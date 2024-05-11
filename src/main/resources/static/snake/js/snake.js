@@ -2,6 +2,7 @@ var tabla = [];
 var serpiente = [];
 var tamaño = 0;
 var direccion = 'D';
+var ultimaDireccion = "D";
 var timeout;
 var crecer = false;
 var terminado = false;
@@ -13,33 +14,38 @@ document.addEventListener("keydown", function(event) {
     var key = String.fromCharCode(keyCode);
     
     // Verificar qué tecla se presionó
-    switch (key.toUpperCase()) {
-        case "W":
-            if(direccion != "S")
+    switch (keyCode) {
+        case 87:
+        case 38:
+            if(ultimaDireccion != "S")
                 direccion = "W";
             break;
-        case "A":
-            if(direccion != "D")
+        case 65:
+        case 37:
+            if(ultimaDireccion != "D")
                 direccion = "A";
             break;
-        case "S":
-            if(direccion != "W")
+        case 83:
+        case 40:
+            if(ultimaDireccion != "W")
                 direccion = "S";
             break;
-        case "D":
-            if(direccion != "A")
+        case 68:
+        case 39:
+            if(ultimaDireccion != "A")
                 direccion = "D";
             break;
         default:
             break;
     }
+    console.log(keyCode);
 });
 
 function bucle() {
     avanzar();
     clearTimeout(timeout);
     if(terminado == false)
-        timeout = setTimeout(bucle, 250);
+        timeout = setTimeout(bucle, 250-tamaño*3);
 }
 
 function randInt(min, max) {
@@ -171,6 +177,7 @@ function siguienteCabeza() {
                 break;
             }
     }
+    ultimaDireccion = direccion;
     return ret;
 }
 
