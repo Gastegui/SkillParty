@@ -19,10 +19,10 @@
             <div><input type="submit" value="Sign In"/></div>
         </form>
 
-        <form action="/createUser" method="post">
-            <label>Nombre: <input type="text" name="username"></label>
-            <label>Contraseña: <input type="text" name="password"></label>
-            <label>Rol: <input type="text" name="rol"></label>
+        <form th:action="@{/createUser}" th:object="${Usuario}" method="post">
+            <label>Nombre: <input type="text" th:field="*{nombre}"></label>
+            <label>Contraseña: <input type="text" th:field="*{contraseña}"></label>
+            <label>Rol: <input type="text" th:field="*{rol}"></label>
             <button type="submit">Crear</button>
         </form>
     </body>

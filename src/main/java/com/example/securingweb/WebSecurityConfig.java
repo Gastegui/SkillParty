@@ -3,6 +3,7 @@ package com.example.securingweb;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -20,9 +21,12 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home", "/createUser", "/snake", "/snake/css/snake.css", "/snake/js/snake.js").permitAll()
+				.requestMatchers("/", "/home", "/createUser").permitAll()
 				.requestMatchers("/login").permitAll()
+				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll()
+				.requestMatchers("/tetris", "/juegos/tetris.js", "/juegos/tetris.css").permitAll()
 				.requestMatchers("/prueba").hasRole("PRUEBA")
+				.requestMatchers("/hello").hasRole("USER")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -45,7 +49,8 @@ public class WebSecurityConfig {
 								.username(u.getNombre())
 								.password(u.getContraseña())
 								.roles(u.getRol())
-								.build();
+								.build();		
+
 			ret.createUser(user);
 		}
 		return ret;
