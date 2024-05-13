@@ -6,6 +6,8 @@ var ultimaDireccion = "D";
 var timeout;
 var crecer = false;
 var terminado = false;
+var velocidadBase = 250;
+var multiplicador = 3;
 
 document.addEventListener("keydown", function(event) {
     // Obtener el código de la tecla presionada
@@ -38,14 +40,13 @@ document.addEventListener("keydown", function(event) {
         default:
             break;
     }
-    console.log(keyCode);
 });
 
 function bucle() {
     avanzar();
     clearTimeout(timeout);
     if(terminado == false)
-        timeout = setTimeout(bucle, 250-tamaño*3);
+        timeout = setTimeout(bucle, velocidadBase-tamaño*multiplicador);
 }
 
 function randInt(min, max) {

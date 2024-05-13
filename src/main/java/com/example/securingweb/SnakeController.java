@@ -18,7 +18,10 @@ public class SnakeController
         {
             try
             {
-                modelo.addAttribute("elementos", Integer.parseInt(numero));
+                int tamaño = Integer.parseInt(numero);
+                if(tamaño > 100)
+                    tamaño = 100;
+                modelo.addAttribute("elementos", tamaño);
             }
             catch (Exception e)
             {

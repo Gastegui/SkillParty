@@ -15,9 +15,7 @@ div
 }
 table
 {
-    height: 100vh;
     margin: 0 auto; 
-    text-align: left;
     height: auto;
 }
 
@@ -39,6 +37,7 @@ th
     box-sizing: border-box;
     width: calc(min(80vh, 80vw)/var(--elementos));
     height: calc(min(80vh, 80vw)/var(--elementos));
+    padding: 0;
 }
 
 .verde
