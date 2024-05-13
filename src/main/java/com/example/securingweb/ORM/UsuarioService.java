@@ -53,7 +53,11 @@ public class UsuarioService implements UserDetailsService{
 
             return usuarioRepository.save(usuario);
         }
-        catch (Exception e)
+        catch(UsernameNotFoundException e)
+        {
+            return null;
+        }
+        catch(Exception e)
         {
             System.out.println("Ha saltado una excepción al guardar el usuario: " + e.getMessage());
             return null;

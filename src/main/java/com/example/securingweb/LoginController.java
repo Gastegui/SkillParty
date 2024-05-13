@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.example.securingweb.ORM.Usuario;
 import com.example.securingweb.ORM.UsuarioService;
 
@@ -30,7 +31,7 @@ public class LoginController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute Usuario nuevo, Model modelo) 
+    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="PRUEBA", required=false) String prueba, Model modelo) 
     {   
         if(nuevo.getUsername().isEmpty())
             return "redirect:/login?noUser";
@@ -40,7 +41,17 @@ public class LoginController {
         Usuario user = new Usuario();
         user.setUsername(nuevo.getUsername());
         user.setPassword(passwordEncoder.encode(nuevo.getPassword()));
-        user.setAutoridad("USER");
+        if(prueba != null)
+        {
+            System.out.println("PRUEBA");
+            user.setAutoridad("PRUEBA");
+            user.setAutoridad("USER");
+        }
+        else
+        {
+            System.out.println("SIN PRUEBA");
+            user.setAutoridad("USER");
+        }
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);

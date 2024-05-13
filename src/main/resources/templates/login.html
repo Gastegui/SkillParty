@@ -31,6 +31,7 @@
         <form th:action="@{/createUser}" th:object="${Usuario}" method="post">
             <label>Nombre: <input type="text" th:field="*{username}"></label>
             <label>Contraseña: <input type="text" th:field="*{password}"></label>
+            <label>PRUEBA: <input type="checkbox" name="PRUEBA"></label>
             <button type="submit">Crear cuenta</button>
         </form>
     </body>
