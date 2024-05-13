@@ -10,20 +10,28 @@
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-        <div th:if="${param.creado}">
-            <h1 th:text="|El usuario nuevo ${param.creado} se ha creado|"></h1>
+        <div th:if="${param.created}">
+            <h1>El usuario nuevo se ha creado</h1>
         </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
+        <div th:if="${param.exists}">
+            <h1>Ya existe un usuario con ese nombre</h1>
+        </div>
+        <div th:if="${param.noUser}">
+            <h1>No has introducido el nombre de usuario</h1>
+        </div>
+        <div th:if="${param.noPass}">
+            <h1>No has introducido la contraseña</h1>
+        </div>
+        <form th:action="@{/login}" th:object="${Usuario}" method="post">
+            <div><label> Nombre: <input type="text" th:field="*{username}"/> </label></div>
+            <div><label> Contraseña: <input type="password" th:field="*{password}"/> </label></div>
+            <div><input type="submit" value="Iniciar sesión"/></div>
         </form>
 
         <form th:action="@{/createUser}" th:object="${Usuario}" method="post">
-            <label>Nombre: <input type="text" th:field="*{nombre}"></label>
-            <label>Contraseña: <input type="text" th:field="*{contraseña}"></label>
-            <label>Rol: <input type="text" th:field="*{rol}"></label>
-            <button type="submit">Crear</button>
+            <label>Nombre: <input type="text" th:field="*{username}"></label>
+            <label>Contraseña: <input type="text" th:field="*{password}"></label>
+            <button type="submit">Crear cuenta</button>
         </form>
     </body>
 </html>
