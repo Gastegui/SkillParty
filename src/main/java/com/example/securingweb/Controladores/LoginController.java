@@ -1,4 +1,4 @@
-package com.example.securingweb;
+package com.example.securingweb.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

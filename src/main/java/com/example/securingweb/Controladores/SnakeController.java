@@ -1,4 +1,4 @@
-package com.example.securingweb;
+package com.example.securingweb.Controladores;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
