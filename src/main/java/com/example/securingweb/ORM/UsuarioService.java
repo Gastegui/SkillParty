@@ -2,6 +2,7 @@ package com.example.securingweb.ORM;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +14,25 @@ public class UsuarioService implements UserDetailsService{
     private AutoridadRepository autoridadRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, AutoridadRepository autoridadRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, AutoridadRepository autoridadRepository) 
+    {
         this.usuarioRepository = usuarioRepository;
         this.autoridadRepository = autoridadRepository;
     }
 
-    public List<Usuario> obtenerTodosLosUsuarios() {
+    public List<Usuario> obtenerTodosLosUsuarios() 
+    {
         return usuarioRepository.findAll();
     }
+
     @Override
     public Usuario loadUserByUsername(String nombre)
-    {
+    {   
         Usuario ret = usuarioRepository.findByUsername(nombre);
-        //MARK: AQUI ANTES LE PONIA LOS ROLES 
-        return ret;
+        if(ret == null)
+            throw new UsernameNotFoundException("No existe el usuario");
+        
+        return usuarioRepository.findByUsername(nombre);
     }
 
     public Usuario guardarUsuario(Usuario usuario) 
@@ -43,10 +49,8 @@ public class UsuarioService implements UserDetailsService{
                     autoridades.add(autoridadRepository.save(autoridad));
             }
 
-            // Paso 2: Asigna las autoridades al usuario
             usuario.setAutoridadesEntity(autoridades);
 
-            // Paso 3: Guarda el usuario en la base de datos
             return usuarioRepository.save(usuario);
         }
         catch (Exception e)

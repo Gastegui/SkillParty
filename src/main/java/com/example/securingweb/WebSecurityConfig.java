@@ -17,7 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig 
 {
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception 
+	{
 		http
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/", "/home", "/createUser").permitAll()
@@ -37,14 +38,14 @@ public class WebSecurityConfig
 	}
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() 
+	{
 		return new BCryptPasswordEncoder();
     }
 
 	@Bean
-	public AuthenticationManager authenticationManager(
-			UserDetailsService userDetailsService,
-			PasswordEncoder passwordEncoder) {
+	public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder) 
+	{
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailsService);
 		authenticationProvider.setPasswordEncoder(passwordEncoder);
