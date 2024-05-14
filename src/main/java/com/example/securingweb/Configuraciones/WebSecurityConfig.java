@@ -24,6 +24,7 @@ public class WebSecurityConfig
 			.authorizeHttpRequests((requests) -> requests
 
 				.requestMatchers("/", "/home").permitAll() 
+				.requestMatchers("/js/*", "/css/*", "/video/*", "/images/*").permitAll() 
 				.requestMatchers("/login", "/createUser").permitAll() 
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/prueba").hasAuthority("PRUEBA")

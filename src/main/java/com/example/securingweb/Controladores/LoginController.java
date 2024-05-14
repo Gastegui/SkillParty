@@ -31,7 +31,7 @@ public class LoginController
     public String cargarLogin(Model modelo)
     {
         modelo.addAttribute("Usuario", new Usuario());
-        return "login";
+        return "login2";
     }
 
     /* Metodo POST */

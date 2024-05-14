@@ -63,15 +63,15 @@
     
       <div class="row flex-grow-1">
         <main class="col-6 container-fluid d-flex align-items-center justify-content-center">
-            <form class="col-md-8" action="#" th:action="@{/ruta}" method="post">
+            <form class="col-md-8" th:action="@{/login}" th:object="${Usuario}" method="post">
                 <h1 class="display-1 mb-3 fw-normal text-white">Iniciar sesión</h1>
 
                 <div class="form-floating">
-                    <input type="email" class="form-control bg-body-primary" id="email" name="email" placeholder="name@example.com">
-                    <label for="email">Email address</label>
+                    <input type="text" class="form-control bg-body-primary" id="username" th:field="*{username}" placeholder="username">
+                    <label for="username">Email address</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control bg-body-primary" id="passwd" name="passwd" placeholder="Password">
+                    <input type="password" class="form-control bg-body-primary" id="passwd" th:field="*{password}" placeholder="Password">
                     <label for="passwd">Password</label>
                 </div>
 
