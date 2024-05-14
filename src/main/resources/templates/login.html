@@ -4,12 +4,8 @@
         <title>Spring Security Example </title>
     </head>
     <body>
-        <nav>
-            <a th:href="@{/login(lang=en)}">EN</a>
-            <a th:href="@{/login(lang=es)}">ES</a>
-            <a th:href="@{/login(lang=eu)}">EU</a>
-            <a th:href="@{/login(lang=zh)}">CHINO</a>
-        </nav>
+        <nav th:include="~{include/nav :: nav}"></nav>
+
         <div th:if="${param.error}" th:text="#{notify.error}"></div>
         <div th:if="${param.logout}">You have been logged out.</div>
         <div th:if="${param.created}"><h1>El usuario nuevo se ha creado</h1></div>
