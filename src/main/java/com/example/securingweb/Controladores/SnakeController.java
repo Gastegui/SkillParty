@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/* Controlador para manejar las solicitudes relacionadas con el juego de la serpiente */
 @Controller
 public class SnakeController 
 {
-    
     @GetMapping("/snake")
     public String snake(@RequestParam(name="elementos", required = false) String numero,Model modelo)
     {
@@ -20,7 +20,9 @@ public class SnakeController
             {
                 int tamaño = Integer.parseInt(numero);
                 if(tamaño > 100)
+                {
                     tamaño = 100;
+                }
                 modelo.addAttribute("elementos", tamaño);
             }
             catch (Exception e)
@@ -30,5 +32,4 @@ public class SnakeController
         }
         return "snake";
     }
-
 }

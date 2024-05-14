@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/* Anotaciones para indicar que esta clase es una configuración de Spring Security y habilitar la seguridad web */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig 
@@ -21,10 +22,10 @@ public class WebSecurityConfig
 	{
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home", "/createUser").permitAll()
-				.requestMatchers("/login").permitAll()
-				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll()
-				.requestMatchers("/tetris", "/juegos/tetris.js", "/juegos/tetris.css").permitAll()
+
+				.requestMatchers("/", "/home").permitAll() 
+				.requestMatchers("/login", "/createUser").permitAll() 
+				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/prueba").hasAuthority("PRUEBA")
 				.requestMatchers("/hello").hasAuthority("USER")
 				.anyRequest().authenticated()
@@ -37,12 +38,14 @@ public class WebSecurityConfig
 		return http.build();
 	}
 
+	/* Bean para proporcionar un codificador de contraseñas */
     @Bean
     public PasswordEncoder passwordEncoder() 
 	{
 		return new BCryptPasswordEncoder();
     }
 
+	/* Bean para proporcionar un administrador de autenticación */
 	@Bean
 	public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder) 
 	{
@@ -51,5 +54,4 @@ public class WebSecurityConfig
 		authenticationProvider.setPasswordEncoder(passwordEncoder);
 		return new ProviderManager(authenticationProvider);
 	}
-	
 }

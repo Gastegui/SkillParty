@@ -1,18 +1,25 @@
-package com.example.securingweb.ORM;
+package com.example.securingweb.ORM.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.example.securingweb.ORM.autoridad.Autoridad;
+import com.example.securingweb.ORM.autoridad.AutoridadRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
+// Clase de servicio para gestionar operaciones relacionadas con los usuarios
 @Service
-public class UsuarioService implements UserDetailsService{
-
+public class UsuarioService implements UserDetailsService
+{
+    // Repositorios necesarios
     private UsuarioRepository usuarioRepository;
     private AutoridadRepository autoridadRepository;
 
+    // Constructor con inyección de dependencias
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository, AutoridadRepository autoridadRepository) 
     {
@@ -30,8 +37,9 @@ public class UsuarioService implements UserDetailsService{
     {   
         Usuario ret = usuarioRepository.findByUsername(nombre);
         if(ret == null)
+        {
             throw new UsernameNotFoundException("No existe el usuario");
-        
+        }
         return usuarioRepository.findByUsername(nombre);
     }
 
@@ -44,9 +52,13 @@ public class UsuarioService implements UserDetailsService{
             {
                 Autoridad autoridadExistente = autoridadRepository.findByAutoridad(autoridad.getAutoridad());
                 if (autoridadExistente != null) 
+                {
                     autoridades.add(autoridadExistente);
+                }
                 else
+                {
                     autoridades.add(autoridadRepository.save(autoridad));
+                }
             }
 
             usuario.setAutoridadesEntity(autoridades);
@@ -63,5 +75,4 @@ public class UsuarioService implements UserDetailsService{
             return null;
         }
     }
-
 }

@@ -4,24 +4,13 @@
         <title>Spring Security Example </title>
     </head>
     <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <div th:if="${param.created}">
-            <h1>El usuario nuevo se ha creado</h1>
-        </div>
-        <div th:if="${param.exists}">
-            <h1>Ya existe un usuario con ese nombre</h1>
-        </div>
-        <div th:if="${param.noUser}">
-            <h1>No has introducido el nombre de usuario</h1>
-        </div>
-        <div th:if="${param.noPass}">
-            <h1>No has introducido la contraseña</h1>
-        </div>
+        <div th:if="${param.error}">Invalid username and password.</div>
+        <div th:if="${param.logout}">You have been logged out.</div>
+        <div th:if="${param.created}"><h1>El usuario nuevo se ha creado</h1></div>
+        <div th:if="${param.exists}"><h1>Ya existe un usuario con ese nombre</h1></div>
+        <div th:if="${param.noUser}"><h1>No has introducido el nombre de usuario</h1></div>
+        <div th:if="${param.noPass}"><h1>No has introducido la contraseña</h1></div>
+        
         <form th:action="@{/login}" th:object="${Usuario}" method="post">
             <div><label> Nombre: <input type="text" th:field="*{username}"/> </label></div>
             <div><label> Contraseña: <input type="password" th:field="*{password}"/> </label></div>

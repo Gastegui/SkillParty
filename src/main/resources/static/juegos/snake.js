@@ -9,14 +9,16 @@ var terminado = false;
 var velocidadBase = 250;
 var multiplicador = 3;
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", function(event) 
+{
     // Obtener el código de la tecla presionada
     var keyCode = event.keyCode || event.which;
     // Convertir el código de la tecla a su correspondiente carácter
     var key = String.fromCharCode(keyCode);
     
     // Verificar qué tecla se presionó
-    switch (keyCode) {
+    switch (keyCode) 
+    {
         case 87:
         case 38:
             if(ultimaDireccion != "S")
@@ -42,20 +44,22 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
-function bucle() {
+function bucle() 
+{
     avanzar();
     clearTimeout(timeout);
     if(terminado == false)
         timeout = setTimeout(bucle, velocidadBase-tamaño*multiplicador);
 }
 
-function randInt(min, max) {
+function randInt(min, max) 
+{
     max -= 1;
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function colocarManzana() {
-
+function colocarManzana() 
+{
     randx = randInt(0, elementos);
     randy = randInt(0, elementos);
     if(tabla[randx][randy].classList.contains("verde"))
@@ -65,13 +69,15 @@ function colocarManzana() {
     return tabla[randx][randy].classList.add("rojo");
 }
 
-function derrota() {
+function derrota() 
+{
     clearTimeout(timeout);
     terminado = true;
     alert("Juego terminado!")
 }
 
-function avanzar() {
+function avanzar() 
+{
     siguienteC = siguienteCabeza();
     aux1x = 0;
     aux1y = 0;
@@ -85,31 +91,36 @@ function avanzar() {
     }
 
     if(tabla[siguienteC[0]][siguienteC[1]].classList.contains("rojo"))
+    {
         crecer = true;
-
+    }
     aux2x = serpiente[0][0];
     aux2y = serpiente[0][1];
-    for(var i = 0; i < tamaño; i++) {
-        
-        if(i == 0) {
+    for(var i = 0; i < tamaño; i++) 
+    {
+        if(i == 0) 
+        {
             serpiente[0][0] = siguienteC[0];
             serpiente[0][1] = siguienteC[1];
             tabla[siguienteC[0]][siguienteC[1]].classList.add("verde");
             if(crecer == true)
             tabla[siguienteC[0]][siguienteC[1]].classList.remove("rojo");
         }
-        else {
+        else 
+        {
             serpiente[i][0] = aux1x;
             serpiente[i][1] = aux1y;
         }
         aux1x = aux2x;
         aux1y = aux2y;
-        if(i+1 != tamaño) {
+        if(i+1 != tamaño) 
+        {
             aux2x = serpiente[i+1][0];
             aux2y = serpiente[i+1][1];
         }
     }
-    if(crecer == true) {
+    if(crecer == true) 
+    {
         serpiente[tamaño] = [];
         serpiente[tamaño][0] = aux1x;
         serpiente[tamaño][1] = aux1y;
@@ -117,14 +128,17 @@ function avanzar() {
         crecer = false;
         colocarManzana();
     }
-    else {
+    else 
+    {
         tabla[aux2x][aux2y].classList.remove("verde");
     }
 }
 
-function siguienteCabeza() {
+function siguienteCabeza() 
+{
     ret = [];
-    switch(direccion) {
+    switch(direccion) 
+    {
         case "W":
             if(serpiente[0][0] == 0)
             {
@@ -182,8 +196,8 @@ function siguienteCabeza() {
     return ret;
 }
 
-function iniciar() {
-
+function iniciar() 
+{
     tamaño = 2;
     serpiente[0] = [];
     serpiente[1] = [];
@@ -197,11 +211,14 @@ function iniciar() {
     bucle();
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function()
+{
     var a = 0;
-    for(let i = 0; i < elementos; i++) {
+    for(let i = 0; i < elementos; i++) 
+    {
         tabla[i] = [];
-        for(let j = 0; j < elementos; j++) {
+        for(let j = 0; j < elementos; j++) 
+        {
             id = (i+1)+"-"+(j+1);
             tabla[i][j] = document.getElementById(id);
         }
