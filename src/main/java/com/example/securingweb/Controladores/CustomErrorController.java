@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class CustomErrorController implements ErrorController 
 {
     @RequestMapping("/error")
-    public String handleError(HttpServletRequest request) 
+    public String handleError(HttpServletRequest request)  
     {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         
