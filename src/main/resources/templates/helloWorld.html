@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Hello World</title>
+</head>
+<body>
+    <h1 th:text="${message}">Hello, World!</h1>
+
+    <form th:action="@{/login}" method="post" th:if="${showButton}">
+        <button type="submit" id="hidden-button">Mejorar la cuenta a PRO</button>
+    </form>
+
+</body>
+</html>

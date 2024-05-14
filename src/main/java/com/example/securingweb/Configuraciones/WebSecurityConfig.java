@@ -23,7 +23,7 @@ public class WebSecurityConfig
 		http
 			.authorizeHttpRequests((requests) -> requests
 
-				.requestMatchers("/", "/home").permitAll() 
+				.requestMatchers("/", "/home", "/helloWorld").permitAll() 
 				.requestMatchers("/login", "/createUser").permitAll() 
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/prueba").hasAuthority("PRUEBA")
