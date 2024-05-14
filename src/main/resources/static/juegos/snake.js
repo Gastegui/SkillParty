@@ -8,6 +8,7 @@ var crecer = false;
 var terminado = false;
 var velocidadBase = 250;
 var multiplicador = 3;
+var puntuacion;
 
 document.addEventListener("keydown", function(event) 
 {
@@ -93,6 +94,7 @@ function avanzar()
     if(tabla[siguienteC[0]][siguienteC[1]].classList.contains("rojo"))
     {
         crecer = true;
+        puntuacion.innerHTML=tamaño-1;
     }
     aux2x = serpiente[0][0];
     aux2y = serpiente[0][1];
@@ -223,5 +225,7 @@ document.addEventListener("DOMContentLoaded", function()
             tabla[i][j] = document.getElementById(id);
         }
     }
+    puntuacion=document.getElementById("puntuacion");
+    puntuacion.innerHTML=0;
     iniciar();
 });
