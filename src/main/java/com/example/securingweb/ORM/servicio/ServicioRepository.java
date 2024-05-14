@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface ServicioRepository extends JpaRepository<Servicio, Short> 
 {
     // Método para buscar un servicio por su nombre
-    Servicio findByTittle(String tittle);
+    Servicio findByTitulo(String titulo);
 }

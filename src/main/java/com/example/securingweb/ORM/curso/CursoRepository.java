@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface CursoRepository extends JpaRepository<Curso, Short> 
 {
     // Método para buscar un curso por su nombre
-    Curso findByTittle(String tittle);
+    Curso findByTitulo(String titulo);
 }
