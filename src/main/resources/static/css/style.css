@@ -1,0 +1,75 @@
+
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: black;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.back-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  overflow: auto;
+}
+
+.animated-text {
+  transition: color 0.3s ease-in-out; /* Transición suave para el cambio de color */
+}
+
+.animated-text:hover {
+  color: red; /* Color que cambiará al hacer hover */
+}
+
+.animated-nav {
+  transition: background-color 0.3s ease-in-out;
+}
+
+.animated-nav:hover {
+  background-color: black;
+}
+
+.custom-height {
+  height: 8em;
+}
+
+@media (max-width: 1920px) {
+  .justify-center {
+    justify-content: center !important;
+  }
+}
+
+@media (min-width: 1920px) {
+  .justify-right {
+    justify-content: end !important;
+  }
+}

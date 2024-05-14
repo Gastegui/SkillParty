@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <title>SkillParty</title>
+</head>
+<body>
+  <div class="container-fluid m-0 vh-100 d-flex flex-column">
+
+    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="15%" height="auto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <p class="h1 text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+          </a>
+
+          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Offcanvas</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="d-flex mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </nav>
+
+
+    <video autoplay loop muted plays-inline class="back-video">
+      <source src="../video/youngVib.mp4" type="video/mp4">
+    </video>
+
+    
+      <div class="row flex-grow-1">
+        <main class="col-6 container-fluid d-flex align-items-center justify-content-center">
+            <form class="col-md-8" action="#" th:action="@{/ruta}" method="post">
+                <h1 class="display-1 mb-3 fw-normal text-white">Iniciar sesión</h1>
+
+                <div class="form-floating">
+                    <input type="email" class="form-control bg-body-primary" id="email" name="email" placeholder="name@example.com">
+                    <label for="email">Email address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control bg-body-primary" id="passwd" name="passwd" placeholder="Password">
+                    <label for="passwd">Password</label>
+                </div>
+
+                <div class="form-check text-start my-3 text-white">
+                    <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Remember me
+                    </label>
+                </div>
+                <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+                <p class="mt-5 mb-3 text-white">&copy; 2017–2024</p>
+            </form>
+            
+        </main>
+    </div>
+  </div>
+    <script defer src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
