@@ -19,9 +19,14 @@
             <p class="h1 text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
           </a>
 
+          <div class="btn-group">
+            <button id="botoiPro">SkillParty Pro</button>
+            <button class="botoi h6 text-white m-0">Kontua sortu</button>
+          </div>
+          
           <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Offcanvas</h5>
+              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
@@ -34,15 +39,14 @@
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+                    Hizkuntza
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li>
-                      <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item" href="#">Euskara</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="#">Castellano</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="#">English</a></li>
                   </ul>
                 </li>
               </ul>
@@ -55,24 +59,25 @@
         </div>
     </nav>
 
-
+    
     <video autoplay loop muted plays-inline class="back-video">
       <source src="../video/youngVib.mp4" type="video/mp4">
     </video>
 
     
       <div class="row flex-grow-1">
-        <main class="col-6 container-fluid d-flex align-items-center justify-content-center">
+        <!--class="col-6 container-fluid d-flex align-items-center justify-content-center"-->
+        <main class="container-fluid col-5 offset-md-7 d-flex align-items-center">
             <form class="col-md-8" th:action="@{/login}" th:object="${Usuario}" method="post">
                 <h1 class="display-1 mb-3 fw-normal text-white">Iniciar sesión</h1>
 
                 <div class="form-floating">
-                    <input type="text" class="form-control bg-body-primary" id="username" th:field="*{username}" placeholder="username">
-                    <label for="username">Email address</label>
+                    <input type="text" class="form-control bg-body-primary" id="username" th:field="*{username}" placeholder="Username">
+                    <label for="username">Username</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control bg-body-primary" id="passwd" th:field="*{password}" placeholder="Password">
-                    <label for="passwd">Password</label>
+                    <input type="password" class="form-control bg-body-primary" id="password" th:field="*{password}" placeholder="Password">
+                    <label for="password">Password</label>
                 </div>
 
                 <div class="form-check text-start my-3 text-white">
