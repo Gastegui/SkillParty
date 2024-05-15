@@ -27,11 +27,11 @@ public class LoginController
     }
 
     /* Metodo GET */
-    @GetMapping("/login")
+    @GetMapping("/createUser")
     public String cargarLogin(Model modelo)
     {
         modelo.addAttribute("Usuario", new Usuario());
-        return "login";
+        return "createUser";
     }
 
     /* Metodo POST */
@@ -40,11 +40,11 @@ public class LoginController
     {   
         if(nuevo.getUsername().isEmpty())
         {
-            return "redirect:/login?noUser";
+            return "redirect:/createUser?noUser";
         }
         if(nuevo.getPassword().isEmpty())
         {
-            return "redirect:/login?noPass";
+            return "redirect:/createUser?noPass";
         }
 
         Usuario user = new Usuario();
@@ -69,7 +69,7 @@ public class LoginController
         
         if(us.guardarUsuario(user)==null)
         {
-            return "redirect:/login?exists";
+            return "redirect:/createUser?exists";
         }
         else
         {

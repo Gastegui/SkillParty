@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillParty - Create User</title>
+</head>
+<body>
+    <form th:action="@{/createUser}" th:object="${Usuario}" method="post">
+        <label>Nombre: <input type="text" th:field="*{username}"></label>
+        <label>Contraseña: <input type="text" th:field="*{password}"></label>
+        <label>PRUEBA: <input type="checkbox" name="PRUEBA"></label>
+        <button type="submit">Crear cuenta</button>
+    </form>
+</body>
+</html>
