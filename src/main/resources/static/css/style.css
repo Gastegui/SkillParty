@@ -40,7 +40,8 @@ body {
   width: auto;
   height: auto;
   z-index: -1;
-  overflow: auto;
+  object-fit: cover;
+  object-position: center;
 }*/
 
 .video-container {
@@ -72,19 +73,47 @@ body {
   color: red; /* Color que cambiará al hacer hover */
 }
 
+#crearCuenta {
+  border: solid 1px #FFF;
+  border-radius: 12px;
+  transition: color 2s ease-in-out;
+}
+
 .animated-nav {
   transition: background-color 0.3s ease-in-out;
 }
 
 .animated-nav:hover {
-  background-color: black;
+  background-color: white;
 }
+
+.animated-nav #header-buttons a {
+  transition: color 2s ease-in-out;
+  color: white;
+}
+
+.animated-nav #title p {
+  transition: color 2s ease-in-out;
+  color: white;
+}
+
+.animated-nav:hover #header-buttons a {
+  color: black;
+}
+
+.animated-nav:hover #title p {
+  color: black;
+}
+
+/*.animated-nav:hover #crearCuenta {
+  border: solid 1px #333;
+}*/
 
 .custom-height {
   height: 8em;
 }
 
-@media (max-width: 1920px) {
+@media (max-width: 1920px) { /*AHAL DA KENDU*/
   .justify-center {
     justify-content: center !important;
   }
@@ -107,7 +136,7 @@ body {
   border-radius: 12px;
 }
 
-#botoiPro { /*BOOTSRAPERA AHAL DA PASAU*/
+.botoiPro { /*BOOTSRAPERA AHAL DA PASAU*/
   margin-right: 2em;
   padding: 15px 40px;
   border: none;
@@ -119,7 +148,7 @@ body {
   border-radius: 12px;
 }
 
-#botoiPro::after {
+.botoiPro::after {
   content: "";
   z-index: -1;
   position: absolute;
@@ -132,7 +161,7 @@ body {
 }
 
 /* glow */
-#botoiPro::before {
+.botoiPro::before {
   content: "";
   background: linear-gradient(
     45deg,
@@ -160,6 +189,20 @@ body {
 }
 
 /* hover */
-#botoiPro:hover::before {
+.botoiPro:hover::before {
   opacity: 1;
+}
+
+#menu-buttons {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  #header-buttons {
+    display: none;
+  }
+
+  #menu-buttons {
+    display: block;
+  }
 }
