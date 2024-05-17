@@ -1,4 +1,4 @@
-package com.example.securingweb.ORM.autoridad;
+package com.example.securingweb.ORM.usuario.autoridad;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 // Clase de entidad para la tabla "autoridad"
 @Entity
-@Table(name = "autoridad")
+@Table(name = "autoridades")
 public class Autoridad 
 {
     // Atributos de la entidad Usuario

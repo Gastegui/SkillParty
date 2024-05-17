@@ -1,5 +1,7 @@
 package com.example.securingweb.Controladores;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.securingweb.ORM.usuario.Usuario;
 import com.example.securingweb.ORM.usuario.UsuarioService;
 
-/* Controlador para manejar las solicitudes relacionadas con el inicio de sesión y la creación de usuarios */
+/* Controlador para manejar las solicitudes relacionadas con la creación de usuarios */
 @Controller
 public class LoginController
 {
@@ -36,7 +38,7 @@ public class LoginController
 
     /* Metodo POST */
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="PRUEBA", required=false) String prueba, Model modelo) 
+    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="CREADOR", required=false) String creador,@RequestParam(value="año", required=true) String año,@RequestParam(value="mes", required=true) String mes,@RequestParam(value="dia", required=true) String dia, Model modelo) 
     {   
         if(nuevo.getUsername().isEmpty())
         {
@@ -50,18 +52,34 @@ public class LoginController
         Usuario user = new Usuario();
         user.setUsername(nuevo.getUsername());
         user.setPassword(passwordEncoder.encode(nuevo.getPassword()));
+        user.setNombre(nuevo.getNombre());
+        user.setApellidos(nuevo.getApellidos());
+        user.setEmail(nuevo.getEmail());
 
-        if(prueba != null)
+        //creates a formatter that parses the date in the given format
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        java.util.Date date;
+        try
         {
-            System.out.println("PRUEBA");
-            user.setAutoridad("PRUEBA");
-            user.setAutoridad("USER");
+           date = sdf.parse(año+"/"+mes+"/"+dia+" 00:00:00");
         }
-        else
+        catch (Exception e)
         {
-            System.out.println("SIN PRUEBA");
-            user.setAutoridad("USER");
+            System.out.println("Error parseando");
+            return null;
         }
+        long timeInMillis = date.getTime();
+        Date fecha = new Date(timeInMillis);
+        
+        user.setFechaDeNacimiento(fecha);
+        
+        if(creador != null)
+        {
+            user.setAutoridad("CREATE_SERVICE");
+            user.setTelefono(nuevo.getTelefono());
+        }
+        
+        user.setAutoridad("USER");
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);

@@ -1,14 +1,14 @@
 package com.example.securingweb.ORM.usuario;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.example.securingweb.ORM.autoridad.Autoridad;
-
+import com.example.securingweb.ORM.servicios.servicio.Servicio;
+import com.example.securingweb.ORM.usuario.autoridad.Autoridad;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,11 +19,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 // Clase de entidad para la tabla "usuario"
 @Entity
-@Table(name="Usuario")
+@Table(name="usuarios")
 public class Usuario implements UserDetails
 {
     // Atributos de la entidad Usuario
@@ -38,7 +39,7 @@ public class Usuario implements UserDetails
     // Relación muchos a muchos con la entidad Autoridad
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "usuario_autoridad",
+            name = "usuarios_autoridades",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "autoridad_id"))
 
@@ -48,6 +49,15 @@ public class Usuario implements UserDetails
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
+
+    private String nombre;
+    private String apellidos;
+    private Date fecha_de_nacimiento;
+    private String telefono;
+    private String email;
+
+    @OneToMany(mappedBy="creador", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<Servicio> servicios;
     
     // Métodos getter y setter para los atributos de la clase
 
@@ -92,7 +102,27 @@ public class Usuario implements UserDetails
     {
         return credentialsNonExpired;
     }
+    public String getNombre()
+    {
+        return nombre;
+    }
+    public String getApellidos()
     
+    {
+        return apellidos;
+    }
+    public Date getFechaDeNacimiento()
+    {
+        return fecha_de_nacimiento;
+    }
+    public String getTelefono()
+    {
+        return telefono;
+    }
+    public String getEmail()
+    {
+        return email;
+    }
 
     public void setId(Long i)
     {
@@ -132,8 +162,26 @@ public class Usuario implements UserDetails
         nuevo.setAutoridad(s);
         autoridades.add(nuevo);
     }
-
-    // Método equals para comparar objetos Usuario
+    public void setNombre(String n)
+    {
+        nombre = n;
+    }
+    public void setApellidos(String a)
+    {
+        apellidos = a;
+    }
+    public void setFechaDeNacimiento(Date f)
+    {
+        fecha_de_nacimiento = f;
+    }
+    public void setTelefono(String t)
+    {
+        telefono = t;
+    }
+    public void setEmail(String e)
+    {
+        email = e;
+    }
 
     @Override
     public boolean equals(Object o)

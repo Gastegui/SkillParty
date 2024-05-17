@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.example.securingweb.ORM.autoridad.Autoridad;
-import com.example.securingweb.ORM.autoridad.AutoridadRepository;
-
+import com.example.securingweb.ORM.usuario.autoridad.Autoridad;
+import com.example.securingweb.ORM.usuario.autoridad.AutoridadRepository;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class UsuarioService implements UserDetailsService
         {
             throw new UsernameNotFoundException("No existe el usuario");
         }
-        return usuarioRepository.findByUsername(nombre);
+        return ret;
     }
 
     public Usuario guardarUsuario(Usuario usuario) 

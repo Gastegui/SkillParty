@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillParty - Create Service</title>
+</head>
+<body>
+    <form th:action="@{/createService}" th:object="${Servicio}" method="post">
+        <label>Titulo: <input type="text" th:field="*{titulo}"></label><br>
+        <label>Descripcion: <input type="text" th:field="*{descripcion}"></label><br>
+        
+        <label>Portada: <input type="text" name="portadaDireccion"></label><br>
+        <label for="categoria">Categoria</label>
+        <select name="categoriaSeleccionada" id="categoria">
+            <option value="Fisica">Fisica</option>
+            <option value="Informatica">Informatica</option>
+            <option value="Mecanica">Mecanica</option>
+            <option value="Biologia">Biologia</option>
+            <option value="Matematica">Matematica</option>
+        </select><br>
+        <button type="submit">Crear servicio</button>
+    </form>
+</body>
+</html>

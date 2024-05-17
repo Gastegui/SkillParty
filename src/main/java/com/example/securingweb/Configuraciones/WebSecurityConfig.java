@@ -29,6 +29,7 @@ public class WebSecurityConfig
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/prueba").hasAuthority("PRUEBA")
 				.requestMatchers("/hello").hasAuthority("USER")
+				.requestMatchers("createService").hasAnyAuthority("CREATE_SERVICE")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
