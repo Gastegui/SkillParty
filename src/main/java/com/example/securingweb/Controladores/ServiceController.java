@@ -36,6 +36,7 @@ public class ServiceController
         this.servicioRepository = servicioRepository;
         this.categoriaRepository = categoriaRepository;
         this.ficheroRepository = ficheroRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
 
@@ -82,30 +83,36 @@ public class ServiceController
         return servicioRepository.findAll();
     }
 
-    public Servicio guardarServicio(Servicio servicio) 
-    {
-
+    public Servicio guardarServicio(Servicio servicio) {
+        if (servicio == null || servicio.getCreador() == null || servicio.getCategoria() == null || servicio.getPortada() == null) {
+            throw new IllegalArgumentException("Servicio, creador, categoría y portada no deben ser nulos");
+        }
+    
         Fichero ficheroExistente = ficheroRepository.findByDireccion(servicio.getPortada().getDireccion());
         Fichero portada;
-        if(ficheroExistente == null)
-            portada = ficheroRepository.save(ficheroExistente);
-        else
+        if (ficheroExistente == null) {
+            portada = ficheroRepository.save(servicio.getPortada());
+        } else {
             portada = ficheroExistente;
-
-        Optional<Categoria> categoriaExistente = categoriaRepository.findById(servicio.getCategoria().getId());
+        }
+    
+        Optional<Categoria> categoriaExistente = categoriaRepository.findByDescripcion(servicio.getCategoria().getDescripcion());
         Categoria categoria;
-        if(categoriaExistente.isEmpty())
-            categoria = categoriaRepository.save(categoriaExistente.get());
-        else 
+        if (categoriaExistente.isPresent()) {
             categoria = categoriaExistente.get();
+        } else {
+            categoria = categoriaRepository.save(servicio.getCategoria());
+        }
     
         Optional<Usuario> creadorExistente = usuarioRepository.findById(servicio.getCreador().getId());
-        if(creadorExistente.isEmpty())
-            return null;
-
+        if (creadorExistente.isEmpty()) {
+            throw new IllegalArgumentException("El creador no existe");
+        }
+    
         servicio.setCreador(creadorExistente.get());
         servicio.setCategoria(categoria);
         servicio.setPortada(portada);
         return servicioRepository.save(servicio);
     }
+    
 }
