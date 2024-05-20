@@ -6,11 +6,23 @@
     <title>SkillParty - Create Service</title>
 </head>
 <body>
+    <div th:if="${param.noFather}">
+        <h1>El servicio introducido no existe</h1>
+    </div>
+    <div th:if="${param.null}">
+        <h1>No se han introducido todos los datos</h1>
+    </div>
+    <div th:if="${param.noCreator}">
+        <h1>El usuario logeado no es un creador</h1>
+    </div>
+    <div th:if="${param.exists}">
+        <h1>El servicio ya existe</h1>
+    </div>
     <form th:action="@{/createService}" th:object="${Servicio}" method="post">
-        <label>Titulo: <input type="text" th:field="*{titulo}"></label><br>
-        <label>Descripcion: <input type="text" th:field="*{descripcion}"></label><br>
+        <label>Titulo: <input type="text" th:field="*{titulo}" required></label><br>
+        <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label><br>
         
-        <label>Portada: <input type="text" name="portadaDireccion"></label><br>
+        <label>Portada: <input type="text" name="portadaDireccion" required></label><br>
         <label for="categoria">Categoria</label>
         <select name="categoriaSeleccionada" id="categoria">
             <option value="Fisica">Fisica</option>
@@ -20,6 +32,12 @@
             <option value="Matematica">Matematica</option>
         </select><br>
         <button type="submit">Crear servicio</button>
+    </form>
+    <form th:action="@{/createOption}" th:object="${Opcion}" method="post">
+        <label>Titulo Servicio: <input type="text" name="titulo" required></label>
+        <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label>
+        <label>Precio: <input type="number" name="precio" step=".01" required></label>
+        <button type="submit"></button>
     </form>
 </body>
 </html>

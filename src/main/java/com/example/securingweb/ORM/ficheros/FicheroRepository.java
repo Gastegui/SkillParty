@@ -1,5 +1,6 @@
 package com.example.securingweb.ORM.ficheros;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -7,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface FicheroRepository extends JpaRepository<Fichero, Long>
 {
     //FindAllById no hay que hacerlo porque ya forma parte de JpaRepository
-    Fichero findByDireccion(String direccion);
+    Optional<Fichero> findByDireccion(String direccion);
 }

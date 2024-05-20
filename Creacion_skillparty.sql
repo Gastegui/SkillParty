@@ -95,7 +95,7 @@ alter table cursos add constraint FK3_cursos foreign key (portada_id) references
 create table servicios
 (
 	id bigint auto_increment primary key,
-	titulo VARCHAR(255) not null,
+	titulo VARCHAR(255) not null unique,
 	descripcion VARCHAR(255) not null,
 	fecha_de_creacion datetime(6) NOT NULL,
 	creador_id BIGINT not null,
@@ -107,12 +107,13 @@ alter table servicios add constraint FK_servicios foreign key (creador_id) refer
 alter table servicios add constraint FK2_servicios foreign key (categoria_id) references categorias (id);
 alter table servicios add constraint FK3_servicios foreign key (portada_id) references ficheros(id);
 
+
 create table opciones
 (
 	id bigint auto_increment primary key,
     servicio_id bigint not null,
 	descripcion VARCHAR(255) not null,
-    precio bigint check(precio >= 0) not null
+    precio decimal(7, 2) check(precio >= 0) not null
 );
 
 alter table opciones add constraint FK_opciones foreign key (servicio_id) references servicios (id);

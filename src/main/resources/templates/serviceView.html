@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillParty - Service</title>
+</head>
+<body>
+    <label>Titulo: <span th:text="${servicio.getTitulo()}"></span></label><br>
+    <label>Descripcion: <span th:text="${servicio.getDescripcion()}"></span></label><br>
+    <p>Opciones:</p>
+    <ul>
+        <li th:each="i : ${servicio.getOpciones()}">Desc: <span th:text="${i.getDescripcion()}"></span>, Precio: <span th:text="${i.getPrecio()}"></span></li>
+    </ul>
+</body>
+</html>

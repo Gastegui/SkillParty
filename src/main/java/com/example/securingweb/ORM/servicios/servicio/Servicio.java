@@ -1,16 +1,20 @@
 package com.example.securingweb.ORM.servicios.servicio;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import java.util.Date;
+import java.util.List;
 import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
+import com.example.securingweb.ORM.servicios.opciones.Opcion;
 import com.example.securingweb.ORM.usuario.Usuario;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GenerationType;
 
 @Entity
@@ -21,6 +25,7 @@ public class Servicio
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String titulo;
     private String descripcion;
     @Column(name="fecha_de_creacion")
@@ -37,6 +42,9 @@ public class Servicio
     @ManyToOne
     @JoinColumn(name="portada_id")
     private Fichero portada;
+
+    @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Opcion> opciones;
 
     public Long getId() 
     {
@@ -107,6 +115,11 @@ public class Servicio
     public void setCreador(Usuario c)
     {
         creador = c;
+    }
+
+    public List<Opcion> getOpciones()
+    {
+        return opciones;
     }
 
     @Override
