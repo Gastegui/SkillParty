@@ -38,7 +38,7 @@ public class LoginController
 
     /* Metodo POST */
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="CREADOR", required=false) String creador,@RequestParam(value="año", required=true) String año,@RequestParam(value="mes", required=true) String mes,@RequestParam(value="dia", required=true) String dia, Model modelo) 
+    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="CREADOR", required=false) String creador, @RequestParam(value="fecha_nacimiento", required=true) String fechaStr, Model modelo) 
     {   
         if(nuevo.getUsername().isEmpty())
         {
@@ -55,17 +55,16 @@ public class LoginController
         user.setNombre(nuevo.getNombre());
         user.setApellidos(nuevo.getApellidos());
         user.setEmail(nuevo.getEmail());
-
-        //creates a formatter that parses the date in the given format
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date;
         try
         {
-           date = sdf.parse(año+"/"+mes+"/"+dia+" 00:00:00");
+           date = sdf.parse(fechaStr+" 00:00:00");
         }
         catch (Exception e)
         {
-            System.out.println("Error parseando");
+            System.out.println("Error parseando la fecha");
             return null;
         }
         long timeInMillis = date.getTime();
