@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/cursosStyle.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+        <title>Cursos</title>
+    </head>
+    <body>
+        <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+                    <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+                    <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+                </a>
+            
+                <div class="btn-group" id="header-buttons">
+                    <button class="botoiPro">SkillParty Pro</button>
+                    <a href="../html/createUser.html" class="botoi">Servicios</a>
+                    <a href="../html/createUser.html" class="botoi">Usuario</a>
+                </div>
+                
+                
+                <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+            
+                    <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+            
+                        <div id="menu-buttons">
+                        <li class="nav-item">
+                            <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Usuario</a>
+                        </li>
+                        </div>
+                        
+            
+                        <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Hizkuntza
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Euskara</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="#">Castellano</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="#">English</a></li>
+                        </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex mt-3" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <aside class="position-relative container z-index-1 bg-light">
+            <div class="row">
+                
+                <li class="col dropdown me-auto ms-2 p-1 list-unstyled">
+                    <a class="nav-link dropdown-toggle border p-2" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Friltroa jartzeko</a>
+                    <ul class="dropdown-menu position-absolute z-index-2 " aria-labelledby="dropdown">
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="filtro1" id="filtro1">
+                                <label for="filtro1">filtro1</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="filtro1" id="filtro1">
+                                <label for="filtro1">filtro1</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="filtro1" id="filtro1">
+                                <label for="filtro1">filtro1</label>
+                            </div>
+                        </li>
+                        <!--<li>
+                            <input type="checkbox" name="filtro2" id="filtro2">
+                            <label for="filtro2">filtro2</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" name="filtro3" id="filtro3">
+                            <label for="creator">filtro3</label>
+                        </li>-->
+                    </ul>
+                </li> 
+                <form class="col-4 pt-1 ">
+                    <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
+                </form>
+
+            </div>
+        </aside>
+
+        <main class="container position-relative z-index-0 overflow-auto pt-1">
+            <!--<div class=" align-items-center border">
+                <div id="titulo" class="align-items-center text-center border">
+                    <p>Título</p>
+                </div>
+                <div id="argazkia" class="align-items-center text-center border">
+                    <div class="bg-info vh-50">
+                        <p>Foto</p>
+                    </div>
+                    
+                </div>
+                <div id="descripcion" class="align-items-center text-center border">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit illo corporis ad totam quas repellat architecto adipisci dolores! Veniam veritatis illo vitae iure ducimus sint laboriosam esse accusantium distinctio quam.</p>
+                </div>
+                
+            </div>-->
+
+            
+
+            <div class="album py-2 bg-light z-index-1">
+                <div class="container ">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. In ipsam saepe voluptatum deserunt quae. Totam eligendi, at ex recusandae provident, nulla quibusdam laborum fugiat aut porro molestiae unde commodi magnam. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure tempore sit quam, tempora alias eius harum dolore, quia possimus cumque voluptatem esse ab veritatis odio officia quisquam, ipsum veniam. Suscipit.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- kurtsoa-->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulua</h5>
+                                </div>
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Foto" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"/>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Foto</text>
+                                </svg>
+                    
+                                <div class="card-body">
+                                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Info</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">تعديل</button>-->
+                                        </div>
+                                        <!--<small class="text-muted"></small>--> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end pb-2">
+                <button type="button" class="btn border mt-2 me-2" disabled>
+                    <img src="../images/flecha_izqierda.png" alt="Flecha" style="width: 20px; height: 20px;">
+                </button>
+                <button type="button" class="btn border mt-2 me-2">
+                    <img src="../images/flecha.png" alt="Flecha" style="width: 20px; height: 20px;">
+                </button>
+            </div>
+        </main>
+
+
+        <script defer src="../js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
