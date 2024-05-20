@@ -92,14 +92,14 @@
 
 #menu-buttons {
     display: none;
-  }
+}
 
 @media (max-width: 700px) {
     #header-buttons {
-    display: none;
+        display: none;
     }
 
     #menu-buttons {
-      display: block;
+        display: block;
     }
 }

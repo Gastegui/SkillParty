@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/header.css">
     <title>SkillParty</title>
 </head>
 <body>
   <div class="video-container">
     <video autoplay loop muted playsinline>
-      <source src="../video/background.mp4" type="video/mp4">
+      <source src="video/background.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -21,7 +21,7 @@
     <div class="container-fluid">
 
       <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-        <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+        <img src="images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
         <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
       </a>
 
@@ -81,7 +81,7 @@
 
           <div class="form-floating">
             <input type="text" class="form-control bg-body-primary mb-2" name="username" id="username" placeholder="name@example.com">
-            <label for="username">Username</label>
+            <label for="username" th:text="#{login.username}"></label>
           </div>
           <div class="form-floating mt-3">
             <input type="password" class="form-control bg-body-primary" name="password" id="password" placeholder="Password">
@@ -100,6 +100,6 @@
       </main>
     </div>
   </div>
-    <script defer src="../js/bootstrap.bundle.min.js"></script>
+    <script defer src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

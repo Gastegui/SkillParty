@@ -60,7 +60,7 @@ public class LoginController
         java.util.Date date;
         try
         {
-           date = sdf.parse(fechaStr+" 00:00:00");
+            date = sdf.parse(fechaStr+" 00:00:00");
         }
         catch (Exception e)
         {
