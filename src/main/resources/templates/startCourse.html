@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/startCourse.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <title>CourseName</title>
+</head>
+<body>
+    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+        <div class="container-fluid">
+    
+          <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+          </a>
+    
+          <div class="btn-group" id="header-buttons">
+            <button class="botoiPro">SkillParty Pro</button>
+            <a href="../html/createUser.html" class="botoi">Kontua sortu</a>
+          </div>
+          
+          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+    
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+    
+                <li class="nav-item">
+                <div id="menu-buttons">
+                  <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                  <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
+                </div>
+              </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hizkuntza
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="d-flex mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row my-3">
+            <h1>Kurtsoaren izena</h1>
+        </div>
+        <div class="row  d-flex justify-content-center">
+            <div class="col-10 card">
+              <div class="row text-start">
+                <p class="h2 p-1 card-header">Bideoaren izena</p>
+              </div>
+              <div class="row d-flex justify-content-center p-1">
+                <video controls class="w-100 h-auto">
+                  <source src="../video/youngVib.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="row d-flex justify-content-between">
+                <div class="col-1 m-2 w-auto">
+                  <button>Aurrekoa</button>
+                </div>
+                <div class="col-1 m-2 w-auto">
+                  <button>Hurrengoa</button>
+                </div>
+              </div>
+            </div>
+                <div class="col-10 card mt-3">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam.</p>
+                </div>
+      </div>
+      <script defer src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
