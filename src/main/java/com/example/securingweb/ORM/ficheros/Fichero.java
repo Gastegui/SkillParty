@@ -37,8 +37,6 @@ public class Fichero
             return false;
         if(o.getClass() != this.getClass())
             return false;
-        if(((Fichero)o).getDireccion() != this.getDireccion())
-            return false;
-        return true;
+        return ((Fichero)o).getDireccion().equals(this.getDireccion());
     }
 }

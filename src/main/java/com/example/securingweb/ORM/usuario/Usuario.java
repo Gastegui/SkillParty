@@ -7,7 +7,10 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
+import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
+import com.example.securingweb.ORM.servicios.verServicios.VerServicio;
 import com.example.securingweb.ORM.usuario.autoridad.Autoridad;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -59,6 +62,14 @@ public class Usuario implements UserDetails
     @OneToMany(mappedBy="creador", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Servicio> servicios;
     
+    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<VerServicio> serviciosVistos;
+
+    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<ComprarServicio> serviciosComprados;
+
+    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
+    private List<ValorarServicios> serviciosValorados;
     // Métodos getter y setter para los atributos de la clase
 
     public Long getId()
@@ -122,6 +133,22 @@ public class Usuario implements UserDetails
     public String getEmail()
     {
         return email;
+    }
+    public List<Servicio> getServiciosCreados()
+    {
+        return servicios;
+    }
+    public List<VerServicio> getServiciosVistos()
+    {
+        return serviciosVistos;
+    }
+    public List<ComprarServicio> getServiciosComprados()
+    {
+        return serviciosComprados;
+    }
+    public List<ValorarServicios> getServiciosValorados()
+    {
+        return serviciosValorados;
     }
 
     public void setId(Long i)
@@ -194,10 +221,7 @@ public class Usuario implements UserDetails
         {
             return false;
         }
-        if(((Usuario)o).getUsername() != this.getUsername())
-        {
-            return false;
-        }
-        return true;
+        return ((Usuario)o).getUsername().equals(this.getUsername());
+        
     }
 }

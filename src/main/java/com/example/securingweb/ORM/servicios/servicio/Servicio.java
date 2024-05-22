@@ -7,7 +7,11 @@ import java.util.Date;
 import java.util.List;
 import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
+import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
+import com.example.securingweb.ORM.servicios.muestras.Muestra;
 import com.example.securingweb.ORM.servicios.opciones.Opcion;
+import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
+import com.example.securingweb.ORM.servicios.verServicios.VerServicio;
 import com.example.securingweb.ORM.usuario.Usuario;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.GenerationType;
 
 @Entity
@@ -44,8 +49,22 @@ public class Servicio
     private Fichero portada;
 
     @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("precio ASC")
     private List<Opcion> opciones;
 
+    @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("posicion ASC")
+    private List<Muestra> muestras;
+
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VerServicio> vistas;
+
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComprarServicio> compras;
+
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ValorarServicios> valoraciones;
+    
     public Long getId() 
     {
         return id;
@@ -122,6 +141,26 @@ public class Servicio
         return opciones;
     }
 
+    public List<Muestra> getMuestras()
+    {
+        return muestras;
+    }
+
+    public List<VerServicio> getVistas()
+    {
+        return vistas;
+    }
+
+    public List<ComprarServicio> getCompradores()
+    {
+        return compras;
+    }
+
+    public List<ValorarServicios> getValoraciones()
+    {
+        return valoraciones;
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -131,9 +170,6 @@ public class Servicio
         if(o.getClass() != this.getClass())
             return false;
 
-        if(((Servicio)o).getTitulo() != this.getTitulo())
-            return false;
-        
-        return true;
+        return ((Servicio)o).getTitulo().equals(this.getTitulo());
     }
 }

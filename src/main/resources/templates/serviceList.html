@@ -8,7 +8,7 @@
 <body>
     <div>
         <div th:each="i : ${servicios}">
-            <a th:href="|/service?title=${i.getTitulo()}|"><p th:text="|titulo: ${i.getTitulo()}|"></p></a>
+            <a th:href="|/service/view?title=${i.getTitulo()}|"><p th:text="|titulo: ${i.getTitulo()}|"></p></a>
         </div>
     </div>
 </body>

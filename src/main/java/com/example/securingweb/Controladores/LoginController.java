@@ -38,7 +38,7 @@ public class LoginController
 
     /* Metodo POST */
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="CREADOR", required=false) String creador, @RequestParam(value="fecha_nacimiento", required=true) String fechaStr, Model modelo) 
+    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="creator", required=false) String creador, @RequestParam(value="fecha_nacimiento", required=true) String fechaStr, Model modelo) 
     {   
         if(nuevo.getUsername().isEmpty())
         {
@@ -50,11 +50,11 @@ public class LoginController
         }
 
         Usuario user = new Usuario();
-        user.setUsername(nuevo.getUsername());
+        user.setUsername(nuevo.getUsername().trim());
         user.setPassword(passwordEncoder.encode(nuevo.getPassword()));
-        user.setNombre(nuevo.getNombre());
-        user.setApellidos(nuevo.getApellidos());
-        user.setEmail(nuevo.getEmail());
+        user.setNombre(nuevo.getNombre().trim());
+        user.setApellidos(nuevo.getApellidos().trim());
+        user.setEmail(nuevo.getEmail().trim());
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date;

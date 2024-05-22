@@ -22,14 +22,17 @@ public class WebSecurityConfig
 	{
 		http
 			.authorizeHttpRequests((requests) -> requests
-
+				//GENERALES
 				.requestMatchers("/", "/home").permitAll() 
 				.requestMatchers("/js/*", "/css/*", "/video/*", "/images/*").permitAll() 
 				.requestMatchers("/login", "/createUser").permitAll() 
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
-				.requestMatchers("/prueba").hasAuthority("PRUEBA")
-				.requestMatchers("/hello").hasAuthority("USER")
-				.requestMatchers("createService").hasAnyAuthority("CREATE_SERVICE")
+				.requestMatchers("/error", "/error/403", "error/404").permitAll() 
+				//SERVICIOS
+				.requestMatchers("/service/view", "service/list").permitAll()
+				.requestMatchers("/service/create", "/service/createOption", "service/createSample").hasAnyAuthority("CREATE_SERVICE")
+				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE")
+				.requestMatchers("/service/rate", "/service/deleteRatin").authenticated()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form

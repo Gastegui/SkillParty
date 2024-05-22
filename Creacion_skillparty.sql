@@ -171,7 +171,7 @@ create table valorar_cursos
 	usuario_id BIGINT not null,
 	curso_id bigint not null,
 	valoracion bigint not null,
-    comentario VARCHAR(500),
+    comentario VARCHAR(255),
 	fecha_valoracion DATE not null
 );
 
@@ -182,9 +182,9 @@ create table valorar_servicios
 (
 	id bigint auto_increment primary key,
 	usuario_id BIGINT not null,
-	servicio_id bigint not null,
+	servicio_id bigint not null,	
 	valoracion bigint not null,
-    comentario VARCHAR(500),
+    comentario VARCHAR(255),
 	fecha_valoracion DATE not null
 );
 

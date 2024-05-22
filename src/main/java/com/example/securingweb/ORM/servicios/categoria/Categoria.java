@@ -36,9 +36,6 @@ public class Categoria
         if(o.getClass() != this.getClass())
             return false;
 
-        if(((Categoria)o).getDescripcion() != this.getDescripcion())
-            return false;
-
-        return true;
+        return ((Categoria)o).getDescripcion().equals(this.getDescripcion());
     }
 }
