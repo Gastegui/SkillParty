@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import java.util.Date;
 import java.util.List;
 import com.example.securingweb.ORM.ficheros.Fichero;
+import com.example.securingweb.ORM.idiomas.Idioma;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.muestras.Muestra;
@@ -48,6 +49,10 @@ public class Servicio
     @JoinColumn(name="portada_id")
     private Fichero portada;
 
+    @ManyToOne
+    @JoinColumn(name="idioma_id")
+    private Idioma idioma;
+
     @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("precio ASC")
     private List<Opcion> opciones;
@@ -64,6 +69,7 @@ public class Servicio
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ValorarServicios> valoraciones;
+
     
     public Long getId() 
     {
@@ -159,6 +165,16 @@ public class Servicio
     public List<ValorarServicios> getValoraciones()
     {
         return valoraciones;
+    }
+
+    public Idioma getIdioma()
+    {
+        return idioma;
+    }
+
+    public void setIdioma(Idioma i)
+    {
+        idioma=i;
     }
 
     @Override

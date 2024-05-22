@@ -9,6 +9,7 @@
     <label>Creador: <a th:href="|/creadores/${servicio.getCreador().getUsername()}|" th:text="${servicio.getCreador().getUsername()}"></a></label><br>
     <label>Titulo: <span th:text="${servicio.getTitulo()}"></span></label><br>
     <label>Descripcion: <span th:text="${servicio.getDescripcion()}"></span></label><br>
+    <label>Idioma: <span th:text="${servicio.getIdioma().getIdioma()}"></span></label><br>
     <a th:href="|/service/delete?title=${servicio.getTitulo()}|">Borrar servicio</a>
     <p>Opciones:</p>
     <ul>

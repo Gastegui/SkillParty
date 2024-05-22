@@ -55,6 +55,8 @@ public class LoginController
         user.setNombre(nuevo.getNombre().trim());
         user.setApellidos(nuevo.getApellidos().trim());
         user.setEmail(nuevo.getEmail().trim());
+        user.setSaldo((long) 50);
+        user.setPorCobrar((long) 0);
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date;

@@ -2,6 +2,7 @@ package com.example.securingweb.Controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.ficheros.FicheroRepository;
+import com.example.securingweb.ORM.idiomas.Idioma;
+import com.example.securingweb.ORM.idiomas.IdiomaRepository;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
 import com.example.securingweb.ORM.servicios.categoria.CategoriaRepository;
 import com.example.securingweb.ORM.servicios.muestras.Muestra;
@@ -28,7 +31,6 @@ import com.example.securingweb.ORM.usuario.Usuario;
 import com.example.securingweb.ORM.usuario.UsuarioRepository;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import javax.naming.NoPermissionException;
 
@@ -43,10 +45,11 @@ public class ServiceController
     private OpcionRepository opcionRepository;
     private MuestrasRepository muestrasRepository;
     private ValorarServiciosRepository valorarServiciosRepository;
+    private IdiomaRepository idiomaRepository;
 
 
     @Autowired
-    public ServiceController(ServicioRepository servicioRepository, CategoriaRepository categoriaRepository, FicheroRepository ficheroRepository, UsuarioRepository usuarioRepository, OpcionRepository opcionRepository, MuestrasRepository muestrasRepository, ValorarServiciosRepository valorarServiciosRepository)
+    public ServiceController(ServicioRepository servicioRepository, CategoriaRepository categoriaRepository, FicheroRepository ficheroRepository, UsuarioRepository usuarioRepository, OpcionRepository opcionRepository, MuestrasRepository muestrasRepository, ValorarServiciosRepository valorarServiciosRepository, IdiomaRepository idiomaRepository)
     {
         this.servicioRepository = servicioRepository;
         this.categoriaRepository = categoriaRepository;
@@ -55,6 +58,7 @@ public class ServiceController
         this.opcionRepository = opcionRepository;
         this.muestrasRepository = muestrasRepository;
         this.valorarServiciosRepository = valorarServiciosRepository;
+        this.idiomaRepository = idiomaRepository;
     }
 
     private Usuario getUser()
@@ -79,10 +83,11 @@ public class ServiceController
     }
     
     @GetMapping("list")
-    public String serviceList(Model modelo, @RequestParam(value="page", required=false, defaultValue = "0") String page, @RequestParam(value="size", required=false, defaultValue = "9") String size)
+    public String serviceList(Model modelo, @RequestParam(value="page", required=false, defaultValue = "0") String page, @RequestParam(value="size", required=false, defaultValue = "9") String size, @RequestParam(value="lang", required=false, defaultValue = "es") String idioma)
     {
         int pageInt = 0;
         int sizeInt = 9;
+        Page<Servicio> lista;
         try
         {
             pageInt = Integer.parseInt(page);
@@ -96,9 +101,15 @@ public class ServiceController
         }
         catch(Exception e)
         {}
-
-        List<Servicio> lista = servicioRepository.findAll(PageRequest.of(pageInt, sizeInt)).getContent();
-        modelo.addAttribute("servicios", lista);
+        Optional<Idioma> idiomOptional = idiomaRepository.findByIdioma(idioma);
+        if(idiomOptional.isEmpty())
+            lista = servicioRepository.findAll(PageRequest.of(pageInt, sizeInt));
+        else
+            lista = servicioRepository.findAllByIdioma_id(idiomOptional.get().getId(), PageRequest.of(pageInt, sizeInt));
+        modelo.addAttribute("servicios", lista.getContent());
+        modelo.addAttribute("haySiguiente", lista.hasNext());
+        modelo.addAttribute("hayAnterior", lista.hasPrevious());
+        modelo.addAttribute("pagActual", pageInt);
 
         return "serviceList";
     }
@@ -117,7 +128,7 @@ public class ServiceController
     }
 
     @PostMapping("create")
-    public String postCreateService(@ModelAttribute Servicio nuevo, @RequestParam(value="categoriaSeleccionada", required=true) String categoria, @RequestParam(value="portadaDireccion", required=true) String direccion)
+    public String postCreateService(@ModelAttribute Servicio nuevo, @RequestParam(value="categoriaParam", required=true) String categoria, @RequestParam(value="portadaDireccion", required=true) String direccion, @RequestParam(value="idiomaParam", required=true) String idioma)
     {
         Servicio guardar = new Servicio();
 
@@ -132,6 +143,12 @@ public class ServiceController
         guardar.setCategoria(catNueva);
 
         guardar.setDescripcion(nuevo.getDescripcion().trim());
+
+        Optional<Idioma> idiomaEncontrado = idiomaRepository.findByIdioma(idioma);
+        if(idiomaEncontrado.isEmpty())
+            return "redirect:/error";
+
+        guardar.setIdioma(idiomaEncontrado.get());
 
         Fichero portNueva = new Fichero();
         portNueva.setDireccion(direccion.trim());

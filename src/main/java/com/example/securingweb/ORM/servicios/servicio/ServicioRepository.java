@@ -12,4 +12,5 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long>
     // Método para buscar un servicio por su nombre
     Optional<Servicio> findByTitulo(String titulo);
     Page<Servicio> findAll(Pageable pageable);
+    Page<Servicio> findAllByIdioma_id(Long idiomaId, Pageable pageable);
 }

@@ -15,7 +15,9 @@ create table usuarios
     enabled BOOLEAN NOT NULL,
     account_non_expired BOOLEAN NOT NULL,
     account_non_locked BOOLEAN NOT NULL,
-    credentials_non_expired BOOLEAN NOT NULL
+    credentials_non_expired BOOLEAN NOT NULL,
+	saldo bigint not null,
+	por_cobrar bigint
 );
 
 CREATE TABLE autoridades
@@ -70,6 +72,16 @@ alter table mensajes add constraint FK_mensajes foreign key (contacto_id) refere
 alter table mensajes add constraint FK2_mensajes foreign key (usuario_id) references usuarios (id);
 alter table mensajes add constraint FK3_mensajes foreign key (fichero_id) references ficheros (id);
 
+create table idiomas
+(
+	id bigint auto_increment primary key,
+	idioma varchar(255) not null unique
+);
+
+insert into idiomas values (1, "es");
+insert into idiomas values (2, "eu");
+insert into idiomas values (3, "en");
+
 create table tipos
 (
 	id bigint auto_increment primary key,
@@ -85,12 +97,14 @@ create table cursos
 	creador_id BIGINT not null,
     portada_id bigint not null,
 	tipo_id bigint not null,
-    precio bigint check(precio >= 0) not null
+    precio bigint check(precio >= 0) not null,
+	idioma_id bigint not null
 );
 
 alter table cursos add constraint FK_cursos foreign key (creador_id) references usuarios (id);
 alter table cursos add constraint FK2_cursos foreign key (tipo_id) references tipos (id);
 alter table cursos add constraint FK3_cursos foreign key (portada_id) references ficheros(id);
+alter table cursos add constraint FK4_cursos foreign key (idioma_id) references idiomas(id);
 
 create table servicios
 (
@@ -100,12 +114,14 @@ create table servicios
 	fecha_de_creacion datetime(6) NOT NULL,
 	creador_id BIGINT not null,
     portada_id bigint not null,
-	categoria_id bigint not null
+	categoria_id bigint not null,
+	idioma_id bigint not null
 );
 
 alter table servicios add constraint FK_servicios foreign key (creador_id) references usuarios (id);
 alter table servicios add constraint FK2_servicios foreign key (categoria_id) references categorias (id);
 alter table servicios add constraint FK3_servicios foreign key (portada_id) references ficheros(id);
+alter table servicios add constraint FK4_servicios foreign key (idioma_id) references idiomas(id);
 
 
 create table opciones
@@ -113,7 +129,7 @@ create table opciones
 	id bigint auto_increment primary key,
     servicio_id bigint not null,
 	descripcion VARCHAR(255) not null,
-    precio decimal(7, 2) check(precio >= 0) not null
+    precio decimal(38, 2) check(precio >= 0) not null
 );
 
 alter table opciones add constraint FK_opciones foreign key (servicio_id) references servicios (id);
@@ -185,7 +201,7 @@ create table valorar_servicios
 	servicio_id bigint not null,	
 	valoracion bigint not null,
     comentario VARCHAR(255),
-	fecha_valoracion DATE not null
+	fecha_valoracion datetime(6) not null
 );
 
 alter table valorar_servicios add constraint FK_valorar_servicios foreign key (usuario_id) references usuarios (id);
@@ -197,7 +213,7 @@ create table muestras #las imagenes de los servicios
     servicio_id bigint not null,
     posicion bigint not null,
     multimedia_id bigint,
-	descripcion VARCHAR(500)
+	descripcion VARCHAR(255)
 );
 
 alter table muestras add constraint FK_muestras foreign key (servicio_id) references servicios (id);

@@ -25,12 +25,18 @@
         
         <label>Portada: <input type="text" name="portadaDireccion" required></label><br>
         <label for="categoria">Categoria</label>
-        <select name="categoriaSeleccionada" id="categoria">
+        <select name="categoriaParam" id="categoria">
             <option value="Fisica">Fisica</option>
             <option value="Informatica">Informatica</option>
             <option value="Mecanica">Mecanica</option>
             <option value="Biologia">Biologia</option>
             <option value="Matematica">Matematica</option>
+        </select><br>
+        <label for="idioma"></label>
+        <select name="idiomaParam" id="idioma">
+            <option value="es">Castellano</option>
+            <option value="eu">Vasco</option>
+            <option value="en">Ingles</option>
         </select><br>
         <button type="submit">Crear servicio</button>
     </form>

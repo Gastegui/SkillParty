@@ -58,6 +58,9 @@ public class Usuario implements UserDetails
     private Date fecha_de_nacimiento;
     private String telefono;
     private String email;
+    private Long saldo;
+    @Column(name="por_cobrar")
+    private Long porCobrar;
 
     @OneToMany(mappedBy="creador", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Servicio> servicios;
@@ -150,6 +153,14 @@ public class Usuario implements UserDetails
     {
         return serviciosValorados;
     }
+    public Long getSaldo()
+    {
+        return saldo;
+    }
+    public Long getPorCobrar()
+    {
+        return porCobrar;
+    }
 
     public void setId(Long i)
     {
@@ -209,6 +220,15 @@ public class Usuario implements UserDetails
     {
         email = e;
     }
+    public void setSaldo(Long s)
+    {
+        saldo = s;
+    }
+    public void setPorCobrar(Long p)
+    {
+        porCobrar = p;
+    }
+
 
     @Override
     public boolean equals(Object o)
