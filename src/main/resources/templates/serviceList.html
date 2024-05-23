@@ -11,10 +11,10 @@
             <a th:href="|/service/view?title=${i.getTitulo()}|"><p th:text="|titulo: ${i.getTitulo()}|"></p></a>
         </div>
         <div th:if="${haySiguiente == true}">
-            <a th:href="|/service/list?page=${pagActual+1}|">Siguiente página</a>
+            <a th:href="|/service/list?page=${pagActual+1}|">Página siguiente</a>
         </div>
         <div th:if="${hayAnterior == true}">
-            <a th:href="|/service/list?page=${pagActual-1}|">Siguiente anterior</a>
+            <a th:href="|/service/list?page=${pagActual-1}|">Página anterior</a>
         </div>
     </div>
 </body>

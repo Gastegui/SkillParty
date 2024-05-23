@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillParty - Edit Service</title>
+    <style>
+        div
+        {
+            display: inherit;
+        }
+        .scroll
+        {
+            overflow-x: auto;
+            display: inline-block;
+            width: 100vw;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Información sobre el servicio</h1>
+    <form th:action="@{/service/edit}" th:object="${Servicio}" method="post">
+        <input hidden type="text" name="tituloViejo" th:value="${Servicio.getTitulo()}">
+        <label>Titulo: <input type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}" required></label><br>
+        <label>Descripcion: <input type="text" th:field="*{descripcion}" th:value="${Servicio.getDescripcion()}" required></label><br>
+        <label>Portada: <input type="text" name="portadaDireccion" th:value="${Servicio.getPortada().getDireccion()}" required></label><br>
+        <label for="categoria">Categoria</label>
+        <select name="categoriaParam" id="categoria">
+            <option value="Fisica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Fisica")}'>Fisica</option>
+            <option value="Informatica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Informatica")}'>Informatica</option>
+            <option value="Mecanica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Mecanica")}'>Mecanica</option>
+            <option value="Biologia" th:selected='${Servicio.getCategoria().getDescripcion().equals("Biologia")}'>Biologia</option>
+            <option value="Matematica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Matematica")}'>Matematica</option>
+        </select><br>
+        <label for="idioma"></label>
+        <select name="idiomaParam" id="idioma">
+            <option value="es" th:selected='${Servicio.getIdioma().getIdioma().equals("es")}'>Castellano</option>
+            <option value="eu" th:selected='${Servicio.getIdioma().getIdioma().equals("eu")}'>Vasco</option>
+            <option value="en" th:selected='${Servicio.getIdioma().getIdioma().equals("en")}'>Ingles</option>
+        </select><br>
+        <button type="submit">Modificar datos del servicio</button>
+    </form>
+
+    <h1>Opciones</h1>
+    <div class="scroll">
+        <div th:each="i : ${ListaOpciones}">
+            <form th:action="@{/service/editOption(id=${i.id}, title=${Servicio.titulo})}" method="post">
+                <label>Descripcion: <input type="text" th:value="${i.descripcion}" name="desc" required></label><br>
+                <label>Precio: <input type="number" name="precio" th:value="${i.precio}" step=".01" required></label><br>
+                <button style="display: inline-block;" type="submit">Editar opcion</button>
+                <a th:href="|/service/deleteOption?id=${i.getId()}&title=${Servicio.getTitulo()}|">Borrar opción</a>
+            </form>
+        </div>
+        <div>
+            <form th:action="@{/service/createOption(title=${Servicio.titulo})}" th:object="${Opcion}" method="post">
+                <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label><br>
+                <label>Precio: <input type="number" name="precio" step=".01" required></label><br>
+                <button type="submit">Crear opcion de compra</button>
+            </form>
+        </div>
+    </div>
+    <h1>Muestras</h1>
+    <div class="scroll">
+        <div th:each="i : ${ListaMuestras}">
+            <form th:action="@{/service/editSample(id=${i.id}, title=${Servicio.titulo})}" method="post">
+                <a style="margin-left: 50px;" th:if="${i.posicion != 1}" th:href="|/service/editSamplePos?title=${Servicio.titulo}&id=${i.id}&dir=izq|">&lt;--</a>
+                <a style="float: right; margin-right: 50px;" th:if="${i.posicion != ListaMuestras.size()}" th:href="|/service/editSamplePos?title=${Servicio.titulo}&id=${i.id}&dir=der|">--&gt;</a><br>
+                <label>Multimedia: <input type="text" name="dirMultimedia" th:value="${i.getMultimedia().getDireccion()}" required></label><br>
+                <label>Descripcion: <input type="text" name="desc" th:value="${i.getDescripcion()}" required></label><br>
+                <button style="display: inline-block;" type="submit">Editar muestra</button>
+                <a th:href="|/service/deleteSample?id=${i.getId()}&title=${Servicio.getTitulo()}|">Borrar muestra</a>
+            </form>
+        </div>
+        <div>
+            <form th:action="@{/service/createSample(title=${Servicio.titulo}, pos=${ListaMuestras.size()+1})}" th:object="${Muestra}" method="post">
+                <label>Multimedia: <input type="text" name="dirMultimedia" required></label><br>
+                <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label><br>
+                <button type="submit">Crear muestra del servicio</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <form th:action="@{/service/publish}" th:object="${Servicio}" method="post">
+        <input hidden type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}">
+        <button type="submit">Publicar servicio</button>
+    </form>
+    <a th:href="|/service/view?title=${Servicio.titulo}|">Ver pantalla del servicio</a>
+</body>
+</html>

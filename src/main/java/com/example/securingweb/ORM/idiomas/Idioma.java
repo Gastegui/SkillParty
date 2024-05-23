@@ -25,6 +25,7 @@ public class Idioma
     @OneToMany(mappedBy="idioma", cascade = CascadeType.ALL)
     private List<Servicio> servicios;
     
+    public void setIdioma(String i){idioma=i;}
     public String getIdioma(){return idioma;}
     public Long getId(){return id;}
 

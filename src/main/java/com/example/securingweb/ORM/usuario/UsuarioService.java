@@ -69,7 +69,6 @@ public class UsuarioService implements UserDetailsService
         }
         catch(Exception e)
         {
-            System.out.println("Ha saltado una excepción al guardar el usuario: " + e.getMessage());
             return null;
         }
     }

@@ -13,4 +13,6 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long>
     Optional<Servicio> findByTitulo(String titulo);
     Page<Servicio> findAll(Pageable pageable);
     Page<Servicio> findAllByIdioma_id(Long idiomaId, Pageable pageable);
+    Page<Servicio> findAllByIdioma_idAndPublicado(Long idiomaId, boolean publicado, Pageable pageable);
+    Page<Servicio> findAllByPublicado(boolean publicado, Pageable pageable);
 }

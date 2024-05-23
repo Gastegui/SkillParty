@@ -20,11 +20,20 @@ create table usuarios
 	por_cobrar bigint
 );
 
+insert into usuarios values(1, 'Administrator', 'Owner', '2000-01-01', '000000000', 'julen.gallastegui@alumni.mondragon.edu', 'admin', '$2a$10$JNg3mDt2kJ8vujwPTsNjO.npMYYsonSFWsFODSIolDk5AI3BFj9FO',
+1, 1, 1, 1, 1000, 0);
+
 CREATE TABLE autoridades
 (
     id bigint AUTO_INCREMENT NOT NULL PRIMARY KEY,
     autoridad VARCHAR(255) NOT NULL UNIQUE
 );
+
+insert into autoridades values (1, "ADMIN");
+insert into autoridades values (2, "CREATE_ALL");
+insert into autoridades values (3, "CREATE_SERVICE");
+insert into autoridades values (4, "CREATE_COURSE");
+insert into autoridades values (5, "USER");
 
 CREATE TABLE usuarios_autoridades
 (
@@ -34,6 +43,8 @@ CREATE TABLE usuarios_autoridades
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (autoridad_id) REFERENCES autoridades(id)
 );
+
+insert into usuarios_autoridades values (1, 1);
 
 CREATE TABLE ficheros 
 (
@@ -93,12 +104,14 @@ create table cursos
 	id bigint auto_increment primary key,
 	titulo VARCHAR(255) not null,
 	descripcion VARCHAR(255) not null,
-	fecha_de_creacion DATE NOT NULL,
+	fecha_de_creacion datetime(6) NOT NULL,
+	fecha_de_actualizacion datetime(6) NOT NULL,
 	creador_id BIGINT not null,
     portada_id bigint not null,
 	tipo_id bigint not null,
     precio bigint check(precio >= 0) not null,
-	idioma_id bigint not null
+	idioma_id bigint not null,
+    publicado boolean not null
 );
 
 alter table cursos add constraint FK_cursos foreign key (creador_id) references usuarios (id);
@@ -112,10 +125,12 @@ create table servicios
 	titulo VARCHAR(255) not null unique,
 	descripcion VARCHAR(255) not null,
 	fecha_de_creacion datetime(6) NOT NULL,
+	fecha_de_actualizacion datetime(6) NOT NULL,
 	creador_id BIGINT not null,
     portada_id bigint not null,
 	categoria_id bigint not null,
-	idioma_id bigint not null
+	idioma_id bigint not null,
+    publicado boolean not null
 );
 
 alter table servicios add constraint FK_servicios foreign key (creador_id) references usuarios (id);
@@ -234,4 +249,6 @@ alter table elementos add constraint FK_elementos foreign key (curso_id) referen
 alter table elementos add constraint FK2_elementos foreign key (multimedia_id) references ficheros (id);
 alter table elementos add constraint FK3_elementos foreign key (fichero_id) references ficheros (id);
 
-select * from elementos;
+select * from autoridades;
+select * from usuarios;
+select * from usuarios_autoridades;

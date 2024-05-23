@@ -40,20 +40,5 @@
         </select><br>
         <button type="submit">Crear servicio</button>
     </form>
-    <h1>Create service buy option</h1>
-    <form th:action="@{/service/createOption}" th:object="${Opcion}" method="post">
-        <label>Titulo Servicio: <input type="text" name="titulo" required></label>
-        <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label>
-        <label>Precio: <input type="number" name="precio" step=".01" required></label>
-        <button type="submit">Crear opcion de compra</button>
-    </form>
-    <h1>Create service product sample</h1>
-    <form th:action="@{/service/createSample}" th:object="${Muestra}" method="post">
-        <label>Titulo Servicio: <input type="text" name="titulo" required></label>
-        <label>Multimedia: <input type="text" name="dirMultimedia" required></label>
-        <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label>
-        <label>Posicion: <input type="number" th:field="*{posicion}" required></label>
-        <button type="submit">Crear muestra del servicio</button>
-    </form>
 </body>
 </html>

@@ -10,14 +10,15 @@
     <label>Titulo: <span th:text="${servicio.getTitulo()}"></span></label><br>
     <label>Descripcion: <span th:text="${servicio.getDescripcion()}"></span></label><br>
     <label>Idioma: <span th:text="${servicio.getIdioma().getIdioma()}"></span></label><br>
-    <a th:href="|/service/delete?title=${servicio.getTitulo()}|">Borrar servicio</a>
+    <a th:href="|/service/delete?title=${servicio.getTitulo()}|">Borrar servicio</a><br>
+    <a th:href="|/service/edit?title=${servicio.getTitulo()}|">Cambiar datos</a><br>
     <p>Opciones:</p>
     <ul>
-        <li th:each="i : ${servicio.getOpciones()}">Desc: <span th:text="${i.getDescripcion()}"></span><br>Precio: <span th:text="${i.getPrecio()}"></span><a th:href="|/service/deleteOption?id=${i.getId()}&title=${servicio.getTitulo()}|">Borrar opción</a></li>
+        <li th:each="i : ${servicio.getOpciones()}">Desc: <span th:text="${i.getDescripcion()}"></span><br>Precio: <span th:text="${i.getPrecio()}"></span></li>
     </ul>
     <p>Muestras:</p>
     <ul>
-        <li th:each="i : ${servicio.getMuestras()}">Posicion: <span th:text="${i.getPosicion()}"></span><br>Descripicon: <span th:text="${i.getDescripcion()}"></span><br>Multimedia: <span th:text="${i.getMultimedia().getDireccion()}"></span><a th:href="|/service/deleteSample?id=${i.getId()}&title=${servicio.getTitulo()}|">Borrar muestra</a></li>
+        <li th:each="i : ${servicio.getMuestras()}">Posicion: <span th:text="${i.getPosicion()}"></span><br>Descripicon: <span th:text="${i.getDescripcion()}"></span><br>Multimedia: <span th:text="${i.getMultimedia().getDireccion()}"></span></li>
     </ul>
     <p>Valoraciones:</p>
     <ul>

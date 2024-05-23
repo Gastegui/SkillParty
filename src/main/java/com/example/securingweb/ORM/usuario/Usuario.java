@@ -161,6 +161,15 @@ public class Usuario implements UserDetails
     {
         return porCobrar;
     }
+    public boolean isAdmin()
+    {
+        for(Autoridad a : autoridades)
+        {
+            if(a.getAutoridad().equals("ADMIN"))
+                return true;
+        }
+        return false;
+    }
 
     public void setId(Long i)
     {

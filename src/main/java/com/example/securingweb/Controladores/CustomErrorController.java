@@ -30,7 +30,6 @@ public class CustomErrorController implements ErrorController
                 return "error/403";
             }
         }
-        System.out.println("HA OCURIIDO UN  ERORO: " + status);
         return "error";
     }    
 }

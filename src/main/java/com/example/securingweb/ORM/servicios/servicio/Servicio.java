@@ -36,6 +36,10 @@ public class Servicio
     private String descripcion;
     @Column(name="fecha_de_creacion")
     private Date fechaDeCreacion;
+    @Column(name="fecha_de_actualizacion")
+    private Date fechaDeActualizacion;
+
+    private boolean publicado;
 
     @ManyToOne
     @JoinColumn(name="creador_id")
@@ -109,6 +113,7 @@ public class Servicio
     public void setFechaDeCreacion(Date fechaDeCreacion) 
     {
         this.fechaDeCreacion = fechaDeCreacion;
+        this.fechaDeActualizacion = fechaDeCreacion;
     }
 
     public Fichero getPortada()
@@ -120,7 +125,6 @@ public class Servicio
     {
         portada=p;
     }
-
 
     public Categoria getCategoria()
     {
@@ -175,6 +179,26 @@ public class Servicio
     public void setIdioma(Idioma i)
     {
         idioma=i;
+    }
+
+    public void setPublicado(boolean p)
+    {
+        publicado = p;
+    }
+
+    public boolean getPublicado()
+    {
+        return publicado;
+    }
+
+    public void setFechaDeActualizacion(Date fecha)
+    {
+        fechaDeActualizacion = fecha;
+    }
+
+    public Date getFechaDeActualizacion()
+    {
+        return fechaDeActualizacion;
     }
 
     @Override

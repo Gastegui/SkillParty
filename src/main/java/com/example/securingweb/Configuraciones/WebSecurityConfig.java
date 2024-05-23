@@ -29,10 +29,11 @@ public class WebSecurityConfig
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/error", "/error/403", "error/404").permitAll() 
 				//SERVICIOS
-				.requestMatchers("/service/view", "service/list").permitAll()
-				.requestMatchers("/service/create", "/service/createOption", "service/createSample").hasAnyAuthority("CREATE_SERVICE")
-				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE")
-				.requestMatchers("/service/rate", "/service/deleteRatin").authenticated()
+				.requestMatchers("/service", "/service/view", "service/list").permitAll()
+				.requestMatchers("/service/create", "/service/createOption", "service/createSample", "service/publish").hasAnyAuthority("CREATE_SERVICE", "ADMIN")
+				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE", "ADMIN")
+				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "ADMIN")
+				.requestMatchers("/service/rate", "/service/deleteRating").authenticated()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
