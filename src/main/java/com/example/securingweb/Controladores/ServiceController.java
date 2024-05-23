@@ -62,12 +62,21 @@ public class ServiceController
         this.idiomaRepository = idiomaRepository;
     }
 
+    /**
+     * 
+     * @return el usuario loggeado
+     */
     private Usuario getUser()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (Usuario) authentication.getPrincipal();
     }
 
+    /**
+     * Devuelve el servicio con el nombre <code>title</code> o <code>null</code> si no existe el servicio
+     * @param title
+     * @return <code>Servicio</code> con nombre <code>title</code> o <code>null</null>
+     */
     public Servicio checkTitle(String title) 
     {
         return Optional.of(servicioRepository.findByTitulo(title).get()).orElseGet(() -> null);
@@ -79,6 +88,9 @@ public class ServiceController
         return "redirect:/service/list";
     }
 
+    /**
+     * Solo carga la pantalla con el formulario de creacion de servicios
+     */
     @GetMapping("create")
     public String getCreateService(Model modelo)
     {
@@ -92,27 +104,32 @@ public class ServiceController
                             @RequestParam(value="size", required=false, defaultValue = "9") String size, 
                             @RequestParam(value="lang", required=false, defaultValue = "es") String idioma)
     {
-        int pageInt = 0;
-        int sizeInt = 9;
+        int pageInt = 0; //page indica que página se ha cargado
+        int sizeInt = 9; //size indica cuantos servicios se cargan en cada página
+
         Page<Servicio> lista;
         try
         {
             pageInt = Integer.parseInt(page);
         }
         catch(Exception e)
-        {}
+        {} //Si da error no hacer nada para usar los valores por defecto
 
         try
         {
             sizeInt = Integer.parseInt(size);
         }
         catch(Exception e)
-        {}
+        {} //Si da error no hacer nada para usar los valores por defecto
+
         Optional<Idioma> idiomOptional = idiomaRepository.findByIdioma(idioma);
-        if(idiomOptional.isEmpty())
+
+        if(idiomOptional.isEmpty()) //Si no se ha encontrado el idioma pedido en la DB, cargar todos los servicios
             lista = servicioRepository.findAllByPublicado(true, PageRequest.of(pageInt, sizeInt));
         else
             lista = servicioRepository.findAllByIdioma_idAndPublicado(idiomOptional.get().getId(), true, PageRequest.of(pageInt, sizeInt));
+        
+        //Cargar todos los atributos necesarios para cargar todo correctamente
         modelo.addAttribute("servicios", lista.getContent());
         modelo.addAttribute("haySiguiente", lista.hasNext());
         modelo.addAttribute("hayAnterior", lista.hasPrevious());
@@ -126,11 +143,15 @@ public class ServiceController
     {
         if(titulo == null)
             return "redirect:/";
-        Optional<Servicio> solicitado = servicioRepository.findByTitulo(titulo.trim());
-        if(solicitado.isEmpty())
+
+        Optional<Servicio> solicitado = servicioRepository.findByTitulo(titulo.trim()); //.trim() sirve para quitar los espacios en blanco al principio y al final de los strings
+
+        if(solicitado.isEmpty()) //Esto significa que el servicio pedido no se ha encontrado en la base de datos
+            return "redirect:/error/404"; //404: no encontrado
+
+        if(!solicitado.get().getPublicado()) //Si no está publicado, no mostrarlo. Esto es necesario por si se introduce manualmente en la url el nombre del servicio
             return "redirect:/error/404";
-        if(!solicitado.get().getPublicado())
-            return "redirect:/error/404";
+
         modelo.addAttribute("servicio", solicitado.get());
         modelo.addAttribute("ValorarServicios", new ValorarServicios());
         return "serviceView";
@@ -175,7 +196,7 @@ public class ServiceController
         }
         catch(DataIntegrityViolationException e)
         {
-            return "redirect:/service/create?message=serviveExists";
+            return "redirect:/service/create?message=serviceExists";
         }
         catch(IllegalArgumentException e)
         {
@@ -218,7 +239,7 @@ public class ServiceController
     }
 
     @GetMapping("edit")
-    public String updateService(Model modelo, @RequestParam(value="title", required = true)String titulo) //TODO: no se actualizan las muestras
+    public String updateService(Model modelo, @RequestParam(value="title", required = true)String titulo)
     {
         Optional<Servicio> aEditar = servicioRepository.findByTitulo(titulo);
 
@@ -254,7 +275,7 @@ public class ServiceController
         guardado.get().setDescripcion(nuevo.getDescripcion());
         guardado.get().setFechaDeActualizacion(new Date());
         
-        if(!guardado.get().getCategoria().getDescripcion().equals(categoriaParam))
+        if(!guardado.get().getCategoria().getDescripcion().equals(categoriaParam)) //Comprobar si se ha cambiado la categoría
         {
             Optional<Categoria> cat = categoriaRepository.findByDescripcion(categoriaParam);
             if(cat.isEmpty())
@@ -269,7 +290,7 @@ public class ServiceController
         //TODO: ARCHIVO
         //Actualizar el archivo si el creador ha subido uno nuevo
 
-        if(!guardado.get().getIdioma().getIdioma().equals(idiomaParam))
+        if(!guardado.get().getIdioma().getIdioma().equals(idiomaParam)) //Comprobar si se ha cambiado el idioma
         {
             Optional<Idioma> idi = idiomaRepository.findByIdioma(idiomaParam);
             if(idi.isEmpty())
@@ -292,7 +313,7 @@ public class ServiceController
                             @RequestParam(value="title", required=true) String padre, 
                             @RequestParam(value="precio", required=true) String precio)
     {
-        nuevo.setPrecio(new BigDecimal(precio));
+        nuevo.setPrecio(new BigDecimal(precio)); //BigDecimal ya que en la base de datos se guarda como un DECIMAL
         nuevo.setDescripcion(nuevo.getDescripcion().trim());
         try
         {
@@ -448,24 +469,23 @@ public class ServiceController
         
         muestrasRepository.delete(aBorrar.get());
         
-        List<Muestra> lista = checkTitle(title).getMuestras();
+        List<Muestra> lista = checkTitle(title).getMuestras(); //Se usa checkTitle para cargar la lista de todas las muesras qua hay despues de borrar la muestra deseada
 
-        Long anterior = lista.get(0).getPosicion()-1;
+        Long anterior = lista.get(0).getPosicion()-1; //Esto siempre debería ser 0, pero por si acaso le pongo el valor de la primera muestra menos uno para que el for sea más sencillo
         for(Muestra i : lista)
         {
-            if(i.getPosicion() != anterior+1)
+            if(i.getPosicion() != anterior+1) //Esto comprueba que todas las muestras tengan los números seguidos, ya que al borrar una muestra que no sea la última se rompe la cadena de números
             {
-                i.setPosicion(anterior+1);
-                muestrasRepository.save(i);
+                i.setPosicion(anterior+1); //Ponerle el número siguiente al anterior para reestablecer la cadena de números
+                muestrasRepository.save(i); //Hay que guardar la muestra de nuevo para actualizarla con su nueva posición
             }
-
             anterior++;
         }
 
         return "redirect:/service/edit?title="+title+"&message=sampleDeleted";
     }
 
-    @PostMapping("editSample")
+    @PostMapping("editSample") //En /editSample NO se cambia la posición de la muestra, para eso está /editSamplePos
     public String editSample(@RequestParam(value="id", required = true) String id, 
                         @RequestParam(value = "title", required = true) String titulo, 
                         @RequestParam(value = "desc", required = true) String desc, 
@@ -527,28 +547,30 @@ public class ServiceController
             return "redirect:/error/403";
 
 
-        List<Muestra> lista = guardado.get().getPadre().getMuestras();
+        List<Muestra> lista = checkTitle(titulo).getMuestras(); //Cargar la lista de muestras (están ordenadas por su posición, no por su ID)
+
         Long buscando;
         if(dir.equals("izq"))
-            buscando = guardado.get().getPosicion()-1;
-        else
-            buscando = guardado.get().getPosicion()+1;
-
-        for(Muestra i : lista)
         {
-            if(i.getPosicion().equals(buscando))
-            {
-                otro = i;
-                break;
-            }
+            if(guardado.get().getPosicion()==1) //Se ha intentado mover a la izquierda la primera muestra
+                return "redirect:/service/edit?title="+titulo+"&sampleNotEdited";
+
+            buscando = guardado.get().getPosicion()-1; //Hay que mover la muestra una posición a la izquierda, por lo que hay que buscar cual es la muestra con una posición menos
         }
-        if(otro == null)
-            return "redirect:/service/edit?title="+guardado.get().getPadre().getTitulo()+"&message=sampleNotFound";
+        else
+        {
+            if(guardado.get().getPosicion()==lista.size()) //Se ha intentado mover a la derecha la última muestra
+                return "redirect:/service/edit?title="+titulo+"&sampleNotEdited";
 
-        otro.setPosicion(guardado.get().getPosicion());
-        guardado.get().setPosicion(buscando);
+            buscando = guardado.get().getPosicion()+1; //Hay que mover la muestra una posición a la derecha, por lo que hay que buscar cual es la muestra con una posición más
+        }
 
-        muestrasRepository.save(guardado.get());
+        otro = lista.get((int)(buscando-1)); //La lista está ordenada por posiciones, por lo que simplemente hay que cojer buscando-1, ya que buscando empieza en 1 y la lista en 0
+
+        otro.setPosicion(guardado.get().getPosicion()); //Ponerle la posición de la muestra solicitada a la otra muestra
+        guardado.get().setPosicion(buscando); //Ponerle la posición de la muestra que se ha buscado (la otra) a la muestra solicitada
+
+        muestrasRepository.save(guardado.get()); //Guardar las dos muestras para actualizar sus posiciones
         muestrasRepository.save(otro);
 
         return "redirect:/service/edit?title="+guardado.get().getPadre().getTitulo()+"&message=sampleEdited";
@@ -609,13 +631,13 @@ public class ServiceController
             throw new IllegalArgumentException("notEnoughData");
         }
         servicio.getPortada().setDireccion(servicio.getPortada().getDireccion().trim());
-        Optional<Fichero> ficheroExistente = ficheroRepository.findByDireccion(servicio.getPortada().getDireccion());
+
+        Optional<Fichero> ficheroExistente = ficheroRepository.findByDireccion(servicio.getPortada().getDireccion()); //Buscar el fichero que se quiere guardar entre los ya existentes
         Fichero portada;
-        if (ficheroExistente.isEmpty()) {
-            portada = ficheroRepository.save(servicio.getPortada());
-        } else {
-            portada = ficheroExistente.get();
-        }
+        if (ficheroExistente.isEmpty())
+            portada = ficheroRepository.save(servicio.getPortada()); //Si no existe en la DB, se guarda el fichero en la DB y se guarda la referencia al archivo guardado
+        else
+            portada = ficheroExistente.get(); //Si ya en la DB, se guarda su referencia
     
         Optional<Categoria> categoriaExistente = categoriaRepository.findByDescripcion(servicio.getCategoria().getDescripcion());
         Categoria categoria;
@@ -632,7 +654,7 @@ public class ServiceController
     
         servicio.setCreador(creadorExistente.get());
         servicio.setCategoria(categoria);
-        servicio.setPortada(portada);
+        servicio.setPortada(portada); //Se asigna la referencia a la DB para que las relaciones padre a hijo se hagan bien de forma automática con JPA
         servicio.setTitulo(servicio.getTitulo().trim());
         return servicioRepository.save(servicio);
     }

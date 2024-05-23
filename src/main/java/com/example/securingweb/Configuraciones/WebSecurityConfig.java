@@ -30,11 +30,12 @@ public class WebSecurityConfig
 				.requestMatchers("/error", "/error/403", "error/404").permitAll() 
 				//SERVICIOS
 				.requestMatchers("/service", "/service/view", "service/list").permitAll()
-				.requestMatchers("/service/create", "/service/createOption", "service/createSample", "service/publish").hasAnyAuthority("CREATE_SERVICE", "ADMIN")
-				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE", "ADMIN")
-				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "ADMIN")
+				.requestMatchers("/service/create", "/service/createOption", "service/createSample", "service/publish").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/service/rate", "/service/deleteRating").authenticated()
-				.anyRequest().authenticated()
+				
+				.anyRequest().authenticated() //Esto tal vez habría que quitarlo
 			)
 			.formLogin((form) -> form
 				.loginPage("/login").permitAll()
