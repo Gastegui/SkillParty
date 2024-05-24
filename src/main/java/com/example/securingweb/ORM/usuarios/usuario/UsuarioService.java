@@ -1,11 +1,11 @@
-package com.example.securingweb.ORM.usuario;
+package com.example.securingweb.ORM.usuarios.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.example.securingweb.ORM.usuario.autoridad.Autoridad;
-import com.example.securingweb.ORM.usuario.autoridad.AutoridadRepository;
+import com.example.securingweb.ORM.usuarios.autoridad.Autoridad;
+import com.example.securingweb.ORM.usuarios.autoridad.AutoridadRepository;
 import java.util.ArrayList;
 import java.util.List;
 

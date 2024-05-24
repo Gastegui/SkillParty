@@ -1,4 +1,4 @@
-package com.example.securingweb.ORM.usuario;
+package com.example.securingweb.ORM.usuarios.usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

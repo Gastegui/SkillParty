@@ -1,4 +1,4 @@
-package com.example.securingweb.ORM.usuario;
+package com.example.securingweb.ORM.usuarios.usuario;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
-import com.example.securingweb.ORM.usuario.autoridad.Autoridad;
+import com.example.securingweb.ORM.usuarios.autoridad.Autoridad;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

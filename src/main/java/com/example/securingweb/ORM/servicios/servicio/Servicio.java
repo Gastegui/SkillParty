@@ -12,7 +12,7 @@ import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.muestras.Muestra;
 import com.example.securingweb.ORM.servicios.opciones.Opcion;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
-import com.example.securingweb.ORM.usuario.Usuario;
+import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.example.securingweb.ORM.usuarios.usuario.Usuario;
+import com.example.securingweb.ORM.usuarios.usuario.UsuarioService;
 
-import com.example.securingweb.ORM.usuario.Usuario;
-import com.example.securingweb.ORM.usuario.UsuarioService;
 
 /* Controlador para manejar las solicitudes relacionadas con la creación de usuarios */
 @Controller

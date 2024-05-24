@@ -31,9 +31,8 @@ import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.servicios.servicio.ServicioRepository;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServiciosRepository;
-import com.example.securingweb.ORM.usuario.Usuario;
-import com.example.securingweb.ORM.usuario.UsuarioRepository;
-
+import com.example.securingweb.ORM.usuarios.usuario.Usuario;
+import com.example.securingweb.ORM.usuarios.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;

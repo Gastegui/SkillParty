@@ -3,7 +3,7 @@ package com.example.securingweb.ORM.servicios.comprarServicios;
 import java.util.Date;
 import com.example.securingweb.ORM.servicios.opciones.Opcion;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
-import com.example.securingweb.ORM.usuario.Usuario;
+import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

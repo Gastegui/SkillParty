@@ -1,9 +1,7 @@
-package com.example.securingweb.ORM.usuario.autoridad;
+package com.example.securingweb.ORM.usuarios.autoridad;
 
 import java.util.List;
-
-import com.example.securingweb.ORM.usuario.Usuario;
-
+import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
