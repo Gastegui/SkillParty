@@ -183,6 +183,9 @@ public class ServiceController
     {
         Servicio guardar = new Servicio();
 
+        if(getUser() == null)
+            return "redirect:/error/403";
+
         guardar.setCreador(getUser());
 
         guardar.setFechaDeCreacion(new Date());
@@ -350,7 +353,7 @@ public class ServiceController
 
         Usuario user = getUser();
         if(user == null)
-            return "/";
+            return "redirect:/error/403";
 
         if(getUser().getSaldo().compareTo(opcion.get().getPrecio()) < 0)
             return "redirect:/service/view?title="+padre+"&message=noEnoughMoney";
@@ -641,6 +644,8 @@ public class ServiceController
     public String createRating(@ModelAttribute ValorarServicios valoracion, 
                             @RequestParam(value="title", required = true) String titulo)
     {
+        if(getUser() == null)
+            return "redirect:/error/403";
 
         Optional<Servicio> servicioValorado = servicioRepository.findByTitulo(titulo.trim());
         if(servicioValorado.isEmpty())

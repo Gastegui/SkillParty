@@ -34,7 +34,8 @@ public class WebSecurityConfig
 				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/service/rate", "/service/deleteRating", "service/buy").authenticated()
-				
+				//USUARIOS
+				.requestMatchers("/user/addBalance").authenticated()
 				.anyRequest().authenticated() //Esto tal vez habría que quitarlo
 			)
 			.formLogin((form) -> form
