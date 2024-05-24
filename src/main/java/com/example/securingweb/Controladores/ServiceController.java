@@ -224,7 +224,7 @@ public class ServiceController
     }
 
     @PostMapping("publish")
-    public String publishService(@ModelAttribute Servicio aPublicar)
+    public String publishService(@ModelAttribute Servicio aPublicar, @RequestParam(value = "private", required = true) String isPrivate)
     {
         Optional<Servicio> guardado = servicioRepository.findByTitulo(aPublicar.getTitulo());
         if(guardado.isEmpty())
@@ -233,9 +233,9 @@ public class ServiceController
         if(!guardado.get().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
 
-        guardado.get().setPublicado(true);
+        guardado.get().setPublicado(isPrivate.equals("y") ? false : true);
         servicioRepository.save(guardado.get());
-        return "redirect:/service/view?title="+guardado.get().getTitulo()+"&message=servicePublished";
+        return "redirect:/service/edit?title="+guardado.get().getTitulo()+"&message="+(isPrivate.equals("y")? "servicePrivated" : "servicePublished");
     }
 
     @GetMapping("edit")

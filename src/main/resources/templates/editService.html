@@ -40,6 +40,7 @@
             <option value="en" th:selected='${Servicio.getIdioma().getIdioma().equals("en")}'>Ingles</option>
         </select><br>
         <button type="submit">Modificar datos del servicio</button>
+        <a th:href="|/service/delete?title=${Servicio.titulo}|">Borrar servicio</a><br>
     </form>
 
     <h1>Opciones</h1>
@@ -83,10 +84,10 @@
     <br>
     <br>
     <br>
-    <form th:action="@{/service/publish}" th:object="${Servicio}" method="post">
+    <form th:action="@{/service/publish(private=${Servicio.publicado}? y : n)}" th:object="${Servicio}" method="post">
         <input hidden type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}">
-        <button type="submit">Publicar servicio</button>
+        <button type="submit" th:text="${Servicio.publicado}? 'Hacer privado' : 'Hacer público'"></button>
     </form>
-    <a th:href="|/service/view?title=${Servicio.titulo}|">Ver pantalla del servicio</a>
+    <a th:if="${Servicio.publicado}" th:href="|/service/view?title=${Servicio.titulo}|">Ver pantalla del servicio</a>
 </body>
 </html>
