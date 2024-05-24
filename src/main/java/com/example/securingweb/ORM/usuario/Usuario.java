@@ -1,5 +1,6 @@
 package com.example.securingweb.ORM.usuario;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
-import com.example.securingweb.ORM.servicios.verServicios.VerServicio;
 import com.example.securingweb.ORM.usuario.autoridad.Autoridad;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -58,16 +58,13 @@ public class Usuario implements UserDetails
     private Date fecha_de_nacimiento;
     private String telefono;
     private String email;
-    private Long saldo;
+    private BigDecimal saldo;
     @Column(name="por_cobrar")
-    private Long porCobrar;
+    private BigDecimal porCobrar;
 
     @OneToMany(mappedBy="creador", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Servicio> servicios;
     
-    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
-    private List<VerServicio> serviciosVistos;
-
     @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<ComprarServicio> serviciosComprados;
 
@@ -141,10 +138,6 @@ public class Usuario implements UserDetails
     {
         return servicios;
     }
-    public List<VerServicio> getServiciosVistos()
-    {
-        return serviciosVistos;
-    }
     public List<ComprarServicio> getServiciosComprados()
     {
         return serviciosComprados;
@@ -153,11 +146,11 @@ public class Usuario implements UserDetails
     {
         return serviciosValorados;
     }
-    public Long getSaldo()
+    public BigDecimal getSaldo()
     {
         return saldo;
     }
-    public Long getPorCobrar()
+    public BigDecimal getPorCobrar()
     {
         return porCobrar;
     }
@@ -166,6 +159,15 @@ public class Usuario implements UserDetails
         for(Autoridad a : autoridades)
         {
             if(a.getAutoridad().equals("ADMIN"))
+                return true;
+        }
+        return false;
+    }
+    public boolean isPro()
+    {
+        for(Autoridad a : autoridades)
+        {
+            if(a.getAutoridad().equals("USER_PRO"))
                 return true;
         }
         return false;
@@ -229,11 +231,11 @@ public class Usuario implements UserDetails
     {
         email = e;
     }
-    public void setSaldo(Long s)
+    public void setSaldo(BigDecimal s)
     {
         saldo = s;
     }
-    public void setPorCobrar(Long p)
+    public void setPorCobrar(BigDecimal p)
     {
         porCobrar = p;
     }

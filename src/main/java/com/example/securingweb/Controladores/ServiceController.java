@@ -21,6 +21,8 @@ import com.example.securingweb.ORM.idiomas.Idioma;
 import com.example.securingweb.ORM.idiomas.IdiomaRepository;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
 import com.example.securingweb.ORM.servicios.categoria.CategoriaRepository;
+import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
+import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServiciosRepository;
 import com.example.securingweb.ORM.servicios.muestras.Muestra;
 import com.example.securingweb.ORM.servicios.muestras.MuestrasRepository;
 import com.example.securingweb.ORM.servicios.opciones.Opcion;
@@ -53,10 +55,18 @@ public class ServiceController
     private MuestrasRepository muestrasRepository;
     private ValorarServiciosRepository valorarServiciosRepository;
     private IdiomaRepository idiomaRepository;
-
+    private ComprarServiciosRepository comprarServiciosRepository;
 
     @Autowired
-    public ServiceController(ServicioRepository servicioRepository, CategoriaRepository categoriaRepository, FicheroRepository ficheroRepository, UsuarioRepository usuarioRepository, OpcionRepository opcionRepository, MuestrasRepository muestrasRepository, ValorarServiciosRepository valorarServiciosRepository, IdiomaRepository idiomaRepository)
+    public ServiceController(ServicioRepository servicioRepository, 
+                        CategoriaRepository categoriaRepository, 
+                        FicheroRepository ficheroRepository, 
+                        UsuarioRepository usuarioRepository, 
+                        OpcionRepository opcionRepository, 
+                        MuestrasRepository muestrasRepository, 
+                        ValorarServiciosRepository valorarServiciosRepository, 
+                        IdiomaRepository idiomaRepository,
+                        ComprarServiciosRepository comprarServiciosRepository)
     {
         this.servicioRepository = servicioRepository;
         this.categoriaRepository = categoriaRepository;
@@ -66,6 +76,7 @@ public class ServiceController
         this.muestrasRepository = muestrasRepository;
         this.valorarServiciosRepository = valorarServiciosRepository;
         this.idiomaRepository = idiomaRepository;
+        this.comprarServiciosRepository = comprarServiciosRepository;
     }
 
     /**
@@ -75,7 +86,7 @@ public class ServiceController
     private Usuario getUser()
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (Usuario) authentication.getPrincipal();
+        return (Usuario) (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof Usuario) ? null : authentication.getPrincipal());
     }
 
     /**
@@ -313,6 +324,49 @@ public class ServiceController
         servicioRepository.save(guardado.get());
 
         return "redirect:/service/edit?title="+guardado.get().getTitulo()+"&message=serviceEdited";
+    }
+
+    @GetMapping("buy")
+    public String buyService(@RequestParam(value="title", required = true) String padre,
+                            @RequestParam(value="id", required = true) String id)
+    {
+        Optional<Servicio> servicio = servicioRepository.findByTitulo(padre);
+
+        if(servicio.isEmpty())
+            return "redirect:/service/list?message=serviceNotFound";
+
+        Optional<Opcion> opcion;
+        try
+        {
+            opcion = opcionRepository.findById(Long.parseLong(id));
+        }
+        catch(NumberFormatException e)
+        {
+            return "redirect:/service/view?title="+padre+"&message=serviceNotBought";
+        }
+
+        if(opcion.isEmpty())
+            return "redirect:/service/view?title="+padre+"&message=optionNotFound";
+
+        Usuario user = getUser();
+        if(user == null)
+            return "/";
+
+        if(getUser().getSaldo().compareTo(opcion.get().getPrecio()) < 0)
+            return "redirect:/service/view?title="+padre+"&message=noEnoughMoney";
+        
+        user.setSaldo(getUser().getSaldo().subtract(opcion.get().getPrecio()));
+        usuarioRepository.save(user);
+
+        ComprarServicio compra = new ComprarServicio();
+        compra.setFecha(new Date());
+        compra.setOpcionCompra(opcion.get());
+        compra.setServicio(servicio.get());
+        compra.setUsuario(user);
+        compra.setTerminado(false);
+        comprarServiciosRepository.save(compra);
+
+        return "redirect:/snake";//MARK: esto debería redirigir al chat o algo así ns
     }
 
     @PostMapping("createOption")

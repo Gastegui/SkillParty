@@ -1,5 +1,6 @@
 package com.example.securingweb.Controladores;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,8 @@ public class LoginController
         user.setNombre(nuevo.getNombre().trim());
         user.setApellidos(nuevo.getApellidos().trim());
         user.setEmail(nuevo.getEmail().trim());
-        user.setSaldo((long) 50);
-        user.setPorCobrar((long) 0);
+        user.setSaldo(BigDecimal.valueOf(50));
+        user.setPorCobrar(BigDecimal.valueOf(0));
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date;

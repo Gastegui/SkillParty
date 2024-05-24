@@ -16,12 +16,12 @@ create table usuarios
     account_non_expired BOOLEAN NOT NULL,
     account_non_locked BOOLEAN NOT NULL,
     credentials_non_expired BOOLEAN NOT NULL,
-	saldo bigint not null,
-	por_cobrar bigint
+	saldo decimal(38, 2) not null,
+	por_cobrar decimal(38, 2) not null
 );
 
-insert into usuarios values(1, 'Administrator', 'Owner', '2000-01-01', '000000000', 'julen.gallastegui@alumni.mondragon.edu', 'admin', '$2a$10$JNg3mDt2kJ8vujwPTsNjO.npMYYsonSFWsFODSIolDk5AI3BFj9FO',
-1, 1, 1, 1, 1000, 0);
+insert into usuarios values(1, 'Administrator', 'Owner', '2000-01-01', '000000000', 'julen.gallastegui@alumni.mondragon.edu',
+'admin', '$2a$10$JNg3mDt2kJ8vujwPTsNjO.npMYYsonSFWsFODSIolDk5AI3BFj9FO', 1, 1, 1, 1, 1000, 0);
 
 CREATE TABLE autoridades
 (
@@ -33,7 +33,8 @@ insert into autoridades values (1, "ADMIN");
 insert into autoridades values (2, "CREATE_ALL");
 insert into autoridades values (3, "CREATE_SERVICE");
 insert into autoridades values (4, "CREATE_COURSE");
-insert into autoridades values (5, "USER");
+insert into autoridades values (5, "USER_PRO");
+insert into autoridades values (6, "USER");
 
 CREATE TABLE usuarios_autoridades
 (
@@ -75,7 +76,7 @@ create table mensajes
 	contacto_id bigint not null,
 	usuario_id BIGINT not null,
     texto VARCHAR(500) not null,
-	fecha_envio DATE NOT NULL,
+	fecha_envio datetime(6) NOT NULL,
 	fichero_id bigint
 );
 
@@ -149,35 +150,14 @@ create table opciones
 
 alter table opciones add constraint FK_opciones foreign key (servicio_id) references servicios (id);
 
-create table ver_cursos
-(
-	id bigint auto_increment primary key,
-	usuario_id BIGINT not null,
-	curso_id bigint not null,
-	fecha_de_ver DATE NOT NULL
-);
-
-alter table ver_cursos add constraint FK_ver_cursos foreign key (usuario_id) references usuarios (id);
-alter table ver_cursos add constraint FK2_ver_cursos foreign key (curso_id) references cursos (id);
-
-create table ver_servicios
-(
-	id bigint auto_increment primary key,
-	usuario_id BIGINT not null,
-	servicio_id bigint not null,
-	fecha_de_ver DATE NOT NULL
-);
-
-alter table ver_servicios add constraint FK_ver_servicios foreign key (usuario_id) references usuarios (id);
-alter table ver_servicios add constraint FK2_ver_servicios foreign key (servicio_id) references servicios (id);
-
 create table comprar_cursos
 (
 	id bigint auto_increment primary key,
 	usuario_id BIGINT not null,
 	curso_id bigint not null,
-	fecha_de_compra DATE NOT NULL,
-    precio bigint check(precio >= 0) not null
+	fecha_de_compra datetime(6) NOT NULL,
+    precio bigint check(precio >= 0) not null,
+	terminado boolean not null
 );
 
 alter table comprar_cursos add constraint FK_comprar_cursos foreign key (usuario_id) references usuarios (id);
@@ -188,8 +168,9 @@ create table comprar_servicios
 	id bigint auto_increment primary key,
 	usuario_id BIGINT not null,
 	servicio_id bigint not null,
-	fecha_de_compra DATE NOT NULL,
-    opcion_id bigint not null
+	fecha_de_compra datetime(6) NOT NULL,
+    opcion_id bigint not null,
+	terminado boolean not null
 );
 
 alter table comprar_servicios add constraint FK_comprar_servicios foreign key (usuario_id) references usuarios (id);
@@ -203,7 +184,7 @@ create table valorar_cursos
 	curso_id bigint not null,
 	valoracion bigint not null,
     comentario VARCHAR(255),
-	fecha_valoracion DATE not null
+	fecha_valoracion datetime(6) not null
 );
 
 alter table valorar_cursos add constraint FK_valorar_cursos foreign key (usuario_id) references usuarios (id);

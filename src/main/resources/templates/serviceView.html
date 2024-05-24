@@ -13,7 +13,7 @@
     <a th:href="|/service/edit?title=${servicio.getTitulo()}|">Cambiar datos</a><br>
     <p>Opciones:</p>
     <ul>
-        <li th:each="i : ${servicio.getOpciones()}">Desc: <span th:text="${i.getDescripcion()}"></span><br>Precio: <span th:text="${i.getPrecio()}"></span></li>
+        <li th:each="i : ${servicio.getOpciones()}">Desc: <span th:text="${i.getDescripcion()}"></span><br>Precio: <span th:text="${i.getPrecio()}"></span><br><a th:href="|/service/buy?title=${servicio.titulo}&id=${i.id}|">Comprar</a></li>
     </ul>
     <p>Muestras:</p>
     <ul>

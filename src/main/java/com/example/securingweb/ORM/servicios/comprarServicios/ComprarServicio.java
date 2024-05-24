@@ -1,6 +1,6 @@
 package com.example.securingweb.ORM.servicios.comprarServicios;
 
-import java.sql.Date;
+import java.util.Date;
 import com.example.securingweb.ORM.servicios.opciones.Opcion;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.usuario.Usuario;
@@ -36,17 +36,21 @@ public class ComprarServicio
     @Column(name = "fecha_de_compra")
     private Date fecha;
 
+    private boolean terminado;
+
 
     public void setUsuario(Usuario u){usuario = u;}
     public void setServicio(Servicio s){servicio = s;}
     public void setOpcionCompra(Opcion o){opcionCompra = o;}
     public void setFecha(Date f){fecha = f;}
-    
+    public void setTerminado(boolean t){terminado=t;}
+
     public Long getId(){return id;}
     public Usuario getUsuario(){return usuario;}
     public Servicio getServicio(){return servicio;}
     public Opcion getOpcionCompra(){return opcionCompra;}
     public Date getFecha(){return fecha;}
+    public boolean getTerminado(){return terminado;}
 
     @Override
     public boolean equals(Object o)

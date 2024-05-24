@@ -12,7 +12,6 @@ import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.muestras.Muestra;
 import com.example.securingweb.ORM.servicios.opciones.Opcion;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
-import com.example.securingweb.ORM.servicios.verServicios.VerServicio;
 import com.example.securingweb.ORM.usuario.Usuario;
 import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
@@ -64,9 +63,6 @@ public class Servicio
     @OneToMany(mappedBy = "padre", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("posicion ASC")
     private List<Muestra> muestras;
-
-    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<VerServicio> vistas;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ComprarServicio> compras;
@@ -154,11 +150,6 @@ public class Servicio
     public List<Muestra> getMuestras()
     {
         return muestras;
-    }
-
-    public List<VerServicio> getVistas()
-    {
-        return vistas;
     }
 
     public List<ComprarServicio> getCompradores()
