@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
 import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.ficheros.FicheroRepository;
 import com.example.securingweb.ORM.idiomas.Idioma;
@@ -29,9 +31,13 @@ import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServiciosRepository;
 import com.example.securingweb.ORM.usuario.Usuario;
 import com.example.securingweb.ORM.usuario.UsuarioRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import javax.naming.NoPermissionException;
 
@@ -102,7 +108,7 @@ public class ServiceController
     public String serviceList(Model modelo, 
                             @RequestParam(value="page", required=false, defaultValue = "0") String page, 
                             @RequestParam(value="size", required=false, defaultValue = "9") String size, 
-                            @RequestParam(value="lang", required=false, defaultValue = "es") String idioma)
+                            HttpServletRequest request)
     {
         int pageInt = 0; //page indica que página se ha cargado
         int sizeInt = 9; //size indica cuantos servicios se cargan en cada página
@@ -122,7 +128,8 @@ public class ServiceController
         catch(Exception e)
         {} //Si da error no hacer nada para usar los valores por defecto
 
-        Optional<Idioma> idiomOptional = idiomaRepository.findByIdioma(idioma);
+        Locale locale = RequestContextUtils.getLocale(request); // Obtener el idioma actual de la sesión
+        Optional<Idioma> idiomOptional = idiomaRepository.findByIdioma(locale.getLanguage());
 
         if(idiomOptional.isEmpty()) //Si no se ha encontrado el idioma pedido en la DB, cargar todos los servicios
             lista = servicioRepository.findAllByPublicado(true, PageRequest.of(pageInt, sizeInt));
