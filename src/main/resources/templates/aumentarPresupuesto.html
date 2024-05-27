@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Aumetar presupuesto</title>
+    
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+        <link rel="stylesheet" href="../css/listStyle.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <script src="../js/validarPromo.js"></script>
+
+    </head>
+    <body class="overflow-x-hidden">
+        <nav id="header" class="navbar navbar-dark animated-nav row custom-height me-0" aria-label="Dark offcanvas navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+                    <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+                    <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+                </a>
+            
+                <div class="btn-group" id="header-buttons">
+                    <button class="botoiPro">SkillParty Pro</button>
+                    <a href="../html/servicios.html" class="botoi">Servicios</a>
+                    <a href="../html/panelUsuario.html" class="botoi">Panel del usuario</a>
+                </div>
+                
+                
+                <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+            
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                
+                            <div id="menu-buttons">
+                                <li class="nav-item">
+                                    <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Servicios</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Panel del usuario</a>
+                                </li>
+                            </div>
+                            
+                
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hizkuntza
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Euskara</a></li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="#">Castellano</a></li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="#">English</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!--Hasi -->
+
+        <main>
+            <div class="m-4 ms-5 border p-2 ">
+                <h3 class="mt-2 ms-2 text-center text-md-start text-decoration-underline fw-bold">
+                    Gráfico de consumo
+                </h3>
+                <p class="mx-2 mt-2 text-center text-sm-start">
+                    Este gráfico representa el coste del año por los servicios contratados y por los cursos comprados.
+                </p>
+            </div>
+
+            <div class="col-md-10 ms-sm-auto col-lg-11 px-md-4">
+                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+            </div>
+
+           
+
+            <div class="ms-lg-4 mx-2 ps-2 pt-5 ps-lg-4 mb-5">
+                <h3 class="text-decoration-underline fw-bold mb-3">El dinero que tengo</h3>
+                
+                <p class="text-center text-sm-start ">Para poder contratar más servicios y realizar más cursos, añade dinero a tu perfil.</p>
+                
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-8 me-auto ps-0">
+                            <p class=" text-start text-md-start me-auto">El monedero actual es de: </p>
+                        </div>
+                        <div class="col-2">
+                            <h4 class="fw-bold text-end me-4">10€</h4>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>       
+            
+            
+            <hr>
+
+            <div class="m-lg-4 px-2 pt-5">
+                <div>
+                    <h2 class="text-center text-decoration-underline fw-bold">Añadir dinero</h2>
+                    <p class="text-center">Para añadir rellene este formulario</p>
+                </div>
+                    
+                
+                <form action="" class="px-2 mb-2">
+
+                    <div class="my-3 ms-3">
+                        <div class="form-check">
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <label class="form-check-label" for="credit">Credit card</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="debit">Debit card</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <label class="form-check-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" th:field="*{name}" class="form-control bg-body-primary mb-2" id="name" name="name" placeholder="Name">
+                        <label for="name">Name on card</label>
+                    </div>
+
+                    <!--<div class="form-floating">
+                        <input type="text" th:field="*{apellidos}" class="form-control bg-body-primary mb-2" id="surname" name="surname" placeholder="surname">
+                        <label for="surname">Surname</label>
+                    </div>-->
+
+                    <div class="form-floating">
+                        <input type="text" th:field="*{cuantoDinero}" class="form-control bg-body-primary mb-2" id="cuantoDinero" name="cuantoDinero" placeholder="cuantoDinero">
+                        <label for="cuantoDinero">Cuanto quieres añadir</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" th:field="*{numeroDeCuenta}" class="form-control bg-body-primary mb-2" id="numeroCuenta" name="numeroCuenta" placeholder="numeroCuenta">
+                        <label for="numeroDeCuenta">Credit card number is required</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" th:field="*{expiration}" class="form-control bg-body-primary mb-2" id="expiration" name="expiration" placeholder="expiration">
+                        <label for="expiration">Expiration date required</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" th:field="*{ccv}" class="form-control bg-body-primary mb-2" id="ccv" name="ccv" placeholder="ccv">
+                        <label for="ccv">Security code required</label>
+                    </div>
+
+                    <div class="text-end">
+                        <button class="btn btn-primary border border-primary rounded text-white btn-lg">Añadir</button>
+                    </div>
+                </form>
+                
+            </div>   
+                
+                
+            
+        </main>
+        
+
+        <!-- Script-ak-->
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="../js/dashboard.js"></script>
+    </body>
+</html>

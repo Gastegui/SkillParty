@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/vistaCurso.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+  
+    <title>Document</title>
+</head>
+<body>
+    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+        <div class="container-fluid">
+    
+          <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+          </a>
+    
+          <div class="btn-group" id="header-buttons">
+            <button class="botoiPro">SkillParty Pro</button>
+            <a href="../html/createUser.html" class="botoi">Kontua sortu</a>
+          </div>
+          
+          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+    
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+    
+                <li class="nav-item">
+                <div id="menu-buttons">
+                  <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                  <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
+                </div>
+              </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hizkuntza
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="d-flex mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-1 m-2 w-auto">
+            <a type="button" class="btn border" href="panelCreador.html">Atzera</a>
+          </div>
+        </div>
+      </div>
+
+    <main>
+
+      
+        <div class="container-fluid d-flex flex-column flex-lg-row">
+          <div class="row d-flex justify-content-start"> <!---->
+
+            <div class="container-fluid">
+              <form class="row">
+                <div class="col-10 col-lg-6 card offset-1 me-4">
+                  <div class="row text-start">
+                    <input type="text" name="username" value="" placeholder="Lehen kurtsoa" class="h1 p-1 card-header"/>
+                    <!--<p class="h1 p-1 card-header">Lehen kurtsoa</p>-->
+                  </div>
+
+
+                  <div class="row d-flex justify-content-center p-1">
+                    <video controls class="w-100 h-auto">
+                      <source src="../video/youngVib.mp4" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="row d-flex justify-content-between">
+                    <div class="col-1 m-2 w-auto">
+                      <button>Aurrekoa</button>
+                    </div>
+                    <div class="col-1 m-2 w-auto">
+                      <button>Hurrengoa</button>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center p-1">
+                    <textarea	rows="4"
+                        cols="50"
+                        name="body"
+                        placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
+                        ></textarea>
+                    
+                    <!--<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam.</p>
+                    -->
+                  </div>
+                </div>
+
+                <div class="col d-flex align-items-center justify-content-center d-lg-none">
+                  <img src="../images/profile.png" class="rounded h-auto p-3 m-0" width="100px" alt="profile picture">
+                  <!--<input type="text" name="username" value="" placeholder="Autorearen izena" class="h3 m-0 ps-2 me-2"/>-->
+                  <p class="h3 m-0 ps-2">Autorearen izena</p>
+                </div>
+
+                <div class="col-4 d-flex align-items-center justify-content-center card d-none d-lg-inline">
+                  <img src="../images/profile.png" class="rounded h-auto p-3 m-0" width="100px" alt="profile picture">
+                  <!--<input type="text" name="username" value="" placeholder="Autorearen izena lg" class="h3 m-0 ps-2"/>-->
+
+                  <p class="h3 m-0 ps-2">Autorearen izena lg</p>
+                  <div class="row m-2">
+                    <div class="card opinion-card">
+                      <div class="card-body">
+                          <div class="row mb-2">
+                              <div class="col-12 d-flex align-items-center">
+                                  <div class="rating me-3">
+                                      Kontaktua
+                                  </div>
+                                  <div>
+                                      <!--<input type="text" name="username" value="" placeholder="+34 661 48 00 43"/>-->
+                                      +34 661 48 00 43
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row mb-2">
+                              <div class="col-12 d-flex align-items-center">
+                                  <div class="rating me-3">
+                                      Idatzi kontaktu honi
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row mb-2">
+                              <div class="col-12 d-flex align-items-center">
+                                  <div class="rating me-3">
+                                      Ikusi erabitzailearen beste kurtso batzuk
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row d-flex text-center my-4">
+                  <div class="col ">
+                    <button type="button" class="btn btn-primary px-4 me-md-2">Editar</button>
+                  </div>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr>
+          <!--Imagen o video del resumen del curso-->
+          <div>
+            <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold">Imagen o video del resumen del curso</h2>
+          
+            <div class="album py-2 ">
+              <div class="container">
+                  <div class="d-flex overflow-x-auto">
+                      
+                      <div class="form-check p-0">
+                        <label class="form-check-label h3" for="credit">Portadako argazkia igo</label>
+                        <input class="form-control" type="file" id="formFile">
+                      </div>
+
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <hr>
+  <!--barruko kontenidua-->
+
+          <div>
+            <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold">Contenido del curso</h2>
+          
+            <div class="album py-2 ">
+              <div class="container">
+                  <div class="d-flex overflow-x-auto">
+                      <!-- kurtsoa-->
+                      <div class="p-2">
+                        <form class="card shadow-sm">
+                            <div class="card-body">
+                              <div class="btn-group d-flex justify-content-between mb-3">
+                                <button><-</button>
+                                <button>-></button>
+                              </div>
+                              <h5 class="card-title">Titulua</h5>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <img src="../images/skillPartyLogo.png" alt="logo" width="300px">   
+                            </div>
+                            <div class="form-check p-2 ">
+                              <p>Para cambiar la foto o video:</p>
+                              <input class="form-control" type="file" id="formFile">
+                            </div>
+                
+                            <div class="card-body">
+                              <textarea	rows="4"
+                                                cols="50"
+                                                name="body"
+                                                placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
+                                                ></textarea>
+                              <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                -->
+                                <div class="d-flex justify-content-end">
+                                  <div class="btn-group m-2">
+                                    <button class="btn btn-primary me-2">
+                                      Editar
+                                    </button>
+                                    <button class="btn btn-primary">
+                                      Borrar
+                                    </button>
+                                  </div>
+                                </div>
+                              
+                            </div>
+                            
+                            
+                        </form>
+                      </div>
+
+
+                      <!-- kurtsoa-->
+                      <div class="p-2">
+                        <form class="card shadow-sm">
+                            <div class="card-body">
+                              <div class="btn-group d-flex justify-content-between mb-3">
+                                <button><-</button>
+                                <button>-></button>
+                              </div>
+                              <h5 class="card-title">Titulua</h5>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <img src="../images/skillPartyLogo.png" alt="logo" width="300px">   
+                            </div>
+                            
+                
+                            <div class="form-check p-2 ">
+                              <p>Para cambiar la foto o video:</p>
+                              <input class="form-control" type="file" id="formFile">
+                            </div>
+                
+                            <div class="card-body">
+                              <textarea	rows="4"
+                                                cols="50"
+                                                name="body"
+                                                placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
+                                                ></textarea>
+                                <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                -->
+                                <div class="d-flex justify-content-end">
+                                  <div class="btn-group m-2">
+                                    <button class="btn btn-primary me-2">
+                                      Editar
+                                    </button>
+                                    <button class="btn btn-primary">
+                                      Borrar
+                                    </button>
+                                  </div>
+                                </div>
+                            </div>
+
+                            
+                        </form>
+                      </div>
+                      <!-- kurtsoa-->
+                      <div class="p-2">
+                        <form class="card shadow-sm">
+                            <div class="card-body">
+                              <div class="btn-group d-flex justify-content-between mb-3">
+                                <button><-</button>
+                                <button>-></button>
+                              </div>
+                              <h5 class="card-title">Titulua</h5>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <img src="../images/skillPartyLogo.png" alt="logo" width="300px">   
+                            </div>
+                            
+
+                            <div class="form-check p-2 ">
+                              <p>Para cambiar la foto o video:</p>
+                              <input class="form-control" type="file" id="formFile">
+                            </div>
+
+                            <div class="card-body">
+                              <textarea	rows="4"
+                                                cols="50"
+                                                name="body"
+                                                placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
+                                                ></textarea>
+                                <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                -->
+                                <div class="d-flex justify-content-end">
+                                  <div class="btn-group m-2">
+                                    <button class="btn btn-primary me-2">
+                                      Editar
+                                    </button>
+                                    <button class="btn btn-primary">
+                                      Borrar
+                                    </button>
+                                  </div>
+                                </div>
+                                
+                            </div>
+
+                            
+                          </form>
+                      </div>
+
+                      <!-- kurtsoa hutsik-->
+                      <div class="p-2 d-flex align-items-center">
+                        <form class="card shadow-sm">
+                            <div class="card-body">
+                              <h5 class="card-title">Titulua</h5>
+                            </div>
+                            <div class="form-check p-0">
+                              <label class="form-check-label h3" for="credit">Argazkia edo bideoa igo</label>
+                              <input class="form-control" type="file" id="formFile">
+                            </div>
+
+                            <div class="card-body">
+                              <textarea	rows="4"
+                                                cols="50"
+                                                name="body"
+                                                placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
+                                                ></textarea>
+                                <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
+                                -->
+                                
+                                <div class="d-flex justify-content-end m-2">
+                                  <button class="btn btn-primary px-4 me-md-2">
+                                    Añadir
+                                  </button>
+                                </div>
+                            </div>
+
+                            
+                          </form>
+                      </div>
+                     
+                  </div>
+              </div>
+            </div>
+          </div>
+
+     <div class="btn-group m-3 px-2 d-flex">
+        <button class="btn btn-primary rounded px-4 me-2 me-md-2">Borrar curso</button>
+        <button class="btn btn-primary rounded px-4 me-md-2">Publicar curso</button>
+      </div> 
+       <!--<div class="m-3 px-2 d-flex justify-content-end">
+        <button class="btn btn-primary px-4 me-md-2">Publicar curso</button>
+      </div>-->
+   
+    </main>
+    <script defer src="../js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
