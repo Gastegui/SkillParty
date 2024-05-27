@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>fondos</title>
+    
+        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+        <link rel="stylesheet" href="../css/listStyle.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    </head>
+    <body class="overflow-x-hidden">
+        <nav id="header" class="navbar navbar-dark animated-nav row custom-height me-0" aria-label="Dark offcanvas navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+                    <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+                    <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+                </a>
+            
+                <div class="btn-group" id="header-buttons">
+                    <button class="botoiPro">SkillParty Pro</button>
+                    <a href="../html/servicios.html" class="botoi">Servicios</a>
+                    <a href="../html/panelCreador.html" class="botoi">Panel de Creador</a>
+                </div>
+                
+                
+                <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+            
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                
+                            <div id="menu-buttons">
+                                <li class="nav-item">
+                                    <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Servicios</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Panel del creador</a>
+                                </li>
+                            </div>
+                            
+                
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hizkuntza
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Euskara</a></li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="#">Castellano</a></li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="#">English</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!--Hasi -->
+
+        <main>
+            <div class="m-4 ms-5 border p-2 ">
+                <h3 class="mt-2 ms-2 text-center text-md-start text-decoration-underline fw-bold">
+                    Gráfico de ganancias
+                </h3>
+                <p class="mx-2 mt-2 text-center text-sm-start">
+                    Este gráfico representa las ganancias obtenidas por los servicios.
+                </p>
+            </div>
+
+            <div class="col-md-10 ms-sm-auto col-lg-11 px-md-4">
+                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+            </div>
+
+            <div class="container m-lg-4 ms-0 me-0 ps-3 pt-5">
+                <h3 class="text-decoration-underline fw-bold mb-3">Para cobrar</h3>
+                <div class="row">
+                    <div class="col-6 col-md-10"> 
+                        <p>Lo que has ganado desde la última vez que cobraste:</p>
+                    </div>
+                    <div class="col-2 text-end"> 
+                        <h4 class="fw-bold">5000€</h4>
+                    </div>
+                    
+                </div>
+                <div class="row my-4">
+                    <div class="col-6 col-md-10 d-flex align-items-center">
+                        <p>Para cobrar lo que debes, click-a en el botón -></p>
+                    </div>
+                    <div class="col-2 text-end">
+                        <button class="btn btn-primary border border-primary rounded text-white btn-lg">Cobrar</button>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </main>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Script-ak-->
+        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="../js/dashboard.js"></script>
+    </body>
+</html>
