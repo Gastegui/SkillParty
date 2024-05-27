@@ -19,11 +19,14 @@
         <h1>El servicio ya existe</h1>
     </div>
     <h1>Create service</h1>
-    <form th:action="@{/service/create}" th:object="${Servicio}" method="post">
-        <label>Titulo: <input type="text" th:field="*{titulo}" required></label><br>
+    <form th:action="@{/service/create}" th:object="${Servicio}" method="post" enctype="multipart/form-data">
+        <label>Titulo: <input type="text" th:field="*{titulo}" name="titulo" required></label><br>
         <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label><br>
         
-        <label>Portada: <input type="text" name="portadaDireccion" required></label><br>
+        <label>Portada: 
+            <input type="file" name="file" required/>
+            <!--<label>Carpeta: <input type="text" name="directory" required></label>-->
+        </label><br>
         <label for="categoria">Categoria</label>
         <select name="categoriaParam" id="categoria">
             <option value="Fisica">Fisica</option>

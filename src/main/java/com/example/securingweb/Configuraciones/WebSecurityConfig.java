@@ -12,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-/* Anotaciones para indicar que esta clase es una configuración de Spring Security y habilitar la seguridad web */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig 
@@ -43,23 +42,19 @@ public class WebSecurityConfig
 			)
 			.logout((logout) -> logout.permitAll());
 
-		return http.build();
-	}
-
-	/* Bean para proporcionar un codificador de contraseñas */
-    @Bean
-    public PasswordEncoder passwordEncoder() 
-	{
-		return new BCryptPasswordEncoder();
+        return http.build();
     }
 
-	/* Bean para proporcionar un administrador de autenticación */
-	@Bean
-	public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder) 
-	{
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsService);
-		authenticationProvider.setPasswordEncoder(passwordEncoder);
-		return new ProviderManager(authenticationProvider);
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(authenticationProvider);
+    }
 }

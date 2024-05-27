@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.example.securingweb.ORM.ficheros.Fichero;
@@ -35,7 +37,12 @@ import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import com.example.securingweb.ORM.usuarios.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -175,7 +182,7 @@ public class ServiceController
     }
 
     @PostMapping("create")
-    public String postCreateService(@ModelAttribute Servicio nuevo, 
+public String postCreateService(@ModelAttribute Servicio nuevo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoria, 
                                 @RequestParam(value="portadaDireccion", required=true) String direccion, 
                                 @RequestParam(value="idiomaParam", required=true) String idioma)
@@ -189,42 +196,65 @@ public class ServiceController
 
         guardar.setFechaDeCreacion(new Date());
 
-        Categoria catNueva = new Categoria();
-        catNueva.setDescripcion(categoria);
+    Categoria catNueva = new Categoria();
+    catNueva.setDescripcion(categoria);
+    guardar.setCategoria(catNueva);
 
-        guardar.setCategoria(catNueva);
+    guardar.setDescripcion(nuevo.getDescripcion().trim());
+    guardar.setPublicado(false);
 
-        guardar.setDescripcion(nuevo.getDescripcion().trim());
-
-        guardar.setPublicado(false);
-
-        Optional<Idioma> idiomaEncontrado = idiomaRepository.findByIdioma(idioma);
-        if(idiomaEncontrado.isEmpty())
-            return "redirect:/error";
-
-        guardar.setIdioma(idiomaEncontrado.get());
-
-        Fichero portNueva = new Fichero();
-        portNueva.setDireccion(direccion.trim());
-        guardar.setPortada(portNueva);
-
-        guardar.setTitulo(nuevo.getTitulo().trim());
-
-        try
-        {
-            guardarServicio(guardar);
-        }
-        catch(DataIntegrityViolationException e)
-        {
-            return "redirect:/service/create?message=serviceExists";
-        }
-        catch(IllegalArgumentException e)
-        {
-            return "redirect:/service/create?message="+e.getMessage();
-        }
-
-        return "redirect:/service/edit?title="+nuevo.getTitulo()+"&message=serviceCreated";
+    Optional<Idioma> idiomaEncontrado = idiomaRepository.findByIdioma(idioma);
+    if (idiomaEncontrado.isEmpty()) {
+        return "redirect:/error";
     }
+    guardar.setIdioma(idiomaEncontrado.get());
+
+    guardar.setTitulo(nuevo.getTitulo().trim());
+
+    // Proceso de guardado de la imagen
+    if (file == null || file.isEmpty()) {
+        System.out.println("Por favor seleccione un archivo");
+        return "redirect:/service/create?message=noFile";
+    }
+
+    String userHome = System.getProperty("user.home");
+    StringBuilder builder = new StringBuilder();
+    builder.append(userHome);
+    builder.append(File.separator);
+    builder.append("ficheros"); 
+    builder.append(File.separator);
+    builder.append(directory);
+    builder.append(File.separator);
+    builder.append("portada"); // Aquí se asegura que el nombre del archivo siempre sea "portada"
+
+    Path path = Paths.get(builder.toString());
+
+    // Crear los directorios si no existen
+    if (!Files.exists(path.getParent())) {
+        Files.createDirectories(path.getParent());
+    }
+
+    byte[] fileBytes = file.getBytes();
+    Files.write(path, fileBytes);
+
+    System.out.println("Archivo cargado correctamente [" + builder.toString() + "]");
+
+    // Asigna la dirección de la portada al servicio
+    Fichero portNueva = new Fichero();
+    portNueva.setDireccion(builder.toString());
+    guardar.setPortada(portNueva);
+
+    try {
+        guardarServicio(guardar);
+    } catch (DataIntegrityViolationException e) {
+        return "redirect:/service/create?message=serviceExists";
+    } catch (IllegalArgumentException e) {
+        return "redirect:/service/create?message=" + e.getMessage();
+    }
+
+    return "redirect:/service/edit?title=" + nuevo.getTitulo() + "&message=serviceCreated";
+}
+
 
     @GetMapping("delete")
     public String deleteService(@RequestParam(value="title", required = true) String titulo)
@@ -278,49 +308,65 @@ public class ServiceController
     }
 
     @PostMapping("edit")
-    public String PostUpdateService(@ModelAttribute Servicio nuevo, 
+public String PostUpdateService(@ModelAttribute Servicio nuevo, 
                                 @RequestParam(value="tituloViejo", required=true) String tituloViejo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoriaParam, 
-                                @RequestParam(value="idiomaParam", required=true) String idiomaParam)
-    {
-        Optional<Servicio> guardado = servicioRepository.findByTitulo(tituloViejo);
+                                @RequestParam(value="idiomaParam", required=true) String idiomaParam,
+                                @RequestParam(value="file", required=false) MultipartFile file) throws IOException {
+    Optional<Servicio> guardadoOpt = servicioRepository.findByTitulo(tituloViejo);
 
-        if(guardado.isEmpty())
-            return "redirect:/service/list?message=serviceNotFound"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
+    if (guardadoOpt.isEmpty())
+        return "redirect:/service/list?message=serviceNotFound"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
 
-        if(!guardado.get().getCreador().equals(getUser()) && !getUser().isAdmin())
-            return "redirect:/error/403";
+    Servicio guardado = guardadoOpt.get();
 
-        guardado.get().setTitulo(nuevo.getTitulo());
-        guardado.get().setDescripcion(nuevo.getDescripcion());
-        guardado.get().setFechaDeActualizacion(new Date());
-        
-        if(!guardado.get().getCategoria().getDescripcion().equals(categoriaParam)) //Comprobar si se ha cambiado la categoría
-        {
-            Optional<Categoria> cat = categoriaRepository.findByDescripcion(categoriaParam);
-            if(cat.isEmpty())
-            {
-                Categoria catNueva = new Categoria();
-                catNueva.setDescripcion(categoriaParam);
-                guardado.get().setCategoria(categoriaRepository.save(catNueva));
-            }
-            else
-                guardado.get().setCategoria(cat.get());
+    if (!guardado.getCreador().equals(getUser()) && !getUser().isAdmin())
+        return "redirect:/error/403";
+
+    guardado.setTitulo(nuevo.getTitulo());
+    guardado.setDescripcion(nuevo.getDescripcion());
+    guardado.setFechaDeActualizacion(new Date());
+    
+    if (!guardado.getCategoria().getDescripcion().equals(categoriaParam)) { //Comprobar si se ha cambiado la categoría
+        Optional<Categoria> cat = categoriaRepository.findByDescripcion(categoriaParam);
+        if (cat.isEmpty()) {
+            Categoria catNueva = new Categoria();
+            catNueva.setDescripcion(categoriaParam);
+            guardado.setCategoria(categoriaRepository.save(catNueva));
+        } else {
+            guardado.setCategoria(cat.get());
         }
-        //TODO: ARCHIVO
-        //Actualizar el archivo si el creador ha subido uno nuevo
+    }
 
-        if(!guardado.get().getIdioma().getIdioma().equals(idiomaParam)) //Comprobar si se ha cambiado el idioma
-        {
-            Optional<Idioma> idi = idiomaRepository.findByIdioma(idiomaParam);
-            if(idi.isEmpty())
-            {
-                Idioma idiNuevo = new Idioma();
-                idiNuevo.setIdioma(idiomaParam);
-                guardado.get().setIdioma(idiomaRepository.save(idiNuevo));
-            }
-            else
-                guardado.get().setIdioma(idi.get());
+    if (!guardado.getIdioma().getIdioma().equals(idiomaParam)) { //Comprobar si se ha cambiado el idioma
+        Optional<Idioma> idi = idiomaRepository.findByIdioma(idiomaParam);
+        if (idi.isEmpty()) {
+            Idioma idiNuevo = new Idioma();
+            idiNuevo.setIdioma(idiomaParam);
+            guardado.setIdioma(idiomaRepository.save(idiNuevo));
+        } else {
+            guardado.setIdioma(idi.get());
+        }
+    }
+
+    // Procesar la nueva imagen de portada
+    if (file != null && !file.isEmpty()) {
+        // Guardar la nueva imagen
+        String userHome = System.getProperty("user.home");
+        StringBuilder builder = new StringBuilder();
+        builder.append(userHome);
+        builder.append(File.separator);
+        builder.append("ficheros");
+        builder.append(File.separator);
+        builder.append(nuevo.getTitulo());
+        builder.append(File.separator);
+        builder.append("portada"); // Nombre de la nueva portada
+
+        Path newPath = Paths.get(builder.toString());
+
+        // Crear los directorios si no existen
+        if (!Files.exists(newPath.getParent())) {
+            Files.createDirectories(newPath.getParent());
         }
 
         servicioRepository.save(guardado.get());

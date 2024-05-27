@@ -5,26 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillParty - Edit Service</title>
     <style>
-        div
-        {
-            display: inherit;
-        }
-        .scroll
-        {
-            overflow-x: auto;
-            display: inline-block;
-            width: 100vw;
-            white-space: nowrap;
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <h1>Información sobre el servicio</h1>
-    <form th:action="@{/service/edit}" th:object="${Servicio}" method="post">
+    <form th:action="@{/service/edit}" th:object="${Servicio}" method="post" enctype="multipart/form-data">
         <input hidden type="text" name="tituloViejo" th:value="${Servicio.getTitulo()}">
         <label>Titulo: <input type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}" required></label><br>
         <label>Descripcion: <input type="text" th:field="*{descripcion}" th:value="${Servicio.getDescripcion()}" required></label><br>
-        <label>Portada: <input type="text" name="portadaDireccion" th:value="${Servicio.getPortada().getDireccion()}" required></label><br>
+        
+        <!-- Mostrar y cambiar la imagen de portada -->
+        <label>Imagen de Portada:</label><br>
+        <img id="portadaImage" th:src="@{|/uploads/${Servicio.getTitulo()}/portada|}" alt="Imagen de Portada" style="max-width: 200px; max-height: 200px;"><br>
+        <input type="hidden" id="portadaDireccion" name="portadaDireccion" th:value="${Servicio.getPortada().getDireccion()}" required/><br>
+        <input type="file" id="fileInput" name="file" class="hidden"/>
+        <button type="button" onclick="document.getElementById('fileInput').click()">Cambiar Imagen</button><br>
+
         <label for="categoria">Categoria</label>
         <select name="categoriaParam" id="categoria">
             <option value="Fisica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Fisica")}'>Fisica</option>
@@ -46,7 +45,7 @@
     <h1>Opciones</h1>
     <div class="scroll">
         <div th:each="i : ${ListaOpciones}">
-            <form th:action="@{/service/editOption(id=${i.id}, title=${Servicio.titulo})}" method="post">
+            <form th:action="@{/service/editOption(id=${i.id}, title=${Servicio.getTitulo()})}" method="post">
                 <label>Descripcion: <input type="text" th:value="${i.descripcion}" name="desc" required></label><br>
                 <label>Precio: <input type="number" name="precio" th:value="${i.precio}" step=".01" required></label><br>
                 <button style="display: inline-block;" type="submit">Editar opcion</button>
@@ -54,7 +53,7 @@
             </form>
         </div>
         <div>
-            <form th:action="@{/service/createOption(title=${Servicio.titulo})}" th:object="${Opcion}" method="post">
+            <form th:action="@{/service/createOption(title=${Servicio.getTitulo()})}" th:object="${Opcion}" method="post">
                 <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label><br>
                 <label>Precio: <input type="number" name="precio" step=".01" required></label><br>
                 <button type="submit">Crear opcion de compra</button>
@@ -64,9 +63,9 @@
     <h1>Muestras</h1>
     <div class="scroll">
         <div th:each="i : ${ListaMuestras}">
-            <form th:action="@{/service/editSample(id=${i.id}, title=${Servicio.titulo})}" method="post">
-                <a style="margin-left: 50px;" th:if="${i.posicion != 1}" th:href="|/service/editSamplePos?title=${Servicio.titulo}&id=${i.id}&dir=izq|">&lt;--</a>
-                <a style="float: right; margin-right: 50px;" th:if="${i.posicion != ListaMuestras.size()}" th:href="|/service/editSamplePos?title=${Servicio.titulo}&id=${i.id}&dir=der|">--&gt;</a><br>
+            <form th:action="@{/service/editSample(id=${i.id}, title=${Servicio.getTitulo()})}" method="post">
+                <a style="margin-left: 50px;" th:if="${i.posicion != 1}" th:href="|/service/editSamplePos?title=${Servicio.getTitulo()}&id=${i.id}&dir=izq|">&lt;--</a>
+                <a style="float: right; margin-right: 50px;" th:if="${i.posicion != ListaMuestras.size()}" th:href="|/service/editSamplePos?title=${Servicio.getTitulo()}&id=${i.id}&dir=der|">--&gt;</a><br>
                 <label>Multimedia: <input type="text" name="dirMultimedia" th:value="${i.getMultimedia().getDireccion()}" required></label><br>
                 <label>Descripcion: <input type="text" name="desc" th:value="${i.getDescripcion()}" required></label><br>
                 <button style="display: inline-block;" type="submit">Editar muestra</button>
@@ -74,7 +73,7 @@
             </form>
         </div>
         <div>
-            <form th:action="@{/service/createSample(title=${Servicio.titulo}, pos=${ListaMuestras.size()+1})}" th:object="${Muestra}" method="post">
+            <form th:action="@{/service/createSample(title=${Servicio.getTitulo()}, pos=${ListaMuestras.size()+1})}" th:object="${Muestra}" method="post">
                 <label>Multimedia: <input type="text" name="dirMultimedia" required></label><br>
                 <label>Descripcion: <input type="text" th:field="*{descripcion}" required></label><br>
                 <button type="submit">Crear muestra del servicio</button>
