@@ -184,17 +184,17 @@ public class ServiceController
     @PostMapping("create")
 public String postCreateService(@ModelAttribute Servicio nuevo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoria, 
-                                @RequestParam(value="portadaDireccion", required=true) String direccion, 
-                                @RequestParam(value="idiomaParam", required=true) String idioma)
+                                @RequestParam(value="idiomaParam", required=true) String idioma,
+                                @RequestParam("file") MultipartFile file, 
+                                @RequestParam("titulo") String directory) throws IOException
     {
-        Servicio guardar = new Servicio();
+    Servicio guardar = new Servicio();
 
-        if(getUser() == null)
-            return "redirect:/error/403";
+    if(getUser() == null)
+        return "redirect:/error/403";
 
-        guardar.setCreador(getUser());
-
-        guardar.setFechaDeCreacion(new Date());
+    guardar.setCreador(getUser());
+    guardar.setFechaDeCreacion(new Date());
 
     Categoria catNueva = new Categoria();
     catNueva.setDescripcion(categoria);
@@ -369,9 +369,36 @@ public String PostUpdateService(@ModelAttribute Servicio nuevo,
             Files.createDirectories(newPath.getParent());
         }
 
-        servicioRepository.save(guardado.get());
+        byte[] fileBytes = file.getBytes();
+        Files.write(newPath, fileBytes);
 
-        return "redirect:/service/edit?title="+guardado.get().getTitulo()+"&message=serviceEdited";
+        // Crear la nueva portada y guardar en el repositorio
+        Fichero nuevaPortada = new Fichero();
+        nuevaPortada.setDireccion(newPath.toString());
+        ficheroRepository.save(nuevaPortada);
+
+        // Actualizar la referencia a la portada en el servicio
+        guardado.setPortada(nuevaPortada);
+        servicioRepository.save(guardado);
+
+        // Eliminar la imagen anterior si existe
+        if (guardado.getPortada() != null) {
+            Fichero portadaAnterior = guardado.getPortada();
+            Path oldPath = Paths.get(portadaAnterior.getDireccion());
+
+            // Eliminar el archivo del sistema de archivos
+            if (Files.exists(oldPath)) {
+                Files.delete(oldPath);
+            }
+
+            // Eliminar el registro de la base de datos
+            ficheroRepository.delete(portadaAnterior);
+        }
+    } else {
+        servicioRepository.save(guardado);
+    }
+
+    return "redirect:/service/edit?title=" + guardado.getTitulo() + "&message=serviceEdited";
     }
 
     @GetMapping("buy")
