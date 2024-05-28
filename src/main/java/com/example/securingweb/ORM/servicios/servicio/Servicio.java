@@ -192,6 +192,17 @@ public class Servicio
         return fechaDeActualizacion;
     }
 
+    public String getPortadaExtension() {
+        if (portada != null && portada.getDireccion() != null) {
+            String direccion = portada.getDireccion();
+            int i = direccion.lastIndexOf('.');
+            if (i > 0) {
+                return direccion.substring(i);
+            }
+        }
+        return "";
+    }
+
     @Override
     public boolean equals(Object o)
     {

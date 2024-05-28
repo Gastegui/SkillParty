@@ -19,7 +19,7 @@
         
         <!-- Mostrar y cambiar la imagen de portada -->
         <label>Imagen de Portada:</label><br>
-        <img id="portadaImage" th:src="@{|/uploads/${Servicio.getTitulo()}/portada|}" alt="Imagen de Portada" style="max-width: 200px; max-height: 200px;"><br>
+        <img id="portadaImage" th:src="@{|/uploads/${Servicio.getTitulo()}/portada${Servicio.getPortadaExtension()}|}" alt="Imagen de Portada" style="max-width: 200px; max-height: 200px;"><br>
         <input type="hidden" id="portadaDireccion" name="portadaDireccion" th:value="${Servicio.getPortada().getDireccion()}" required/><br>
         <input type="file" id="fileInput" name="file" class="hidden"/>
         <button type="button" onclick="document.getElementById('fileInput').click()">Cambiar Imagen</button><br>

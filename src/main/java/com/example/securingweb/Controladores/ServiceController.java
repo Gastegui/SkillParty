@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.ficheros.FicheroRepository;
+import com.example.securingweb.ORM.ficheros.FicheroService;
 import com.example.securingweb.ORM.idiomas.Idioma;
 import com.example.securingweb.ORM.idiomas.IdiomaRepository;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
@@ -182,11 +183,11 @@ public class ServiceController
     }
 
     @PostMapping("create")
-public String postCreateService(@ModelAttribute Servicio nuevo, 
+    public String postCreateService(@ModelAttribute Servicio nuevo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoria, 
                                 @RequestParam(value="idiomaParam", required=true) String idioma,
-                                @RequestParam("file") MultipartFile file, 
-                                @RequestParam("titulo") String directory) throws IOException
+                                @RequestParam(value="file", required=true) MultipartFile file, 
+                                @RequestParam(value="titulo", required=true) String directory) throws IOException
     {
     Servicio guardar = new Servicio();
 
@@ -211,38 +212,8 @@ public String postCreateService(@ModelAttribute Servicio nuevo,
 
     guardar.setTitulo(nuevo.getTitulo().trim());
 
-    // Proceso de guardado de la imagen
-    if (file == null || file.isEmpty()) {
-        System.out.println("Por favor seleccione un archivo");
-        return "redirect:/service/create?message=noFile";
-    }
-
-    String userHome = System.getProperty("user.home");
-    StringBuilder builder = new StringBuilder();
-    builder.append(userHome);
-    builder.append(File.separator);
-    builder.append("ficheros"); 
-    builder.append(File.separator);
-    builder.append(directory);
-    builder.append(File.separator);
-    builder.append("portada"); // Aquí se asegura que el nombre del archivo siempre sea "portada"
-
-    Path path = Paths.get(builder.toString());
-
-    // Crear los directorios si no existen
-    if (!Files.exists(path.getParent())) {
-        Files.createDirectories(path.getParent());
-    }
-
-    byte[] fileBytes = file.getBytes();
-    Files.write(path, fileBytes);
-
-    System.out.println("Archivo cargado correctamente [" + builder.toString() + "]");
-
-    // Asigna la dirección de la portada al servicio
-    Fichero portNueva = new Fichero();
-    portNueva.setDireccion(builder.toString());
-    guardar.setPortada(portNueva);
+    FicheroService fs = new FicheroService();
+    fs.crearFichero(file, guardar, directory);
 
     try {
         guardarServicio(guardar);
@@ -308,17 +279,22 @@ public String postCreateService(@ModelAttribute Servicio nuevo,
     }
 
     @PostMapping("edit")
-public String PostUpdateService(@ModelAttribute Servicio nuevo, 
+    public String PostUpdateService(@ModelAttribute Servicio nuevo, 
                                 @RequestParam(value="tituloViejo", required=true) String tituloViejo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoriaParam, 
                                 @RequestParam(value="idiomaParam", required=true) String idiomaParam,
-                                @RequestParam(value="file", required=false) MultipartFile file) throws IOException {
+                                @RequestParam(value="file", required=true) MultipartFile file) throws IOException {
     Optional<Servicio> guardadoOpt = servicioRepository.findByTitulo(tituloViejo);
+    
 
     if (guardadoOpt.isEmpty())
         return "redirect:/service/list?message=serviceNotFound"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
 
     Servicio guardado = guardadoOpt.get();
+
+    Optional<Fichero> guardadoOpt2 = ficheroRepository.findById(guardado.getPortada().getId());
+
+    Fichero ficheroGuardado = guardadoOpt2.get();
 
     if (!guardado.getCreador().equals(getUser()) && !getUser().isAdmin())
         return "redirect:/error/403";
@@ -348,57 +324,13 @@ public String PostUpdateService(@ModelAttribute Servicio nuevo,
             guardado.setIdioma(idi.get());
         }
     }
+    
+    FicheroService fs = new FicheroService();
+    fs.editFichero(file, guardado, nuevo, tituloViejo, ficheroGuardado);
+        
+    servicioRepository.save(guardado);
 
-    // Procesar la nueva imagen de portada
-    if (file != null && !file.isEmpty()) {
-        // Guardar la nueva imagen
-        String userHome = System.getProperty("user.home");
-        StringBuilder builder = new StringBuilder();
-        builder.append(userHome);
-        builder.append(File.separator);
-        builder.append("ficheros");
-        builder.append(File.separator);
-        builder.append(nuevo.getTitulo());
-        builder.append(File.separator);
-        builder.append("portada"); // Nombre de la nueva portada
-
-        Path newPath = Paths.get(builder.toString());
-
-        // Crear los directorios si no existen
-        if (!Files.exists(newPath.getParent())) {
-            Files.createDirectories(newPath.getParent());
-        }
-
-        byte[] fileBytes = file.getBytes();
-        Files.write(newPath, fileBytes);
-
-        // Crear la nueva portada y guardar en el repositorio
-        Fichero nuevaPortada = new Fichero();
-        nuevaPortada.setDireccion(newPath.toString());
-        ficheroRepository.save(nuevaPortada);
-
-        // Actualizar la referencia a la portada en el servicio
-        guardado.setPortada(nuevaPortada);
-        servicioRepository.save(guardado);
-
-        // Eliminar la imagen anterior si existe
-        if (guardado.getPortada() != null) {
-            Fichero portadaAnterior = guardado.getPortada();
-            Path oldPath = Paths.get(portadaAnterior.getDireccion());
-
-            // Eliminar el archivo del sistema de archivos
-            if (Files.exists(oldPath)) {
-                Files.delete(oldPath);
-            }
-
-            // Eliminar el registro de la base de datos
-            ficheroRepository.delete(portadaAnterior);
-        }
-    } else {
-        servicioRepository.save(guardado);
-    }
-
-    return "redirect:/service/edit?title=" + guardado.getTitulo() + "&message=serviceEdited";
+        return "redirect:/service/edit?title=" + guardado.getTitulo() + "&message=serviceEdited";
     }
 
     @GetMapping("buy")

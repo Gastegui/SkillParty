@@ -22,11 +22,16 @@ public class Fichero
     @Column(unique=true)
     private String direccion;
 
+    private String extension;
+
     @OneToMany(mappedBy = "portada", cascade = CascadeType.ALL)
     private List<Servicio> servicios;
 
     public void setDireccion(String d) {direccion=d;}
     public String getDireccion() {return direccion;}
+
+    public void setExtension(String e) {extension=e;}
+    public String getExtension() {return extension;}
 
     public Long getId(){return id;}
 
