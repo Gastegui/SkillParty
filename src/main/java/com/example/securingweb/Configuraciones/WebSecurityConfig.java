@@ -24,7 +24,6 @@ public class WebSecurityConfig
 				//GENERALES
 				.requestMatchers("/", "/home").permitAll() 
 				.requestMatchers("/js/*", "/css/*", "/video/*", "/images/*").permitAll() 
-				.requestMatchers("/login", "/createUser").permitAll() 
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/error", "/error/403", "error/404").permitAll() 
 				//SERVICIOS
@@ -34,13 +33,19 @@ public class WebSecurityConfig
 				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/service/rate", "/service/deleteRating", "service/buy").authenticated()
 				//USUARIOS
-				.requestMatchers("/user/addBalance").authenticated()
+				.requestMatchers("/user/addBalance", "/user/edit").authenticated()
+				.requestMatchers("login", "/user/login", "/user/create").permitAll() 
+				
 				.anyRequest().authenticated() //Esto tal vez habría que quitarlo
 			)
 			.formLogin((form) -> form
-				.loginPage("/login").permitAll()
+				.loginPage("/user/login")
+				.defaultSuccessUrl("/")
+				.permitAll()
 			)
-			.logout((logout) -> logout.permitAll());
+			.logout((logout) -> logout
+				.permitAll()
+			);
 
         return http.build();
     }

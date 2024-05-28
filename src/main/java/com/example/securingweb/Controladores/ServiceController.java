@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.example.securingweb.ORM.ficheros.Fichero;
@@ -38,12 +37,8 @@ import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import com.example.securingweb.ORM.usuarios.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -119,7 +114,7 @@ public class ServiceController
     public String getCreateService(Model modelo)
     {
         modelo.addAttribute("Servicio", new Servicio());
-        return "createService";
+        return "service/createService"; //pagina
     }
     
     @GetMapping("list")
@@ -160,7 +155,7 @@ public class ServiceController
         modelo.addAttribute("hayAnterior", lista.hasPrevious());
         modelo.addAttribute("pagActual", pageInt);
 
-        return "serviceList";
+        return "service/serviceList"; //pagina
     }
 
     @GetMapping("view")
@@ -179,7 +174,7 @@ public class ServiceController
 
         modelo.addAttribute("servicio", solicitado.get());
         modelo.addAttribute("ValorarServicios", new ValorarServicios());
-        return "serviceView";
+        return "service/serviceView"; //pagina
     }
 
     @PostMapping("create")
@@ -241,7 +236,7 @@ public class ServiceController
 
         servicioRepository.delete(aBorrar.get());
 
-        return "redirect:/service/list?message=serviceDeleted"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
+        return "redirect:/service/list?message=serviceDeleted"; //pagina //MARK: esto debería redirigir a la lista de servicios creados por el usuario
     }
 
     @PostMapping("publish")
@@ -275,7 +270,7 @@ public class ServiceController
         modelo.addAttribute("ListaMuestras", aEditar.get().getMuestras());
         modelo.addAttribute("Opcion", new Opcion());
         modelo.addAttribute("Muestra", new Muestra());
-        return "editService";
+        return "service/editService"; //pagina
     }
 
     @PostMapping("edit")
@@ -333,7 +328,7 @@ public class ServiceController
         return "redirect:/service/edit?title=" + guardado.getTitulo() + "&message=serviceEdited";
     }
 
-    @GetMapping("buy")
+    @PostMapping("buy")
     public String buyService(@RequestParam(value="title", required = true) String padre,
                             @RequestParam(value="id", required = true) String id)
     {
@@ -373,7 +368,7 @@ public class ServiceController
         compra.setTerminado(false);
         comprarServiciosRepository.save(compra);
 
-        return "redirect:/snake";//MARK: esto debería redirigir al chat o algo así ns
+        return "redirect:/snake"; //pagina //MARK: esto debería redirigir al chat o algo así ns
     }
 
     @PostMapping("createOption")
@@ -399,7 +394,7 @@ public class ServiceController
         return "redirect:/service/edit?title="+padre+"&message=optionCreated";
     }
     
-    @GetMapping("deleteOption")
+    @GetMapping("deleteOption") //TODO: esto debería ser post
     public String deleteOption(@RequestParam(value="title", required = true) String title,
                             @RequestParam(value="id", required = true) String id)
     {
@@ -511,7 +506,7 @@ public class ServiceController
         return "redirect:/service/edit?title="+padre+"&message=sampleCreated";
     }
 
-    @GetMapping("deleteSample")
+    @GetMapping("deleteSample") //TODO: esto deberia ser post
     public String deleteSample(@RequestParam(value="title", required = true) String title, 
                             @RequestParam(value="id", required = true) String id)
     {
@@ -648,13 +643,33 @@ public class ServiceController
     public String createRating(@ModelAttribute ValorarServicios valoracion, 
                             @RequestParam(value="title", required = true) String titulo)
     {
-        if(getUser() == null)
+        Usuario usuario = getUser();
+        if(usuario == null)
             return "redirect:/error/403";
 
         Optional<Servicio> servicioValorado = servicioRepository.findByTitulo(titulo.trim());
         if(servicioValorado.isEmpty())
             return "redirect:/service/list?message=noServiceFather"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
 
+        if(valoracion.getValoracion() > 5)
+            return "redirect:/service/view?title="+titulo+"&message=invalidRating";
+        
+        for(ValorarServicios i : usuario.getServiciosValorados()) //TODO: ARREGLASR ESTO YA
+        {
+            if(i.getServicio().equals(servicioValorado.get()))
+                return "redirect:/service/view?title="+titulo+"&message=alreadyRated";
+        }
+        
+
+        if(valoracion.getValoracion() > 5)
+            return "redirect:/service/view?title="+titulo+"&message=invalidRating";
+        
+        for(ValorarServicios i : usuario.getServiciosValorados()) //TODO: ARREGLASR ESTO YA
+        {
+            if(i.getServicio().equals(servicioValorado.get()))
+                return "redirect:/service/view?title="+titulo+"&message=alreadyRated";
+        }
+        
         valoracion.setServicio(servicioValorado.get());
         valoracion.setUsuario(getUser());
         valoracion.setFecha(new Date());
@@ -662,10 +677,10 @@ public class ServiceController
 
         valorarServiciosRepository.save(valoracion);
 
-        return "redirect:/service/view?title="+titulo;
+        return "redirect:/service/view?title="+titulo+"&message=ratingCreated";
     }
 
-    @GetMapping("deleteRating")
+    @GetMapping("deleteRating") //TODO: esto deberia ser post
     public String deleteRating(@RequestParam(value="title", required = true) String title, 
                             @RequestParam(value="id", required = true) String id)
     {

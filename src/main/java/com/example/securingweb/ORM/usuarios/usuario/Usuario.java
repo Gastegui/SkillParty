@@ -55,7 +55,9 @@ public class Usuario implements UserDetails
 
     private String nombre;
     private String apellidos;
-    private Date fecha_de_nacimiento;
+
+    @Column(name="fecha_de_nacimiento")
+    private Date fechaDeNacimiento;
     private String telefono;
     private String email;
     private BigDecimal saldo;
@@ -124,7 +126,7 @@ public class Usuario implements UserDetails
     }
     public Date getFechaDeNacimiento()
     {
-        return fecha_de_nacimiento;
+        return fechaDeNacimiento;
     }
     public String getTelefono()
     {
@@ -168,6 +170,42 @@ public class Usuario implements UserDetails
         for(Autoridad a : autoridades)
         {
             if(a.getAutoridad().equals("USER_PRO"))
+                return true;
+        }
+        return false;
+    }
+    public boolean isCreatorAll()
+    {
+        for(Autoridad a : autoridades)
+        {
+            if(a.getAutoridad().equals("CREATE_ALL"))
+                return true;
+        }
+        return false;
+    }
+    public boolean isCretorService()
+    {
+        for(Autoridad a : autoridades)
+        {
+            if(a.getAutoridad().equals("CREATE_SERVICE"))
+                return true;
+        }
+        return false;
+    }
+    public boolean isCreatorCourse()
+    {
+        for(Autoridad a : autoridades)
+        {
+            if(a.getAutoridad().equals("CREATE_COURSE"))
+                return true;
+        }
+        return false;
+    }
+    public boolean isCreatorAny()
+    {
+        for(Autoridad a : autoridades)
+        {
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE") || a.getAutoridad().equals("CREATE_COURSE"))
                 return true;
         }
         return false;
@@ -221,7 +259,7 @@ public class Usuario implements UserDetails
     }
     public void setFechaDeNacimiento(Date f)
     {
-        fecha_de_nacimiento = f;
+        fechaDeNacimiento = f;
     }
     public void setTelefono(String t)
     {
