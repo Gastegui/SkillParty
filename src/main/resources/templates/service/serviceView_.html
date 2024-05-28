@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillParty - Service</title>
+</head>
+<body>
+    <label>Creador: <a th:href="|/creadores/${servicio.getCreador().getUsername()}|" th:text="${servicio.getCreador().getUsername()}"></a></label><br>
+    <label>Titulo: <span th:text="${servicio.getTitulo()}"></span></label><br>
+    <label>Descripcion: <span th:text="${servicio.getDescripcion()}"></span></label><br>
+    <label>Idioma: <span th:text="${servicio.getIdioma().getIdioma()}"></span></label><br>
+    <a th:href="|/service/edit?title=${servicio.getTitulo()}|">Cambiar datos</a><br>
+    <p>Opciones:</p>
+    <ul>
+        <li th:each="i : ${servicio.getOpciones()}">Desc: <span th:text="${i.getDescripcion()}"></span><br>Precio: <span th:text="${i.getPrecio()}"></span><br><a th:href="|/service/buy?title=${servicio.titulo}&id=${i.id}|">Comprar</a></li>
+    </ul>
+    <p>Muestras:</p>
+    <ul>
+        <li th:each="i : ${servicio.getMuestras()}">Posicion: <span th:text="${i.getPosicion()}"></span><br>Descripicon: <span th:text="${i.getDescripcion()}"></span><br>Multimedia: <span th:text="${i.getMultimedia().getDireccion()}"></span></li>
+    </ul>
+    <p>Valoraciones:</p>
+    <ul>
+        <li th:each="i : ${servicio.getValoraciones()}">Usuario: <span th:text="${i.getUsuario().getUsername()}"></span><br>Valoración: <span th:text="${i.getValoracion}"></span><br>Comentario: <span th:text="${i.getComentario()}"></span><br>Fecha: <span th:text="${i.getFecha()}"></span><a th:href="|/service/deleteRating?id=${i.getId()}&title=${servicio.getTitulo()}|">Borrar valoración</a></li>
+    </ul>
+
+    <h1>Valorar</h1>
+    <form th:action="|/service/rate?title=${param.title}" th:object="${ValorarServicios}" method="POST">
+        <label>Valoracion: <input type="number" th:field="*{valoracion}" max="100" min="0"></label>
+        <label>Comentario: <input type="text" th:field="*{comentario}"></label>
+        <button type="submit">Mandar valoracion</button>
+    </form>
+</body>
+</html>

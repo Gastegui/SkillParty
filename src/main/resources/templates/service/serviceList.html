@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillParty - Service List</title>
+</head>
+<body>
+    <div>
+        <div th:each="i : ${servicios}">
+            <a th:href="|/service/view?title=${i.getTitulo()}|"><p th:text="|titulo: ${i.getTitulo()}|"></p></a>
+        </div>
+        <div th:if="${haySiguiente == true}">
+            <a th:href="|/service/list?page=${pagActual+1}|">Página siguiente</a>
+        </div>
+        <div th:if="${hayAnterior == true}">
+            <a th:href="|/service/list?page=${pagActual-1}|">Página anterior</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Edit User</h1>
+    <form th:action="@{/user/edit}" method="post" th:object="${usuario}">
+        <label>Usuario<input type="text" th:field="*{username}"></label><br>
+        <label>Contraseña vieja<input type="text" name="oldPassword" placeholder="old password"></label><br>
+        <label>Contraseña nueva<input type="text" name="newPassword" placeholder="new password"></label><br>
+        <label>Email<input type="email" th:field="*{email}"></label><br>
+        <label>Nombre<input type="text" th:field="*{nombre}"></label><br>
+        <label>Apellidos<input type="text" th:field="*{apellidos}"></label><br>
+        <label>Fecha de nacimiento<input type="date" th:field="*{fechaDeNacimiento}"></label><br>
+        <label th:if="${usuario.isCreatorAny()}">Telefono<input type="text" th:field="*{telefono}"></label><br>
+        <button type="submit">Editar</button>
+    </form>
+</body>
+</html>
