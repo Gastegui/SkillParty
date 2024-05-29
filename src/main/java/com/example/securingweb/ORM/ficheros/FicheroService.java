@@ -11,98 +11,90 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class FicheroService 
 {
-    // Repositorios necesarios
-    //private FicheroRepository ficheroRepository;
+    @Transactional
     public void crearFichero (MultipartFile file, Servicio guardar, String directory) throws IOException
     {
-        // Obtener la extensión del archivo subido
         String originalFilename = file.getOriginalFilename();
-        String extension = "";
-        int i = originalFilename.lastIndexOf('.');
-        if (i > 0) {
-            extension = originalFilename.substring(i);
-        }
+        String extension = getExtension(originalFilename);
 
         String userHome = System.getProperty("user.home");
-        StringBuilder builder = new StringBuilder();
-        builder.append(userHome);
-        builder.append(File.separator);
-        builder.append("ficheros"); 
-        builder.append(File.separator);
-        builder.append(directory);
-        builder.append(File.separator);
-        builder.append("portada"); // Aquí se asegura que el nombre del archivo siempre sea "portada"
-        builder.append(extension);
+        String filePath = buildFilePath(userHome, directory, extension);
 
-        Path path = Paths.get(builder.toString());
+        Path path = Paths.get(filePath);
 
-        // Crear los directorios si no existen
-        if (!Files.exists(path.getParent())) {
-            Files.createDirectories(path.getParent());
-        }
+        createDirectoriesIfNotExist(path);
 
-        byte[] fileBytes = file.getBytes();
-        Files.write(path, fileBytes);
+        saveFile(file, path);
 
-        // Asigna la dirección de la portada al servicio
         Fichero portNueva = new Fichero();
-        portNueva.setDireccion(builder.toString());
+        portNueva.setDireccion(filePath);
         portNueva.setExtension(extension);
         guardar.setPortada(portNueva);
     }
 
+    @Transactional
     public void editFichero (MultipartFile file, Servicio guardar, Servicio nuevo, String tituloViejo, Fichero ficheroGuardado) throws IOException
     {
-        // Obtener la extensión del archivo subido
-    String originalFilename = file.getOriginalFilename();
-    String extension = "";
-    int i = originalFilename.lastIndexOf('.');
-    if (i > 0) {
-        extension = originalFilename.substring(i);
+        String originalFilename = file.getOriginalFilename();
+        String extension = getExtension(originalFilename);
+
+        String userHome = System.getProperty("user.home");
+        String newFilePath = buildFilePath(userHome, nuevo.getTitulo(), extension);
+
+        Path newPath = Paths.get(newFilePath);
+
+        createDirectoriesIfNotExist(newPath);
+
+        saveFile(file, newPath);
+
+        deleteOldFileIfExists(ficheroGuardado.getDireccion(), nuevo.getTitulo(), tituloViejo);
+
+        ficheroGuardado.setDireccion(newFilePath);
+        ficheroGuardado.setExtension(extension);
     }
 
-        // Guardar la nueva imagen
-        String userHome = System.getProperty("user.home");
-        StringBuilder builder = new StringBuilder();
-        builder.append(userHome);
-        builder.append(File.separator);
-        builder.append("ficheros");
-        builder.append(File.separator);
-        builder.append(nuevo.getTitulo());
-        builder.append(File.separator);
-        builder.append("portada"); // Nombre de la nueva portada
-        builder.append(extension);
+    private String getExtension(String filename) 
+    {
+        int i = filename.lastIndexOf('.');
+        return (i > 0) ? filename.substring(i) : "";
+    }
 
-        Path newPath = Paths.get(builder.toString());
+    private String buildFilePath(String userHome, String directory, String extension) 
+    {
+        return userHome + File.separator + "ficheros" + File.separator + directory + File.separator + "portada" + extension;
+    }
 
-        // Crear los directorios si no existen
-        if (!Files.exists(newPath.getParent())) {
-            Files.createDirectories(newPath.getParent());
+    private void createDirectoriesIfNotExist(Path path) throws IOException 
+    {
+        if (!Files.exists(path.getParent())) 
+        {
+            Files.createDirectories(path.getParent());
         }
+    }
 
+    private void saveFile(MultipartFile file, Path path) throws IOException 
+    {
         byte[] fileBytes = file.getBytes();
-        Files.write(newPath, fileBytes);
+        Files.write(path, fileBytes);
+    }
 
-        Path oldPath = Paths.get(ficheroGuardado.getDireccion());
+    private void deleteOldFileIfExists(String oldFilePath, String newTitle, String oldTitle) throws IOException 
+    {
+        Path oldPath = Paths.get(oldFilePath);
         Path parentPath = oldPath.getParent();
-            
-        // Eliminar el archivo del sistema de archivos
+
         if (Files.exists(oldPath)) 
         {
             Files.delete(oldPath);
-            if (!nuevo.getTitulo().equals(tituloViejo))
+            if (!newTitle.equals(oldTitle) && Files.exists(parentPath)) 
             {
-                if (Files.exists(parentPath)) 
-                {
-                    Files.delete(parentPath);
-                }
+                Files.delete(parentPath);
             }
         }
-
-        ficheroGuardado.setDireccion(newPath.toString());
-        ficheroGuardado.setExtension(extension);
     }
 }

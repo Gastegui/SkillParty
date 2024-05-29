@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -230,5 +232,31 @@ public class UserController
         return "redirect:/";
     }
 
+    @GetMapping("/{usuarioId}/comprar-curso/{cursoId}")
+    public ResponseEntity<Void> comprarCurso(@PathVariable Long usuarioId, @PathVariable Long cursoId) 
+    {
+        try 
+        {
+            usuarioService.descontarSaldoCurso(usuarioId, cursoId);
+            return ResponseEntity.ok().build();
+        } 
+        catch (Exception e) 
+        {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
+    @GetMapping("/{usuarioId}/comprar-servicio/{servicioId}/{opcionId}")
+    public ResponseEntity<Void> comprarServicio(@PathVariable Long usuarioId, @PathVariable Long servicioId, @PathVariable Long opcionId) 
+    {
+        try 
+        {
+            usuarioService.descontarSaldoServicio(usuarioId, servicioId, opcionId);
+            return ResponseEntity.ok().build();
+        } 
+        catch (Exception e) 
+        {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

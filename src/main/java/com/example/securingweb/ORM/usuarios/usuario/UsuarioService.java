@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.securingweb.ORM.usuarios.autoridad.Autoridad;
 import com.example.securingweb.ORM.usuarios.autoridad.AutoridadRepository;
+
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,5 +76,17 @@ public class UsuarioService implements UserDetailsService
         {
             return null;
         }
+    }
+
+    @Transactional
+    public void descontarSaldoCurso(Long usuarioId, Long cursoId) 
+    {
+        usuarioRepository.descontarSaldoCurso(usuarioId, cursoId);
+    }
+
+    @Transactional
+    public void descontarSaldoServicio(Long usuarioId, Long servicioId, Long opcionId) 
+    {
+        usuarioRepository.descontarSaldoServicio(usuarioId, servicioId, opcionId);
     }
 }
