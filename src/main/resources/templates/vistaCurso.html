@@ -10,7 +10,7 @@
     <script src="../js/download.js"></script>
     <title>Document</title>
 </head>
-<body>
+<body class="overflow-x-hidden">
     <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
         <div class="container-fluid">
     
@@ -70,9 +70,29 @@
       <div class="d-flex justify-content-center bg-info mx-4 ">
         <p class="m-auto text-white p-2">Verificado por el administrador</p>
       </div>
-      <div class="d-flex justify-content-center bg-info mx-4 mb-2">
-        <button class="btn border rounded bg-white my-2">Verificar</button>
+      <form class="bg-info mx-4 mb-2 ">
+        <div class="d-flex justify-content-center py-2 mx-2">
+          <h4 class="me-2">Nivel del curso</h4>
+          <input type="number" min="1" max="5">
+        </div>
+        <div class="d-flex justify-content-center py-2">
+          <button class="btn border rounded bg-white m-2">Verificar</button>
+        </div>
+        
+      <!--<div class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
+        <h4 class="me-4">Nivel de servicio</h4>
+        <input type="number">
+      </div>-->
+        
+      </form>
+      <div class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
+        <button class="btn border rounded bg-danger m-2">Eliminar</button>
       </div>
+
+      <!--<div class="btn-group mx-4 w-50">
+        <button class="btn border rounded bg-white my-2">Verificar</button>
+        <button class="btn border rounded bg-danger my-2">Eliminar</button>
+      </div>--> 
 
       <div class="container-fluid d-flex flex-column flex-lg-row">
         <main class="row d-flex justify-content-center">
@@ -84,10 +104,14 @@
                 <div class="row text-start">
                   <p class="h1 p-1 card-header">Lehen kurtsoa</p>
                 </div>
-                <div class="row d-flex justify-content-center p-1">
-                  <video controls class="w-100 h-auto">
+                <div class="row">
+                  <div class=" d-flex justify-content-center p-1">
+                    <img src="../images/logo.jpg" alt="logo" width="300">
+                  </div>
+                  
+                  <!--<video controls class="w-100 h-auto">
                     <source src="../video/youngVib.mp4" type="video/mp4">
-                  </video>
+                  </video>-->
                 </div>
                 <div class="row d-flex justify-content-between">
                   <div class="col-1 m-2 w-auto">
@@ -98,7 +122,13 @@
                   </div>
                 </div>
                 <div class="row d-flex justify-content-center p-1">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam.</p>
+                  <p class="fw-bold">Descripción:</p>
+                  <p class="ms-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam.</p>
+                </div>
+
+                <div class="row d-flex justify-content-center p-1">
+                  <p class="fw-bold">Categoría:</p>
+                  <p class="ms-4">Lorem</p>
                 </div>
               </div>
 
