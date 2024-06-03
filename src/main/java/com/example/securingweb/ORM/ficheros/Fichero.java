@@ -2,6 +2,7 @@ package com.example.securingweb.ORM.ficheros;
 
 import java.util.List;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
+import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +28,9 @@ public class Fichero
     @OneToMany(mappedBy = "portada", cascade = CascadeType.ALL)
     private List<Servicio> servicios;
 
+    @OneToMany(mappedBy = "imagen", cascade = CascadeType.ALL)
+    private List<Usuario> usuarios;
+
     public void setDireccion(String d) {direccion=d;}
     public String getDireccion() {return direccion;}
 
@@ -34,6 +38,16 @@ public class Fichero
     public String getExtension() {return extension;}
 
     public Long getId(){return id;}
+
+    public boolean isImg()
+    {
+        return extension.equals(".png") || extension.equals(".jpg");
+    }
+
+    public boolean isVid()
+    {
+        return extension.equals(".mp4");
+    }
 
     @Override
     public boolean equals(Object o)

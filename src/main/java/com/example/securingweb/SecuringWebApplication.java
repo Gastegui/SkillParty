@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 /* Clase principal de la aplicación Spring Boot */
 @SpringBootApplication
 /* Escanea los paquetes para componentes de Spring */
-@ComponentScan(basePackages = {"com.example.securingweb.Configuraciones", "com.example.securingweb.Controladores", "com.example.securingweb.ORM.usuarios.usuario"})
+@ComponentScan(basePackages = {"com.example.securingweb.Configuraciones", "com.example.securingweb.Controladores", "com.example.securingweb.ORM.usuarios.usuario", "com.example.securingweb.ORM.ficheros"})
 public class SecuringWebApplication 
 {
 	/* Método principal para ejecutar la aplicación Spring Boot */

@@ -13,6 +13,7 @@ import com.example.securingweb.ORM.usuarios.autoridad.AutoridadRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // Clase de servicio para gestionar operaciones relacionadas con los usuarios
 @Service
@@ -38,12 +39,12 @@ public class UsuarioService implements UserDetailsService
     @Override
     public Usuario loadUserByUsername(String nombre)
     {   
-        Usuario ret = usuarioRepository.findByUsername(nombre);
-        if(ret == null)
+        Optional<Usuario> ret = usuarioRepository.findByUsername(nombre);
+        if(ret.isEmpty())
         {
             throw new UsernameNotFoundException("No existe el usuario");
         }
-        return ret;
+        return ret.get();
     }
 
     public Usuario guardarUsuario(Usuario usuario) 

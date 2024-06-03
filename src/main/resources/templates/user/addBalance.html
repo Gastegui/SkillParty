@@ -7,23 +7,23 @@
         <title>Aumetar presupuesto</title>
     
         <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
-        <link rel="stylesheet" href="../css/listStyle.css">
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <script src="../js/validarPromo.js"></script>
+        <link rel="stylesheet" href="/css/listStyle.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/validarPromo.js"></script>
 
     </head>
     <body class="overflow-x-hidden">
         <nav id="header" class="navbar navbar-dark animated-nav row custom-height me-0" aria-label="Dark offcanvas navbar">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-                    <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+                    <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
                     <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
                 </a>
             
                 <div class="btn-group" id="header-buttons">
                     <button class="botoiPro">SkillParty Pro</button>
-                    <a href="../html/servicios.html" class="botoi">Servicios</a>
-                    <a href="../html/panelUsuario.html" class="botoi">Panel del usuario</a>
+                    <a href="/html/servicios.html" class="botoi">Servicios</a>
+                    <a href="/html/panelUsuario.html" class="botoi">Panel del usuario</a>
                 </div>
                 
                 
@@ -106,7 +106,7 @@
                             <p class=" text-start text-md-start me-auto">El monedero actual es de: </p>
                         </div>
                         <div class="col-2">
-                            <h4 class="fw-bold text-end me-4">10€</h4>
+                            <h4 class="fw-bold text-end me-4" th:text="|${usuario.saldo}€|"></h4>
                         </div>
                     
                     </div>
@@ -119,56 +119,56 @@
             <div class="m-lg-4 px-2 pt-5">
                 <div>
                     <h2 class="text-center text-decoration-underline fw-bold">Añadir dinero</h2>
-                    <p class="text-center">Para añadir rellene este formulario</p>
+                    <p class="text-center">Para añadir rellene este formulario (solo es necesario el último campo)</p>
                 </div>
                     
                 
-                <form action="" class="px-2 mb-2">
+                <form th:action="@{/user/addBalance}" method="post" class="px-2 mb-2">
 
                     <div class="my-3 ms-3">
                         <div class="form-check">
-                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked>
                             <label class="form-check-label" for="credit">Credit card</label>
                         </div>
                         <div class="form-check">
-                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input">
                             <label class="form-check-label" for="debit">Debit card</label>
                         </div>
                         <div class="form-check">
-                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input">
                             <label class="form-check-label" for="paypal">PayPal</label>
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" th:field="*{name}" class="form-control bg-body-primary mb-2" id="name" name="name" placeholder="Name">
+                        <input type="text" class="form-control bg-body-primary mb-2" id="name" placeholder="Name">
                         <label for="name">Name on card</label>
                     </div>
 
                     <!--<div class="form-floating">
-                        <input type="text" th:field="*{apellidos}" class="form-control bg-body-primary mb-2" id="surname" name="surname" placeholder="surname">
+                        <input type="text" class="form-control bg-body-primary mb-2" id="surname" placeholder="surname">
                         <label for="surname">Surname</label>
                     </div>-->
-
+                    
                     <div class="form-floating">
-                        <input type="text" th:field="*{cuantoDinero}" class="form-control bg-body-primary mb-2" id="cuantoDinero" name="cuantoDinero" placeholder="cuantoDinero">
-                        <label for="cuantoDinero">Cuanto quieres añadir</label>
+                        <input type="text" class="form-control bg-body-primary mb-2" id="numeroCuenta" placeholder="numeroCuenta">
+                        <label for="numeroDeCuenta">Credit card number</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="text" class="form-control bg-body-primary mb-2" id="expiration" placeholder="expiration">
+                        <label for="expiration">Expiration date</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="text" class="form-control bg-body-primary mb-2" id="ccv" placeholder="ccv">
+                        <label for="ccv">Security code</label>
                     </div>
 
                     <div class="form-floating">
-                        <input type="text" th:field="*{numeroDeCuenta}" class="form-control bg-body-primary mb-2" id="numeroCuenta" name="numeroCuenta" placeholder="numeroCuenta">
-                        <label for="numeroDeCuenta">Credit card number is required</label>
+                        <input type="number"  class="form-control bg-body-primary mb-2" name="cantidad" id="cuantoDinero" placeholder="cuantoDinero" required min="1">
+                        <label for="cuantoDinero">Saldo a añadir</label>
                     </div>
-
-                    <div class="form-floating">
-                        <input type="text" th:field="*{expiration}" class="form-control bg-body-primary mb-2" id="expiration" name="expiration" placeholder="expiration">
-                        <label for="expiration">Expiration date required</label>
-                    </div>
-
-                    <div class="form-floating">
-                        <input type="text" th:field="*{ccv}" class="form-control bg-body-primary mb-2" id="ccv" name="ccv" placeholder="ccv">
-                        <label for="ccv">Security code required</label>
-                    </div>
-
+                    
                     <div class="text-end">
                         <button class="btn btn-primary border border-primary rounded text-white btn-lg">Añadir</button>
                     </div>
@@ -182,7 +182,9 @@
         
 
         <!-- Script-ak-->
-        <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="../js/dashboard.js"></script>
+        <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+        <script src="/js/dashboard.js"></script>
     </body>
 </html>

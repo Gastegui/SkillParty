@@ -38,7 +38,10 @@ import com.example.securingweb.ORM.usuarios.usuario.UsuarioRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -52,6 +55,7 @@ public class ServiceController
     private ServicioRepository servicioRepository;
     private CategoriaRepository categoriaRepository;
     private FicheroRepository ficheroRepository;
+    private FicheroService ficheroService;
     private UsuarioRepository usuarioRepository;
     private OpcionRepository opcionRepository;
     private MuestrasRepository muestrasRepository;
@@ -63,6 +67,7 @@ public class ServiceController
     public ServiceController(ServicioRepository servicioRepository, 
                         CategoriaRepository categoriaRepository, 
                         FicheroRepository ficheroRepository, 
+                        FicheroService ficheroService,
                         UsuarioRepository usuarioRepository, 
                         OpcionRepository opcionRepository, 
                         MuestrasRepository muestrasRepository, 
@@ -73,6 +78,7 @@ public class ServiceController
         this.servicioRepository = servicioRepository;
         this.categoriaRepository = categoriaRepository;
         this.ficheroRepository = ficheroRepository;
+        this.ficheroService = ficheroService;
         this.usuarioRepository = usuarioRepository;
         this.opcionRepository = opcionRepository;
         this.muestrasRepository = muestrasRepository;
@@ -96,9 +102,21 @@ public class ServiceController
      * @param title
      * @return <code>Servicio</code> con nombre <code>title</code> o <code>null</null>
      */
-    public Servicio checkTitle(String title) 
+    private Servicio checkTitle(String title) 
     {
         return Optional.of(servicioRepository.findByTitulo(title).get()).orElseGet(() -> null);
+    }
+
+    private String encode(String str)
+    {
+        try
+        {
+            return URLEncoder.encode(str, StandardCharsets.UTF_8.toString());
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            return " ";
+        }
     }
 
     @GetMapping({"", "/"})
@@ -141,6 +159,12 @@ public class ServiceController
         catch(Exception e)
         {} //Si da error no hacer nada para usar los valores por defecto
 
+        if(sizeInt <= 0)
+            sizeInt = 1;
+
+        if(pageInt < 0)
+            pageInt = 0;
+
         Locale locale = RequestContextUtils.getLocale(request); // Obtener el idioma actual de la sesión
         Optional<Idioma> idiomOptional = idiomaRepository.findByIdioma(locale.getLanguage());
 
@@ -173,6 +197,8 @@ public class ServiceController
             return "redirect:/error/404";
 
         modelo.addAttribute("servicio", solicitado.get());
+        modelo.addAttribute("admin", getUser() == null ? false : getUser().isAdmin());
+        modelo.addAttribute("usuarioID", getUser() == null ? -1 : getUser().getId());
         modelo.addAttribute("ValorarServicios", new ValorarServicios());
         return "service/serviceView"; //pagina
     }
@@ -181,8 +207,7 @@ public class ServiceController
     public String postCreateService(@ModelAttribute Servicio nuevo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoria, 
                                 @RequestParam(value="idiomaParam", required=true) String idioma,
-                                @RequestParam(value="file", required=true) MultipartFile file, 
-                                @RequestParam(value="titulo", required=true) String directory) throws IOException
+                                @RequestParam(value="file", required=true) MultipartFile file) throws IOException
     {
     Servicio guardar = new Servicio();
 
@@ -198,6 +223,8 @@ public class ServiceController
 
     guardar.setDescripcion(nuevo.getDescripcion().trim());
     guardar.setPublicado(false);
+    guardar.setVerificado(false);
+    guardar.setPuntuacion((long) 0);
 
     Optional<Idioma> idiomaEncontrado = idiomaRepository.findByIdioma(idioma);
     if (idiomaEncontrado.isEmpty()) {
@@ -207,18 +234,29 @@ public class ServiceController
 
     guardar.setTitulo(nuevo.getTitulo().trim());
 
-    FicheroService fs = new FicheroService();
-    fs.crearFichero(file, guardar, directory);
 
-    try {
-        guardarServicio(guardar);
-    } catch (DataIntegrityViolationException e) {
+    try 
+    {
+        if(!ficheroService.isImg(file))
+            return "redirect:/service/create?messagee=invalidFile";
+        guardar = guardarServicio(guardar); //Guardar el servicio primero sin la portada, ya que todavía no existe el ID del servicio
+        guardar.setPortada(ficheroRepository.save(ficheroService.crearFicheroServicio(file, guardar, "portada"))); //Guardar el fichero en el sistema y en la DB
+        servicioRepository.save(guardar); //Guardar el servicio con la portada en la DB
+    }
+    catch (DataIntegrityViolationException e)
+    {
         return "redirect:/service/create?message=serviceExists";
-    } catch (IllegalArgumentException e) {
+    }
+    catch (IllegalArgumentException e)
+    {
         return "redirect:/service/create?message=" + e.getMessage();
     }
+    catch (IOException e)
+    {
+        return "redirect:/service/create?message=fileError";
+    }
 
-    return "redirect:/service/edit?title=" + nuevo.getTitulo() + "&message=serviceCreated";
+    return "redirect:/service/edit?title=" + encode(nuevo.getTitulo()) + "&message=serviceCreated";
 }
 
 
@@ -233,6 +271,21 @@ public class ServiceController
 
         if (!aBorrar.get().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
+
+        try
+        {
+            ficheroService.borrarFichero(aBorrar.get().getPortada());
+            ficheroRepository.delete(aBorrar.get().getPortada());
+            for(Muestra i : aBorrar.get().getMuestras())
+            {
+                ficheroService.borrarFichero(i.getMultimedia());
+                ficheroRepository.delete(i.getMultimedia());
+            }
+        }
+        catch(IOException e)
+        {
+            return "redirect:/service/edit?title="+encode(titulo)+"&message=fileError";
+        }
 
         servicioRepository.delete(aBorrar.get());
 
@@ -251,7 +304,7 @@ public class ServiceController
 
         guardado.get().setPublicado(isPrivate.equals("y") ? false : true);
         servicioRepository.save(guardado.get());
-        return "redirect:/service/edit?title="+guardado.get().getTitulo()+"&message="+(isPrivate.equals("y")? "servicePrivated" : "servicePublished");
+        return "redirect:/service/edit?title="+encode(guardado.get().getTitulo())+"&message="+(isPrivate.equals("y")? "servicePrivated" : "servicePublished");
     }
 
     @GetMapping("edit")
@@ -269,7 +322,6 @@ public class ServiceController
         modelo.addAttribute("ListaOpciones", aEditar.get().getOpciones());
         modelo.addAttribute("ListaMuestras", aEditar.get().getMuestras());
         modelo.addAttribute("Opcion", new Opcion());
-        modelo.addAttribute("Muestra", new Muestra());
         return "service/editService"; //pagina
     }
 
@@ -278,57 +330,80 @@ public class ServiceController
                                 @RequestParam(value="tituloViejo", required=true) String tituloViejo, 
                                 @RequestParam(value="categoriaParam", required=true) String categoriaParam, 
                                 @RequestParam(value="idiomaParam", required=true) String idiomaParam,
-                                @RequestParam(value="file", required=true) MultipartFile file) throws IOException {
-    Optional<Servicio> guardadoOpt = servicioRepository.findByTitulo(tituloViejo);
-    
-
-    if (guardadoOpt.isEmpty())
-        return "redirect:/service/list?message=serviceNotFound"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
-
-    Servicio guardado = guardadoOpt.get();
-
-    Optional<Fichero> guardadoOpt2 = ficheroRepository.findById(guardado.getPortada().getId());
-
-    Fichero ficheroGuardado = guardadoOpt2.get();
-
-    if (!guardado.getCreador().equals(getUser()) && !getUser().isAdmin())
-        return "redirect:/error/403";
-
-    guardado.setTitulo(nuevo.getTitulo());
-    guardado.setDescripcion(nuevo.getDescripcion());
-    guardado.setFechaDeActualizacion(new Date());
-    
-    if (!guardado.getCategoria().getDescripcion().equals(categoriaParam)) { //Comprobar si se ha cambiado la categoría
-        Optional<Categoria> cat = categoriaRepository.findByDescripcion(categoriaParam);
-        if (cat.isEmpty()) {
-            Categoria catNueva = new Categoria();
-            catNueva.setDescripcion(categoriaParam);
-            guardado.setCategoria(categoriaRepository.save(catNueva));
-        } else {
-            guardado.setCategoria(cat.get());
-        }
-    }
-
-    if (!guardado.getIdioma().getIdioma().equals(idiomaParam)) { //Comprobar si se ha cambiado el idioma
-        Optional<Idioma> idi = idiomaRepository.findByIdioma(idiomaParam);
-        if (idi.isEmpty()) {
-            Idioma idiNuevo = new Idioma();
-            idiNuevo.setIdioma(idiomaParam);
-            guardado.setIdioma(idiomaRepository.save(idiNuevo));
-        } else {
-            guardado.setIdioma(idi.get());
-        }
-    }
-    
-    FicheroService fs = new FicheroService();
-    fs.editFichero(file, guardado, nuevo, tituloViejo, ficheroGuardado);
+                                @RequestParam(value="file", required=false) MultipartFile file) throws IOException 
+    {
+        Optional<Servicio> guardadoOpt = servicioRepository.findByTitulo(tituloViejo);
         
-    servicioRepository.save(guardado);
 
-        return "redirect:/service/edit?title=" + guardado.getTitulo() + "&message=serviceEdited";
+        if (guardadoOpt.isEmpty())
+        {
+            System.out.println("EN EL POST");
+            return "redirect:/service/list?message=serviceNotFound"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
+        }
+
+        Servicio guardado = guardadoOpt.get();
+
+        if (!guardado.getCreador().equals(getUser()) && !getUser().isAdmin())
+            return "redirect:/error/403";
+        
+        if(servicioRepository.findByTitulo(nuevo.getTitulo()).isPresent())
+            return "redirect:/service/edit?title="+encode(tituloViejo)+"&message=serviceExists";
+
+        guardado.setDescripcion(nuevo.getDescripcion());
+        guardado.setFechaDeActualizacion(new Date());
+        
+        if (!guardado.getCategoria().getDescripcion().equals(categoriaParam)) { //Comprobar si se ha cambiado la categoría
+            Optional<Categoria> cat = categoriaRepository.findByDescripcion(categoriaParam);
+            if (cat.isEmpty()) {
+                Categoria catNueva = new Categoria();
+                catNueva.setDescripcion(categoriaParam);
+                guardado.setCategoria(categoriaRepository.save(catNueva));
+            } else {
+                guardado.setCategoria(cat.get());
+            }
+        }
+        
+        if (!guardado.getIdioma().getIdioma().equals(idiomaParam)) { //Comprobar si se ha cambiado el idioma
+            Optional<Idioma> idi = idiomaRepository.findByIdioma(idiomaParam);
+            if (idi.isEmpty()) {
+                Idioma idiNuevo = new Idioma();
+                idiNuevo.setIdioma(idiomaParam);
+                guardado.setIdioma(idiomaRepository.save(idiNuevo));
+            } else {
+                guardado.setIdioma(idi.get());
+            }
+        }
+        
+        Optional<Fichero> ficheroGuardado = ficheroRepository.findById(guardado.getPortada().getId());
+        
+        if(!file.isEmpty())
+        {
+            try
+            {
+                if(!ficheroService.isImg(file))
+                    return "redirect:/service/edit?title="+encode(guardado.getTitulo())+"&message=invalidFile";
+                ficheroService.cambiarFicheroServicio(file, guardado, "portada", ficheroGuardado.get());
+                ficheroRepository.save(ficheroGuardado.get());
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                return "redirect:/service/edit?title="+encode(guardado.getTitulo())+"&message=fileError";
+            }
+        }
+        
+        guardado.setPortada(ficheroGuardado.get());
+        
+        guardado.setTitulo(nuevo.getTitulo());
+
+
+        servicioRepository.save(guardado);
+        //Aquí he tenido que poner el título con el con lo del encoder para que no salte error si se usa un título con carácteres no ASCII.
+        //En el resto de lugares no hace falta hacerlo
+        return "redirect:/service/edit?title="+encode(guardado.getTitulo())+"&message=serviceEdited";
     }
 
-    @PostMapping("buy")
+    @PostMapping("buy") //TODO: QUE SE COMPRE CON EL PROCEDIMIENTO
     public String buyService(@RequestParam(value="title", required = true) String padre,
                             @RequestParam(value="id", required = true) String id)
     {
@@ -344,18 +419,21 @@ public class ServiceController
         }
         catch(NumberFormatException e)
         {
-            return "redirect:/service/view?title="+padre+"&message=serviceNotBought";
+            return "redirect:/service/view?title="+encode(padre)+"&message=serviceNotBought";
         }
 
         if(opcion.isEmpty())
-            return "redirect:/service/view?title="+padre+"&message=optionNotFound";
+            return "redirect:/service/view?title="+encode(padre)+"&message=optionNotFound";
 
         Usuario user = getUser();
         if(user == null)
             return "redirect:/error/403";
 
+        if(user.equals(servicio.get().getCreador()))
+            return "redirect:/service/view?title="+encode(padre)+"&message=cannotBuyOwnService";
+
         if(getUser().getSaldo().compareTo(opcion.get().getPrecio()) < 0)
-            return "redirect:/service/view?title="+padre+"&message=noEnoughMoney";
+            return "redirect:/service/view?title="+encode(padre)+"&message=noEnoughMoney";
         
         user.setSaldo(getUser().getSaldo().subtract(opcion.get().getPrecio()));
         usuarioRepository.save(user);
@@ -391,10 +469,10 @@ public class ServiceController
             return "redirect:/error/403";
         }
 
-        return "redirect:/service/edit?title="+padre+"&message=optionCreated";
+        return "redirect:/service/edit?title="+encode(padre)+"&message=optionCreated";
     }
     
-    @GetMapping("deleteOption") //TODO: esto debería ser post
+    @GetMapping("deleteOption")
     public String deleteOption(@RequestParam(value="title", required = true) String title,
                             @RequestParam(value="id", required = true) String id)
     {
@@ -408,18 +486,18 @@ public class ServiceController
         }
         catch (NumberFormatException e)
         {
-            return "redirect:/service/edit?title="+title+"&message=optionNotDeleted";
+            return "redirect:/service/edit?title="+encode(title)+"&message=optionNotDeleted";
         }
 
         if(aBorrar.isEmpty())
-            return "redirect:/service/edit?title="+title+"&message=optionNotFound";
+            return "redirect:/service/edit?title="+encode(title)+"&message=optionNotFound";
 
         if(!aBorrar.get().getPadre().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
 
         opcionRepository.delete(aBorrar.get());
 
-        return "redirect:/service/edit?title="+title+"&message=optionDeleted";
+        return "redirect:/service/edit?title="+encode(title)+"&message=optionDeleted";
     }
 
     @PostMapping("editOption")
@@ -438,11 +516,11 @@ public class ServiceController
         }
         catch (NumberFormatException e)
         {
-            return "redirect:/service/edit?title="+title+"&message=optionNotEdited";
+            return "redirect:/service/edit?title="+encode(title)+"&message=optionNotEdited";
         }
 
         if(guardado.isEmpty())
-            return "redirect:/service/edit?title="+title+"&message=optionNotFound";
+            return "redirect:/service/edit?title="+encode(title)+"&message=optionNotFound";
 
         if(!guardado.get().getPadre().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
@@ -463,50 +541,51 @@ public class ServiceController
             return "redirect:/error/403";
         }
 
-        return "redirect:/service/edit?title="+title+"&message=optionEdited";
+        return "redirect:/service/edit?title="+encode(title)+"&message=optionEdited";
     }
 
     @PostMapping("createSample")
-    public String createSample(@ModelAttribute Muestra nuevo, 
-                        @RequestParam(value="title", required=true) String padre, 
-                        @RequestParam(value="dirMultimedia", required=true) String dirMultimedia, 
-                        @RequestParam(value="pos", required=true) String pos)
+    public String createSample(@RequestParam(value="title", required=true) String padre, 
+                            @RequestParam(value="file", required=true) MultipartFile file, 
+                            @RequestParam(value="pos", required=true) String pos)
     {
         Long posLong;
-
-        if(checkTitle(padre) == null)
+        Servicio servicio = checkTitle(padre);
+        Muestra nuevo = new Muestra();
+        if(servicio == null)
             return "redirect:/service/list?message=noServiceFather"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
-            
+
+        if(!servicio.getCreador().equals(getUser()))
+            return "redirect:/error/403";
+
         try
         {
             posLong = Long.parseLong(pos);
         }
         catch (NumberFormatException e)
         {
-            return "redirect:/service/edit?title="+padre+"&message=sampleNotCreated";
+            return "redirect:/service/edit?title="+encode(padre)+"&message=sampleNotCreated";
         }
 
         try
         {
-            Fichero multimedia = new Fichero();
-            multimedia.setDireccion(dirMultimedia.trim());
-            nuevo.setFichero(multimedia);
-            nuevo.setDescripcion(nuevo.getDescripcion().trim());
+            if(!ficheroService.isImg(file) && !ficheroService.isVid(file))
+                return "redirect:/service/edit?title="+encode(padre)+"&message=invalidFile";
+            
+            nuevo.setMultimedia(ficheroService.crearFicheroServicio(file, servicio, "muestra"+pos));
+            ficheroRepository.save(nuevo.getMultimedia());
             nuevo.setPosicion(posLong);
-            guardarMuestra(nuevo, padre);
+            nuevo.setPadre(servicio);
+            muestrasRepository.save(nuevo);
         }
-        catch(IllegalArgumentException e) //noServiceFather
+        catch(IOException e)
         {
-            return "redirect:/service/create?message="+e.getMessage();//MARK: esto debería redirigir a la lista de servicios creados por el usuario
+            return "redirect:/service/edit?title="+encode(padre)+"&message=fileError";
         }
-        catch(NoPermissionException e)
-        {
-            return "redirect:/error/403";
-        }
-        return "redirect:/service/edit?title="+padre+"&message=sampleCreated";
+        return "redirect:/service/edit?title="+encode(padre)+"&message=sampleCreated";
     }
 
-    @GetMapping("deleteSample") //TODO: esto deberia ser post
+    @GetMapping("deleteSample")
     public String deleteSample(@RequestParam(value="title", required = true) String title, 
                             @RequestParam(value="id", required = true) String id)
     {
@@ -521,40 +600,61 @@ public class ServiceController
         }
         catch(NumberFormatException e)
         {
-            return "redirect:/service/edit?title="+title+"&message=sampleNotDeleted";
+            return "redirect:/service/edit?title="+encode(title)+"&message=sampleNotDeleted";
         }
         
         if(aBorrar.isEmpty())
-            return "redirect:/service/edit?title="+title+"&message=sampleNotDeleted";
+            return "redirect:/service/edit?title="+encode(title)+"&message=sampleNotDeleted";
         
         if(!aBorrar.get().getPadre().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
-        
-        muestrasRepository.delete(aBorrar.get());
+        try
+        {
+            ficheroService.borrarFichero(aBorrar.get().getMultimedia());
+            muestrasRepository.delete(aBorrar.get());
+            ficheroRepository.delete(aBorrar.get().getMultimedia());
+        }
+        catch (IOException e)
+        {
+            return "redirect:/service/edit?title="+encode(title)+"&message=fileError";
+        }
         
         List<Muestra> lista = checkTitle(title).getMuestras(); //Se usa checkTitle para cargar la lista de todas las muesras qua hay despues de borrar la muestra deseada
-
-        Long anterior = lista.get(0).getPosicion()-1; //Esto siempre debería ser 0, pero por si acaso le pongo el valor de la primera muestra menos uno para que el for sea más sencillo
-        for(Muestra i : lista)
+        if(!lista.isEmpty())
         {
-            if(i.getPosicion() != anterior+1) //Esto comprueba que todas las muestras tengan los números seguidos, ya que al borrar una muestra que no sea la última se rompe la cadena de números
+            Long anterior = (long)0;
+            try
             {
-                i.setPosicion(anterior+1); //Ponerle el número siguiente al anterior para reestablecer la cadena de números
-                muestrasRepository.save(i); //Hay que guardar la muestra de nuevo para actualizarla con su nueva posición
+                for(Muestra i : lista)
+                {
+                    System.out.println("Posicion del guardado: " + i.getPosicion() + " , anterior+1: " + (anterior+1));
+                    if(!i.getPosicion().equals(anterior+1)) //Esto comprueba que todas las muestras tengan los números seguidos, ya que al borrar una muestra que no sea la última se rompe la cadena de números
+                    {
+                        i.setPosicion(anterior+1); //Ponerle el número siguiente al anterior para reestablecer la cadena de números
+                        ficheroRepository.save(ficheroService.cambiarNombreFichero(i.getMultimedia(), "muestra"+(anterior+1)));
+                        System.out.println("Se le va a poner el nombre: " + "muestra"+(anterior+1));
+                        muestrasRepository.save(i); //Hay que guardar la muestra de nuevo para actualizarla con su nueva posición
+                    }
+                    anterior++;
+                }
             }
-            anterior++;
+            catch(IOException e)
+            {
+                e.printStackTrace();
+                return "redirect:/service/edit?title="+encode(title)+"&message=fileError";
+            }
         }
 
-        return "redirect:/service/edit?title="+title+"&message=sampleDeleted";
+        return "redirect:/service/edit?title="+encode(title)+"&message=sampleDeleted";
     }
 
     @PostMapping("editSample") //En /editSample NO se cambia la posición de la muestra, para eso está /editSamplePos
     public String editSample(@RequestParam(value="id", required = true) String id, 
                         @RequestParam(value = "title", required = true) String titulo, 
-                        @RequestParam(value = "desc", required = true) String desc, 
-                        @RequestParam(value="dirMultimedia", required = true) String dirMultimedia)
+                        @RequestParam(value="file", required=true) MultipartFile file)
     {
-        if(checkTitle(titulo) == null)
+        Servicio servicio = checkTitle(titulo);
+        if(servicio == null)
             return "redirect:/service/list?message=noServiceFather"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
             
         Optional<Muestra> guardado;
@@ -565,28 +665,39 @@ public class ServiceController
         }
         catch(NumberFormatException e)
         {
-            return "redirect:/service/view?title="+titulo+"&message=sampleNotEdited";
+            return "redirect:/service/view?title="+encode(titulo)+"&message=sampleNotEdited";
         }
 
         if(guardado.isEmpty())
-            return "redirect:/service/view?title="+titulo+"&message=sampleNotFound";
+            return "redirect:/service/view?title="+encode(titulo)+"&message=sampleNotFound";
 
         if(!guardado.get().getPadre().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
 
-        guardado.get().setDescripcion(desc);
-
-        //TODO: ARCHIVO
+        Optional<Fichero> fichero = ficheroRepository.findByDireccion(guardado.get().getMultimedia().getDireccion());
+        if(fichero.isEmpty())
+            return "redirect:/service/edit?title="+encode(titulo)+"&message=fileNotFound";
+        
+        try
+        {
+            if(!ficheroService.isImg(file) && !ficheroService.isVid(file))
+                return "redirect:/service/edit?title="+encode(titulo)+"&message=invalidFile";
+            ficheroService.cambiarFicheroServicio(file, servicio, "muestra"+guardado.get().getPosicion(), fichero.get());
+        }
+        catch(IOException e)
+        {
+            return "redirect:/service/edit?title="+encode(titulo)+"&message=fileError";
+        }
 
         muestrasRepository.save(guardado.get());
 
-        return "redirect:/service/edit?title="+guardado.get().getPadre().getTitulo()+"&message=sampleEdited";
+        return "redirect:/service/edit?title="+encode(guardado.get().getPadre().getTitulo())+"&message=sampleEdited";
     }
 
     @GetMapping("editSamplePos")
     public String editSamplePos(@RequestParam(value="id", required = true) String id, 
-    @RequestParam(value = "title", required = true) String titulo, 
-    @RequestParam(value = "dir", required = true) String dir)
+                            @RequestParam(value = "title", required = true) String titulo, 
+                            @RequestParam(value = "dir", required = true) String dir)
     {
         if(checkTitle(titulo) == null)
             return "redirect:/service/list?message=noServiceFather"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
@@ -600,11 +711,11 @@ public class ServiceController
         }
         catch(NumberFormatException e)
         {
-            return "redirect:/service/view?title="+titulo+"&message=sampleNotEdited";
+            return "redirect:/service/view?title="+encode(titulo)+"&message=sampleNotEdited";
         }
 
         if(guardado.isEmpty())
-            return "redirect:/service/view?title="+titulo+"&message=sampleNotFound";
+            return "redirect:/service/view?title="+encode(titulo)+"&message=sampleNotFound";
 
         if(!guardado.get().getPadre().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
@@ -616,14 +727,14 @@ public class ServiceController
         if(dir.equals("izq"))
         {
             if(guardado.get().getPosicion()==1) //Se ha intentado mover a la izquierda la primera muestra
-                return "redirect:/service/edit?title="+titulo+"&sampleNotEdited";
+                return "redirect:/service/edit?title="+encode(titulo)+"&message=sampleNotEdited";
 
             buscando = guardado.get().getPosicion()-1; //Hay que mover la muestra una posición a la izquierda, por lo que hay que buscar cual es la muestra con una posición menos
         }
         else
         {
             if(guardado.get().getPosicion()==lista.size()) //Se ha intentado mover a la derecha la última muestra
-                return "redirect:/service/edit?title="+titulo+"&sampleNotEdited";
+                return "redirect:/service/edit?title="+encode(titulo)+"&message=sampleNotEdited";
 
             buscando = guardado.get().getPosicion()+1; //Hay que mover la muestra una posición a la derecha, por lo que hay que buscar cual es la muestra con una posición más
         }
@@ -633,18 +744,45 @@ public class ServiceController
         otro.setPosicion(guardado.get().getPosicion()); //Ponerle la posición de la muestra solicitada a la otra muestra
         guardado.get().setPosicion(buscando); //Ponerle la posición de la muestra que se ha buscado (la otra) a la muestra solicitada
 
+
+        Optional<Fichero> ficheroEsteOpt = ficheroRepository.findByDireccion(guardado.get().getMultimedia().getDireccion());
+        Optional<Fichero> ficheroOtroOpt = ficheroRepository.findByDireccion(otro.getMultimedia().getDireccion());
+
+        if(ficheroEsteOpt.isEmpty() || ficheroOtroOpt.isEmpty())
+            return "redirect:/service/edit?title="+encode(titulo)+"&message=fileNotFound";
+
+        Fichero ficheroEste = ficheroEsteOpt.get();
+        Fichero ficheroOtro = ficheroOtroOpt.get();
+
+        try
+        {
+            ficheroEste = ficheroService.cambiarNombreFichero(ficheroEste, "muestra"+guardado.get().getPosicion()+"_");
+            ficheroOtro = ficheroService.cambiarNombreFichero(ficheroOtro, "muestra"+otro.getPosicion());
+            ficheroRepository.save(ficheroOtro);
+            ficheroEste = ficheroService.cambiarNombreFichero(ficheroEste, "muestra"+guardado.get().getPosicion());
+            ficheroRepository.save(ficheroEste);
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            return "redirect:/service/edit?title="+encode(titulo)+"&message=fileError";
+        }
+
+        guardado.get().setMultimedia(ficheroEste);
+        otro.setMultimedia(ficheroOtro);
+
         muestrasRepository.save(guardado.get()); //Guardar las dos muestras para actualizar sus posiciones
         muestrasRepository.save(otro);
 
-        return "redirect:/service/edit?title="+guardado.get().getPadre().getTitulo()+"&message=sampleEdited";
+        return "redirect:/service/edit?title="+encode(guardado.get().getPadre().getTitulo())+"&message=sampleEdited";
     }
 
     @PostMapping("rate")
     public String createRating(@ModelAttribute ValorarServicios valoracion, 
                             @RequestParam(value="title", required = true) String titulo)
     {
-        Usuario usuario = getUser();
-        if(usuario == null)
+        Optional<Usuario> usuario = usuarioRepository.findByUsername(getUser().getUsername());
+        if(usuario.isEmpty())
             return "redirect:/error/403";
 
         Optional<Servicio> servicioValorado = servicioRepository.findByTitulo(titulo.trim());
@@ -652,22 +790,12 @@ public class ServiceController
             return "redirect:/service/list?message=noServiceFather"; //MARK: esto debería redirigir a la lista de servicios creados por el usuario
 
         if(valoracion.getValoracion() > 5)
-            return "redirect:/service/view?title="+titulo+"&message=invalidRating";
+            return "redirect:/service/view?title="+encode(titulo)+"&message=invalidRating";
         
-        for(ValorarServicios i : usuario.getServiciosValorados()) //TODO: ARREGLASR ESTO YA
+        for(ValorarServicios i : usuario.get().getServiciosValorados())
         {
             if(i.getServicio().equals(servicioValorado.get()))
-                return "redirect:/service/view?title="+titulo+"&message=alreadyRated";
-        }
-        
-
-        if(valoracion.getValoracion() > 5)
-            return "redirect:/service/view?title="+titulo+"&message=invalidRating";
-        
-        for(ValorarServicios i : usuario.getServiciosValorados()) //TODO: ARREGLASR ESTO YA
-        {
-            if(i.getServicio().equals(servicioValorado.get()))
-                return "redirect:/service/view?title="+titulo+"&message=alreadyRated";
+                return "redirect:/service/view?title="+encode(titulo)+"&message=alreadyRated";
         }
         
         valoracion.setServicio(servicioValorado.get());
@@ -677,10 +805,10 @@ public class ServiceController
 
         valorarServiciosRepository.save(valoracion);
 
-        return "redirect:/service/view?title="+titulo+"&message=ratingCreated";
+        return "redirect:/service/view?title="+encode(titulo)+"&message=ratingCreated";
     }
 
-    @GetMapping("deleteRating") //TODO: esto deberia ser post
+    @GetMapping("deleteRating")
     public String deleteRating(@RequestParam(value="title", required = true) String title, 
                             @RequestParam(value="id", required = true) String id)
     {
@@ -694,11 +822,11 @@ public class ServiceController
         }
         catch(NumberFormatException e)
         {
-            return "redirect:/service/view?title="+title+"&message=ratingNotDeleted";
+            return "redirect:/service/view?title="+encode(title)+"&message=ratingNotDeleted";
         }
 
         if(aBorrar.isEmpty())
-            return "redirect:/service/view?title="+title+"&message=ratingNotDeleted";
+            return "redirect:/service/view?title="+encode(title)+"&message=ratingNotDeleted";
 
         if(!aBorrar.get().getUsuario().equals(getUser()) && !getUser().isAdmin())
         {
@@ -707,23 +835,35 @@ public class ServiceController
 
         valorarServiciosRepository.delete(aBorrar.get());
 
-        return "redirect:/service/view?title="+title+"&message=ratingDeleted";
+        return "redirect:/service/view?title="+encode(title)+"&message=ratingDeleted";
+    }
+
+    @PostMapping("verify")
+    public String virify(@RequestParam(value = "title", required = true) String titulo)
+    {
+        Usuario usuario = getUser();
+        Servicio servicio = checkTitle(titulo);
+
+        if(usuario == null || !usuario.isAdmin())
+            return "redirect:/error/403";
+
+        if(servicio == null)
+            return "redirect:/service/list?message=serviceNotFound";
+
+        servicio.setVerificado(true);
+
+        servicioRepository.save(servicio);
+        
+        return "redirect:/service/view?title="+titulo+"&message=verified";
     }
 
     public Servicio guardarServicio(Servicio servicio) 
     {
-        if (servicio == null || servicio.getCreador() == null || servicio.getCategoria() == null || servicio.getPortada() == null) {
+        if (servicio == null || servicio.getCreador() == null || servicio.getCategoria() == null)
+        {
             throw new IllegalArgumentException("notEnoughData");
         }
-        servicio.getPortada().setDireccion(servicio.getPortada().getDireccion().trim());
 
-        Optional<Fichero> ficheroExistente = ficheroRepository.findByDireccion(servicio.getPortada().getDireccion()); //Buscar el fichero que se quiere guardar entre los ya existentes
-        Fichero portada;
-        if (ficheroExistente.isEmpty())
-            portada = ficheroRepository.save(servicio.getPortada()); //Si no existe en la DB, se guarda el fichero en la DB y se guarda la referencia al archivo guardado
-        else
-            portada = ficheroExistente.get(); //Si ya en la DB, se guarda su referencia
-    
         Optional<Categoria> categoriaExistente = categoriaRepository.findByDescripcion(servicio.getCategoria().getDescripcion());
         Categoria categoria;
         if (categoriaExistente.isPresent()) {
@@ -739,8 +879,8 @@ public class ServiceController
     
         servicio.setCreador(creadorExistente.get());
         servicio.setCategoria(categoria);
-        servicio.setPortada(portada); //Se asigna la referencia a la DB para que las relaciones padre a hijo se hagan bien de forma automática con JPA
         servicio.setTitulo(servicio.getTitulo().trim());
+        servicio.setPortada(null);
         return servicioRepository.save(servicio);
     }
     
@@ -760,24 +900,4 @@ public class ServiceController
         return opcionRepository.save(nuevo);
     }
 
-    public Muestra guardarMuestra(Muestra nuevo, String tituloPadre) throws NoPermissionException
-    {        
-        Optional<Servicio> padreEncotrado = servicioRepository.findByTitulo(tituloPadre.trim());
-
-        if(padreEncotrado.isEmpty())
-            throw new IllegalArgumentException("noServiceFather");
-
-        if(!padreEncotrado.get().getCreador().equals(getUser()))
-            throw new NoPermissionException();
-
-        nuevo.setPadre(padreEncotrado.get());
-        nuevo.getMultimedia().setDireccion(nuevo.getMultimedia().getDireccion().trim());
-        Optional<Fichero> ficheroEncontrado = ficheroRepository.findByDireccion(nuevo.getMultimedia().getDireccion());
-        if(ficheroEncontrado.isEmpty())
-            nuevo.setFichero(ficheroRepository.save(nuevo.getMultimedia()));
-        else
-            nuevo.setFichero(ficheroEncontrado.get());
-
-        return muestrasRepository.save(nuevo);
-    }
 }

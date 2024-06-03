@@ -1,18 +1,15 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>fondos</title>
-    
-        <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/listStyle.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
+        <title>Historial</title>
     </head>
     <body class="overflow-x-hidden">
-        <nav id="header" class="navbar navbar-dark animated-nav row custom-height me-0" aria-label="Dark offcanvas navbar">
+        <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="#" id="title">
                     <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
@@ -76,68 +73,72 @@
             </div>
         </nav>
 
-        <!--Hasi -->
+        <main class="container position-relative overflow-auto pt-4">
 
-        <main>
-            <div class="m-4 ms-5 border p-2 ">
-                <h3 class="mt-2 ms-2 text-center text-md-start text-decoration-underline fw-bold">
-                    Gráfico de ganancias
-                </h3>
-                <p class="mx-2 mt-2 text-center text-sm-start">
-                    Este gráfico representa las ganancias obtenidas por los servicios.
-                </p>
+            <div class="border m-2 p-2">
+                <h2>Servicios publicados</h2>
             </div>
+            <div class="album py-2">
+                <div class="container-fluid ">
+                    <div class="d-flex overflow-x-auto">
 
-            <div class="col-md-10 ms-sm-auto col-lg-11 px-md-4">
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-            </div>
-
-            <div class="container m-lg-4 ms-0 me-0 ps-3 pt-5">
-                <h3 class="text-decoration-underline fw-bold mb-3">Para cobrar</h3>
-                <div class="row">
-                    <div class="col-6 col-md-10"> 
-                        <p>Lo que has ganado desde la última vez que cobraste:</p>
-                    </div>
-                    <div class="col-2 text-end"> 
-                        <h4 class="fw-bold" th:text="|${usuario.porCobrar}€|"></h4>
-                    </div>
-                    
-                </div>
-                <div class="row my-4">
-                    <div class="col-6 col-md-10 d-flex align-items-center">
-                        <p>Para cobrar lo que debes, click-a en el botón -></p>
-                    </div>
-                    <div class="col-2 text-end">
-                        <form th:action="@{/user/claim}" method="post">
-                            <button type="submit" class="btn btn-primary border border-primary rounded text-white btn-lg">Cobrar</button>
-                        </form>
+                        <div class="p-2" th:each="i : ${serviciosSi}">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${i.titulo}"></h5>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="logo" width="300">   
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${i.descripcion}"></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                            <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
-                
-                
             </div>
+
+            <div class="border m-2 mt-5 p-2">
+                <h2>Servicios sin publicar</h2>
+            </div>
+            <div class="album py-2">
+                <div class="container-fluid ">
+                    <div class="d-flex overflow-x-auto">
+                        
+                            <div class="p-2" th:each="i : ${serviciosNo}">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title" th:text="${i.titulo}"></h5>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="logo" width="300">   
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text" th:text="${i.descripcion}"></p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                    </div>
+                </div>
+            </div>
+       
         </main>
-        
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- Script-ak-->
-        <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-        <script src="/js/dashboard.js"></script>
+        <script defer src="/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

@@ -49,6 +49,6 @@ public class MvcConfig implements WebMvcConfigurer
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:" + System.getProperty("user.home") + "/ficheros/");
+                .addResourceLocations("file:" + System.getProperty("user.home") + "/SkillPartyFiles/");
     }
 }

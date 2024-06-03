@@ -2,6 +2,15 @@ drop database if exists skillparty;
 create database if not exists skillparty;
 use skillparty;
 
+CREATE TABLE ficheros 
+(
+    id bigint auto_increment PRIMARY KEY,
+    direccion VARCHAR(255) not null unique,
+	extension varchar(255) not null
+);
+
+insert into ficheros values(1, '/home/julen/SkillPartyFiles/admin/profile', '.jpg');
+
 create table usuarios
 (
 	id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -17,11 +26,15 @@ create table usuarios
     account_non_locked BOOLEAN NOT NULL,
     credentials_non_expired BOOLEAN NOT NULL,
 	saldo decimal(38, 2) not null,
-	por_cobrar decimal(38, 2) not null
+	por_cobrar decimal(38, 2) not null,
+    puntuacion bigint not null,
+    imagen_id bigint 
 );
 
+alter table usuarios add constraint FK_usuarios foreign key (imagen_id) references ficheros (id);
+
 insert into usuarios values(1, 'Administrator', 'Owner', '2000-01-01', '000000000', 'julen.gallastegui@alumni.mondragon.edu',
-'admin', '$2a$10$JNg3mDt2kJ8vujwPTsNjO.npMYYsonSFWsFODSIolDk5AI3BFj9FO', 1, 1, 1, 1, 1000, 0);
+'admin', '$2a$10$JNg3mDt2kJ8vujwPTsNjO.npMYYsonSFWsFODSIolDk5AI3BFj9FO', 1, 1, 1, 1, 1000, 0, 0, 1);
 
 CREATE TABLE autoridades
 (
@@ -30,11 +43,12 @@ CREATE TABLE autoridades
 );
 
 insert into autoridades values (1, "ADMIN");
-insert into autoridades values (2, "CREATE_ALL");
-insert into autoridades values (3, "CREATE_SERVICE");
-insert into autoridades values (4, "CREATE_COURSE");
-insert into autoridades values (5, "USER_PRO");
-insert into autoridades values (6, "USER");
+insert into autoridades values (2, "SUPPORT");
+insert into autoridades values (3, "CREATE_ALL");
+insert into autoridades values (5, "CREATE_SERVICE");
+insert into autoridades values (6, "CREATE_COURSE");
+insert into autoridades values (7, "USER_PRO");
+insert into autoridades values (8, "USER");
 
 CREATE TABLE usuarios_autoridades
 (
@@ -46,12 +60,6 @@ CREATE TABLE usuarios_autoridades
 );
 
 insert into usuarios_autoridades values (1, 1);
-
-CREATE TABLE ficheros 
-(
-    id bigint auto_increment PRIMARY KEY,
-    direccion VARCHAR(255) not null unique
-);
 
 create table categorias
 (
@@ -104,15 +112,17 @@ create table cursos
 (
 	id bigint auto_increment primary key,
 	titulo VARCHAR(255) not null,
-	descripcion VARCHAR(255) not null,
+	descripcion VARCHAR(1000) not null,
 	fecha_de_creacion datetime(6) NOT NULL,
 	fecha_de_actualizacion datetime(6) NOT NULL,
 	creador_id BIGINT not null,
-    portada_id bigint not null,
+    portada_id bigint,
 	tipo_id bigint not null,
-    precio bigint check(precio >= 0) not null,
+    precio decimal(38, 2) check(precio >= 0) not null,
 	idioma_id bigint not null,
-    publicado boolean not null
+    publicado boolean not null,
+	verificado boolean not null,
+    puntuacion long not null
 );
 
 alter table cursos add constraint FK_cursos foreign key (creador_id) references usuarios (id);
@@ -124,14 +134,16 @@ create table servicios
 (
 	id bigint auto_increment primary key,
 	titulo VARCHAR(255) not null unique,
-	descripcion VARCHAR(255) not null,
+	descripcion VARCHAR(1000) not null,
 	fecha_de_creacion datetime(6) NOT NULL,
 	fecha_de_actualizacion datetime(6) NOT NULL,
 	creador_id BIGINT not null,
-    portada_id bigint not null,
+    portada_id bigint,
 	categoria_id bigint not null,
 	idioma_id bigint not null,
-    publicado boolean not null
+    publicado boolean not null,
+	verificado boolean not null,
+    puntuacion bigint not null
 );
 
 alter table servicios add constraint FK_servicios foreign key (creador_id) references usuarios (id);
@@ -166,7 +178,7 @@ alter table comprar_cursos add constraint FK2_comprar_cursos foreign key (curso_
 create table comprar_servicios
 (
 	id bigint auto_increment primary key,
-	usuario_id BIGINT not null,
+	usuario_id BIGINT not null, #Comprador
 	servicio_id bigint not null,
 	fecha_de_compra datetime(6) NOT NULL,
     opcion_id bigint not null,
@@ -208,8 +220,7 @@ create table muestras #las imagenes de los servicios
 	id bigint auto_increment primary key,
     servicio_id bigint not null,
     posicion bigint not null,
-    multimedia_id bigint,
-	descripcion VARCHAR(255)
+    multimedia_id bigint
 );
 
 alter table muestras add constraint FK_muestras foreign key (servicio_id) references servicios (id);

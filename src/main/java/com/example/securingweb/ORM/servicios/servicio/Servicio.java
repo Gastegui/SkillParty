@@ -32,6 +32,7 @@ public class Servicio
 
     @Column(unique = true)
     private String titulo;
+    @Column(length = 1000)
     private String descripcion;
     @Column(name="fecha_de_creacion")
     private Date fechaDeCreacion;
@@ -39,6 +40,8 @@ public class Servicio
     private Date fechaDeActualizacion;
 
     private boolean publicado;
+    private boolean verificado;
+    private Long puntuacion;
 
     @ManyToOne
     @JoinColumn(name="creador_id")
@@ -192,15 +195,24 @@ public class Servicio
         return fechaDeActualizacion;
     }
 
-    public String getPortadaExtension() {
-        if (portada != null && portada.getDireccion() != null) {
-            String direccion = portada.getDireccion();
-            int i = direccion.lastIndexOf('.');
-            if (i > 0) {
-                return direccion.substring(i);
-            }
-        }
-        return "";
+    public void setVerificado(boolean v)
+    {
+        verificado = v;
+    }
+
+    public  boolean getVerificado()
+    {
+        return verificado;
+    }
+
+    public void setPuntuacion(Long p)
+    {
+        puntuacion = p;
+    }
+
+    public Long getPuntuacion()
+    {
+        return puntuacion;
     }
 
     @Override

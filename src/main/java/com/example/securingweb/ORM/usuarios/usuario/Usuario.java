@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.servicios.valorarServicios.ValorarServicios;
@@ -22,6 +23,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -63,6 +65,11 @@ public class Usuario implements UserDetails
     private BigDecimal saldo;
     @Column(name="por_cobrar")
     private BigDecimal porCobrar;
+    private Long puntuacion;
+
+    @ManyToOne
+    @JoinColumn(name = "imagen_id")
+    private Fichero imagen;
 
     @OneToMany(mappedBy="creador", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Servicio> servicios;
@@ -167,6 +174,9 @@ public class Usuario implements UserDetails
     }
     public boolean isPro()
     {
+        if(isAdmin())
+            return true;
+            
         for(Autoridad a : autoridades)
         {
             if(a.getAutoridad().equals("USER_PRO"))
@@ -176,6 +186,9 @@ public class Usuario implements UserDetails
     }
     public boolean isCreatorAll()
     {
+        if(isAdmin())
+            return true;
+            
         for(Autoridad a : autoridades)
         {
             if(a.getAutoridad().equals("CREATE_ALL"))
@@ -183,32 +196,49 @@ public class Usuario implements UserDetails
         }
         return false;
     }
-    public boolean isCretorService()
+    public boolean isCreatorService()
     {
+        if(isAdmin())
+            return true;
+
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("CREATE_SERVICE"))
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE"))
                 return true;
         }
         return false;
     }
     public boolean isCreatorCourse()
     {
+        if(isAdmin())
+            return true;
+
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("CREATE_COURSE"))
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_COURSE"))
                 return true;
         }
         return false;
     }
     public boolean isCreatorAny()
     {
+        if(isAdmin())
+            return true;
+            
         for(Autoridad a : autoridades)
         {
             if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE") || a.getAutoridad().equals("CREATE_COURSE"))
                 return true;
         }
         return false;
+    }
+    public Long getPuntuacion()
+    {
+        return puntuacion;
+    }
+    public Fichero getImagen()
+    {
+        return imagen;
     }
 
     public void setId(Long i)
@@ -277,7 +307,14 @@ public class Usuario implements UserDetails
     {
         porCobrar = p;
     }
-
+    public void setPuntuacion(Long p)
+    {
+        puntuacion = p;
+    }
+    public void setImagen(Fichero i)
+    {
+        imagen = i;
+    }
 
     @Override
     public boolean equals(Object o)

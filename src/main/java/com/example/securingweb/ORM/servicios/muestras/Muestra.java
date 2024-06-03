@@ -18,8 +18,7 @@ public class Muestra
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private Long posicion;
-    private String descripcion;        
+    private Long posicion;  
     
     @ManyToOne
     @JoinColumn(name = "servicio_id")
@@ -31,12 +30,10 @@ public class Muestra
 
 
     public void setPosicion(Long p){posicion=p;}
-    public void setDescripcion(String d){descripcion=d;}
     public void setPadre(Servicio p){padre=p;}
-    public void setFichero(Fichero m){multimedia=m;}
+    public void setMultimedia(Fichero m){multimedia=m;}
 
     public Long getPosicion(){return posicion;}
-    public String getDescripcion(){return descripcion;}
     public Servicio getPadre(){return padre;}
     public Fichero getMultimedia(){return multimedia;}
     public Long getId(){return id;}
@@ -50,7 +47,6 @@ public class Muestra
         if(o.getClass() != this.getClass())
             return false;
 
-        return ((Muestra)o).getDescripcion().equals(this.getDescripcion()) && ((Muestra)o).getPosicion().equals(this.getPosicion());
-
+        return ((Muestra)o).getPosicion().equals(this.getPosicion());
     }
 }

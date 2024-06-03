@@ -7,170 +7,179 @@
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/servicePage.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/download.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
-        <div class="container-fluid">
-    
-          <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-          </a>
-    
-          <div class="btn-group" id="header-buttons">
-            <button class="botoiPro">SkillParty Pro</button>
-            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
-          </div>
-          
-          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-    
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-    
-                <li class="nav-item">
-                <div id="menu-buttons">
-                  <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-                  <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
-                </div>
-              </li>
-    
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Hizkuntza
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">English</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-            
-          </div>
+  <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+    <div class="container-fluid">
+
+      <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+        <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+        <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+      </a>
+
+      <div class="btn-group" id="header-buttons">
+        <button class="botoiPro">SkillParty Pro</button>
+        <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
+      </div>
+      
+      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-      </nav>
+
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <div id="menu-buttons">
+                <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Hizkuntza
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">English</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex mt-3" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </nav>
+
+  <div th:if="${servicio.verificado}" class="d-flex justify-content-center bg-info mx-4 ">
+    <p class="m-auto text-white p-2">Verificado por el administrador</p>
+  </div>
+  <form th:action="@{|/service/verify?title=${servicio.titulo}|}" method="post" th:if="${!servicio.verificado and admin}" class="d-flex justify-content-center bg-info mx-4 mb-2">
+    <button class="btn border rounded bg-white my-2">Verificar</button>
+  </form>
+
+  <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
+    <main class="row w-100 d-flex justify-content-center">
 
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-1 m-2 w-auto">
-            <button>Atzera</button>
+        <div class="row d-flex justify-content-center vw-100">
+
+          <div class="col-10 col-lg-6 card me-lg-4">
+            <div class="row text-start">
+              <p class="h1 p-1 card-header" th:text="${servicio.titulo}">Lehen Zerbitzua</p>
+            </div>
+            <div class="row d-flex justify-content-center p-1">
+              <div id="carouselExampleIndicators" class="carousel slide col">
+                <div class="carousel-indicators">
+                  <button th:each="i : ${servicio.muestras}" type="button" data-bs-target="#carouselExampleIndicators" th:data-bs-slide-to="${i.posicion-1}" th:attrappend="aria-current=${i.posicion==1}?true" th:classappend="${i.posicion==1}?active" th:aria-label="|Slide ${i.posicion}|"></button>
+                </div>
+
+                <div class="carousel-inner">
+                  <div th:each="i : ${servicio.muestras}" class="carousel-item text-center" th:classappend="${i.posicion==1}?active">
+                    <video th:if="${i.multimedia.isVid()}" controls class="w-auto" height="500">
+                      <source th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" type="video/mp4">
+                    </video>
+                    <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" class="w-auto" height="500" th:alt="|slide number ${i.posicion}|">
+                  </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="row d-flex justify-content-center p-1">
+              <p th:text="${servicio.descripcion}"></p>
+            </div>
+          </div>
+
+          <div class="col-10 col-lg-4 d-flex align-items-center justify-content-center card d-lg-inline mt-3 m-lg-0">
+            <img th:src="@{|/uploads/${servicio.creador.id}/profile${servicio.creador.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="profile picture">
+            <span class="h3 m-0 ps-2" th:text="${servicio.creador.nombre}"></span>
+
+            <div class="col-10 m-2">
+              <form class="offset-lg-2" th:action="@{/service/buy(title=${servicio.getTitulo()})}" method="post">
+                <div id="max-height" class="list-group">
+                  
+                  <label th:each="i : ${servicio.opciones}" class="list-group-item d-flex gap-2">
+                    <input class="form-check-input flex-shrink-0" type="radio" name="id" th:value="${i.id}">
+                    <span>
+                      <span th:text="${i.getDescripcion()}"></span>
+                      <small th:text="|${i.getPrecio()}€|" class="d-block text-body-secondary"></small>
+                    </span>
+                  </label>
+
+                </div>
+                <div class="card opinion-card d-flex justify-content-center mt-3 p-0 bg-success">
+                  <button type="submit" class="btn btn-lg">Buy</a>
+                </div>
+              </form>   
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="container-fluid d-flex flex-column flex-lg-row">
-        <main class="row d-flex justify-content-center">
-
-          <div class="container-fluid">
-            <div class="row d-flex justify-content-center">
-
-              <div class="col-10 col-lg-6 card me-lg-4">
-                <div class="row text-start">
-                  <p class="h1 p-1 card-header">Lehen Zerbitzua</p>
-                </div>
-                <div class="row d-flex justify-content-center p-1">
-                  <video controls class="w-100 h-auto">
-                    <source src="/video/youngVib.mp4" type="video/mp4">
-                  </video>
-                </div>
-                <div class="row d-flex justify-content-between">
-                  <div class="col-1 m-2 w-auto">
-                    <button>Aurrekoa</button>
-                  </div>
-                  <div class="col-1 m-2 w-auto">
-                    <button>Hurrengoa</button>
-                  </div>
-                </div>
-                <div class="row d-flex justify-content-center p-1">
-                  <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam.</p>
-                </div>
+    </main>
+  </div>
+        
+  <div class="container-fluid my-4">
+    <div class="row d-flex justify-content-center"> 
+      <div class="col-11  card opinion-card p-0">
+        <div class="card-header opinion-header"> 
+            Opiniones:
+        </div>
+        <div class="card-body">
+          <div th:each="i : ${servicio.valoraciones}" class="row mb-2">
+            <div class="col-12 d-flex align-items-center">
+              <div class="me-3 bg-danger rounded">
+                <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="|/service/deleteRating?id=${i.id}&title=${servicio.titulo}|">Borrar valoración</a>
               </div>
-
-              <div class="col-10 col-lg-4 d-flex align-items-center justify-content-center card d-lg-inline mt-3 m-lg-0">
-                <img src="/images/profile.png" class="rounded h-auto p-3 m-0" width="100px" alt="profile picture">
-                <p class="h3 m-0 ps-2">Autorearen izena</p>
-
-                <div class="col-10 m-2">
-                  <form class="offset-lg-2" th:action="@{/service/buy(title=${servicio.getTitulo()})}">
-
-                    <div class="list-group">
-                      <label th:each="i : ${servicio.getOpciones()}" class="list-group-item d-flex gap-2">
-                        <input class="form-check-input flex-shrink-0" type="radio" name="option" value="${i.id}">
-                        <span>
-                          <span th:text="${i.getDescripcion()}"></span>
-                          <small th:text="${i.getPrecio()}" class="d-block text-body-secondary"></small>
-                        </span>
-                      </label>
-                    </div>
-
-                    </div>
-                    <div class="card opinion-card d-flex justify-content-center my-3 p-0 bg-success">
-                      <button type="submit" class="btn btn-lg">Zerbitzua hautatu</button>
-                    </div>
-
-                  </form>
-
-                </div>
+              <div class="me-3">
+                <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="profile picture">
+              </div>
+              <div>
+                <span th:text="|${i.usuario.nombre} ${i.usuario.apellidos}: |"></span>  
+              </div>
+              <div class="rating mx-3">
+                <span th:text="|${i.getValoracion()} estrellas|">★★★☆☆</span>
+              </div>
+              <div>
+                <span th:text="${i.getComentario()}"></span>
               </div>
             </div>
           </div>
-        </main>
-    </div>
+        </div>
 
-    <div class="container-fluid my-4">
-      <div class="row d-flex justify-content-center"> 
-        <div class="col-11  card opinion-card p-0">
-          <div class="card-header opinion-header"> 
-              Opiniones:
-          </div>
-          <div class="card-body">
-              <div th:each="i : ${servicio.getValoraciones()}" class="row mb-2">
-                  <div class="col-12 d-flex align-items-center">
-                      <div class="me-3">
-                        <span th:text="|${i.getUsuario().getUsername()}: |"></span>  
-                      </div>
-                      <div class="rating me-3">
-                          <span th:text="${i.getValoracion()}">★★★☆☆</span>
-                      </div>
-                      <div>
-                          <span th:text="${i.getComentario()}"></span>
-                      </div>
-                  </div>
-              </div>
-            </div>
-          </div>
-          <form sec:authorize="isAuthenticated()" th:action="|/service/rate?title=${param.title}" th:object="${ValorarServicios}" method="POST">
-              <label>Valoracion: <input type="number" th:field="*{valoracion}" max="5" min="0"></label>
-              <label>Comentario: <input type="text" th:field="*{comentario}"></label>
-              <button type="submit">Mandar valoracion</button>
-          </form>
+        <form sec:authorize="isAuthenticated()" th:action="@{|/service/rate?title=${servicio.titulo}|}" th:object="${ValorarServicios}" method="post">
+          <label>Valoracion: <input type="number" th:field="*{valoracion}" max="5" min="0"></label>
+          <label>Comentario: <input type="text" th:field="*{comentario}"></label>
+          <button type="submit">Mandar valoracion</button>
+        </form>
+
       </div>
+    </div>
   </div>
 
-      
-
-
-
-        
-
-        
-    <script defer src="/js/bootstrap.bundle.min.js"></script>
+  <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

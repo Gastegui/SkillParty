@@ -1,21 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillParty - Service List</title>
-</head>
-<body>
-    <div>
-        <div th:each="i : ${servicios}">
-            <a th:href="|/service/view?title=${i.getTitulo()}|"><p th:text="|titulo: ${i.getTitulo()}|"></p></a>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/listStyle.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+        <title>Cursos</title>
+    </head>
+    <body class="overflow-x-hidden">
+        <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+                    <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+                    <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+                </a>
+            
+                <div class="btn-group" id="header-buttons">
+                    <button class="botoiPro">SkillParty Pro</button>
+                    <a href="/html/cursos.html" class="botoi">Cursos</a>
+                    <a href="/html/panelUsuario.html" class="botoi">Usuario</a>
+                </div>
+                
+                
+                <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+                    <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+            
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                
+                            <div id="menu-buttons">
+                                <li class="nav-item">
+                                    <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Cursos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Usuario</a>
+                                </li>
+                            </div>
+                            
+                
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Link</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hizkuntza
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Euskara</a></li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="#">Castellano</a></li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="#">English</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div>
+            <img src="/images/logo.png" alt="logo" class="image">
         </div>
-        <div th:if="${haySiguiente == true}">
-            <a th:href="|/service/list?page=${pagActual+1}|">Página siguiente</a>
+        <div class="ms-5">
+            <h2 class="fw-bold">Servicios</h2>
         </div>
-        <div th:if="${hayAnterior == true}">
-            <a th:href="|/service/list?page=${pagActual-1}|">Página anterior</a>
-        </div>
-    </div>
-</body>
+        <aside class="position-relative container ">
+            <div class="row">
+                
+                <li class="col dropdown me-auto ms-2 p-1 list-unstyled">
+                    <a class="nav-link dropdown-toggle border p-2 bg-white" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Filtroa jartzeko</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown">
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="filtro1" id="filtro1">
+                                <label for="filtro1">filtro1</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="filtro1" id="filtro1">
+                                <label for="filtro1">filtro1</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="filtro1" id="filtro1">
+                                <label for="filtro1">filtro1</label>
+                            </div>
+                        </li>
+                    </ul>
+                </li> 
+                <form class="col-4 pt-1" >
+                    <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
+                </form>
+
+            </div>
+        </aside>
+
+        <main class="container position-relative overflow-auto pt-4">
+
+            <div class="album py-2">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"  data-masonry='{"percentPosition": true }'>
+
+                        <div th:each="i : ${servicios}" class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${i.titulo}"></h5>
+                                </div>
+                                <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" class="bd-placeholder-img card-img-top" width="100%" height="225" />
+                                <div class="card-body">
+                                    <p th:text="${i.descripcion}" class="card-text"></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                        </div>
+                                        <p th:text="|Creador: ${i.creador.nombre}|"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end pb-2">
+                <a th:if="${hayAnterior}" th:href="@{|/service/list?page=${pagActual - 1}|}" class="btn border mt-2 me-2 bg-white">
+                    <img src="/images/flecha_izqierda.png" alt="Página anterior" style="width: 20px; height: 20px;">
+                </a>
+                <p th:text="|Página acutal: ${pagActual}|"></p>
+                <a th:if="${haySiguiente}" th:href="@{|/service/list?page=${pagActual + 1}|}" class="btn border mt-2 me-2 bg-white">
+                    <img src="/images/flecha.png" alt="Página siguiente" style="width: 20px; height: 20px;">
+                </a>
+            </div>
+        </main>
+
+
+        <script defer src="/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+    </body>
 </html>

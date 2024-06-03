@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/vistaCurso.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/vistaCurso.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <title>Document</title>
 </head>
@@ -15,7 +15,7 @@
 
     <div class="video-container">
         <video autoplay loop muted playsinline>
-            <source src="../video/background.mp4" type="video/mp4">
+            <source src="/video/background.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -23,14 +23,14 @@
         <div class="container-fluid">
     
         <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
             <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
         </a>
     
         <div class="btn-group" id="header-buttons">
             <button class="botoiPro">SkillParty Pro</button>
-            <a href="../html/createUser.html" class="botoi">Kontua sortu</a>
-            <a href="../html/panelCreador.html" class="botoi">Panel de Creador</a>
+            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
+            <a href="/html/panelCreador.html" class="botoi">Panel de Creador</a>
         </div>
         
         <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
@@ -174,9 +174,6 @@
                         </div>
                     </div>
                 </div>
-                <form th:action="@{/user/delete}" method="post">
-                    <button type="submit">BORRAR USUARIO</button>
-                </form>
             </div>
         </div>
 
@@ -184,6 +181,6 @@
             <button class="btn btn-primary btn-lg px-4 me-md-2">Editar</button>
         </div>
     </main>
-    <script defer src="../js/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

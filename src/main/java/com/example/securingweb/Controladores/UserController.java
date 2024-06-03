@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServiciosRepository;
+import com.example.securingweb.ORM.servicios.servicio.ServicioRepository;
 import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import com.example.securingweb.ORM.usuarios.usuario.UsuarioRepository;
 import com.example.securingweb.ORM.usuarios.usuario.UsuarioService;
@@ -31,13 +33,21 @@ public class UserController
     private UsuarioService usuarioService;
     private UsuarioRepository usuarioRepository;
     private PasswordEncoder passwordEncoder;
+    private ComprarServiciosRepository comprarServiciosRepository;
+    private ServicioRepository servicioRepository;
 
     @Autowired
-    public UserController(UsuarioService usuarioService, UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder)
+    public UserController(UsuarioService usuarioService,
+                        UsuarioRepository usuarioRepository,
+                        PasswordEncoder passwordEncoder,
+                        ComprarServiciosRepository comprarServiciosRepository,
+                        ServicioRepository servicioRepository)
     {
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.comprarServiciosRepository = comprarServiciosRepository;
+        this.servicioRepository = servicioRepository;
     }
     
     /**
@@ -59,20 +69,6 @@ public class UserController
         
     }
 
-    @GetMapping("addBalance") //MARK: esto no tiene el más mínimo sentido, pero como no vamos a usar ni tarjetas de crédito ni otros como paypal,
-    public String addBalance()  //utilizamos un sistema de saldo para pagar las cosas.
-    {
-        Usuario user = getUser();
-
-        if(user == null)
-            return "redirect:/error/403";
-        
-        user.setSaldo(user.getSaldo().add(BigDecimal.TEN));
-        usuarioRepository.save(user);
-        return "redirect:/?message=balanceAdded";
-    }
-
-
     /* Metodo GET */
     @GetMapping("/create")
     public String cargarLogin(Model modelo)
@@ -85,6 +81,7 @@ public class UserController
     @PostMapping("/create")
     public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="creator", required=false) String creador, @RequestParam(value="fecha_nacimiento", required=true) String fechaStr, Model modelo) 
     {   
+        //TODO: ponerle la foto de perfil al usuario, y poder editarla
         if(nuevo.getUsername().isEmpty())
         {
             return "redirect:/user/Create?noUser";
@@ -102,6 +99,7 @@ public class UserController
         user.setEmail(nuevo.getEmail().trim());
         user.setSaldo(BigDecimal.valueOf(50));
         user.setPorCobrar(BigDecimal.valueOf(0));
+        user.setPuntuacion((long)0); //TODO: poner la puntuación a los usuarios bien
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date date;
@@ -150,8 +148,11 @@ public class UserController
         
         modelo.addAttribute("usuario", user);
         
+        if(user.isAdmin())
+            return "user/editUserAdmin";
+
         if(user.isCreatorAny())
-            return "editUserCreator";
+            return "user/editUserCreator";
         
         return "user/editUser"; //pagina
     }
@@ -222,14 +223,154 @@ public class UserController
         if(actual == null)
             return "redirect:/";
 
+        if(actual.isAdmin())
+            return "redirect:/error/403";
+
         Optional<Usuario> guardado = usuarioRepository.findById(actual.getId());
 
         if(guardado.isEmpty())
-            return "redirect:/=message=userNotFound";
+            return "redirect:/?message=userNotFound";
 
         usuarioRepository.delete(guardado.get());
         logout(request, response);
         return "redirect:/";
+    }
+
+    @GetMapping("panel")
+    public String panelUser()
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null)
+            return "redirect:/error/403";
+
+        if(usuario.isCreatorAny())
+            return "user/panelCreator"; //pagina
+        
+        return "user/panelUser"; //pagina
+    }
+
+    @GetMapping("pending")
+    public String pending(Model modelo)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null)
+            return "redirect:/error/403";
+        
+        if(!usuario.isCreatorService())
+            return "redirect:/error/403";
+
+        modelo.addAttribute("servicios", comprarServiciosRepository.findByTerminadoFalseAndServicioCreadorId(usuario.getId()));
+
+        return "user/pendingServices";
+    }
+
+    @GetMapping("bought")
+    public String bought(Model modelo)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null)
+            return "redirect:/error/403";
+
+        //modelo.addAttribute("cursosSinAcabar", ...);
+        //modelo.addAttribute("cursosAcabados", ...);
+        modelo.addAttribute("serviciosSinAcabar", comprarServiciosRepository.findByTerminadoFalseAndUsuarioId(usuario.getId()));
+        modelo.addAttribute("serviciosAcabados", comprarServiciosRepository.findByTerminadoTrueAndUsuarioId(usuario.getId()));
+
+        return "user/bought";
+    }
+
+    @GetMapping("published")
+    public String published(Model modelo)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null || !usuario.isCreatorAny())
+            return "redirect:/error/403";
+
+        //modelo.addAttribute("cursos", ...);
+        modelo.addAttribute("servicios", servicioRepository.findAllByPublicadoTrueAndCreadorId(usuario.getId()));
+
+        return "user/published";
+    }
+
+    @GetMapping("services")
+    public String services(Model modelo)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null || !usuario.isCreatorAny())
+            return "redirect:/error/403";
+
+        modelo.addAttribute("serviciosNo", servicioRepository.findAllByPublicadoFalseAndCreadorId(usuario.getId()));
+        modelo.addAttribute("serviciosSi", servicioRepository.findAllByPublicadoTrueAndCreadorId(usuario.getId()));
+
+        return "user/services";
+    }
+
+    @GetMapping("claim")
+    public String getClaim(Model modelo)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null || !usuario.isCreatorAny())
+            return "redirect:/error/403";
+
+        modelo.addAttribute("usuario", usuario);
+
+        return "user/fondos";
+    }
+
+    @PostMapping("claim")
+    public String postClaim()
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null || !usuario.isCreatorAny())
+            return "redirect:/error/403";
+
+        usuario.setSaldo(usuario.getSaldo().add(usuario.getPorCobrar()));
+        usuario.setPorCobrar(BigDecimal.ZERO);
+
+        usuarioRepository.save(usuario);
+
+        return "redirect:/user/claim?message=claimed";
+    }
+
+    @GetMapping("addBalance")
+    public String getAddBalance(Model modelo)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null)
+            return "redirect:/error/403";
+        
+        modelo.addAttribute("usuario", usuario);
+
+        return "user/addBalance";
+    }
+
+    @PostMapping("addBalance")
+    public String postAddBalance(@RequestParam(value = "cantidad", required = true) String cantidadStr)
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null)
+            return "redirect:/error/403";
+
+        try
+        {
+            usuario.setSaldo(usuario.getSaldo().add(BigDecimal.valueOf(Long.parseLong(cantidadStr))));
+            usuarioRepository.save(usuario);
+        }
+        catch (NumberFormatException e)
+        {
+            return "redirect:/user/addBalance?message=balanceNotAdded";
+        }
+
+        return "redirect:/user/addBalance?message=balanceAdded";
     }
 
     @GetMapping("/{usuarioId}/comprar-curso/{cursoId}")
@@ -259,4 +400,5 @@ public class UserController
             return ResponseEntity.badRequest().build();
         }
     }
+
 }

@@ -26,6 +26,8 @@ public class WebSecurityConfig
 				.requestMatchers("/js/*", "/css/*", "/video/*", "/images/*").permitAll() 
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
 				.requestMatchers("/error", "/error/403", "error/404").permitAll() 
+				.requestMatchers("/uploads/*/services/**", "/uploads/*/courses/**", "/uploads/*/profile.*").permitAll()
+				//permitir los archivos que se hayan subido al chat solo a los authenticated
 				//SERVICIOS
 				.requestMatchers("/service", "/service/view", "service/list").permitAll()
 				.requestMatchers("/service/create", "/service/createOption", "service/createSample", "service/publish").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
@@ -33,7 +35,10 @@ public class WebSecurityConfig
 				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/service/rate", "/service/deleteRating", "service/buy").authenticated()
 				//USUARIOS
-				.requestMatchers("/user/addBalance", "/user/edit").authenticated()
+				.requestMatchers("/user/addBalance", "/user/edit", "user/panel", "/user/bought").authenticated()
+				.requestMatchers("/user/pending", "/user/services").hasAnyAuthority("CREATE_SERVICE", "CREATE_ANY", "ADMIN")
+				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ANY", "ADMIN")
+				.requestMatchers("/user/published", "/user/claim").hasAnyAuthority("CREATE_SERVICE", "CREATE_COURSE", "CREATE_ANY", "ADMIN")
 				.requestMatchers("login", "/user/login", "/user/create").permitAll() 
 				
 				.anyRequest().authenticated() //Esto tal vez habría que quitarlo
