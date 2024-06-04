@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
     
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script src="../js/editarPerfil.js"></script>
+    <!--<script src="../js/editarPerfil.js"></script>-->
     <title>Document</title>
 </head>
 <body>
@@ -77,7 +77,124 @@
         </div>
         </div>
     </nav>
+    <main>
+        <div class="m-4 p-4">
+            <h1 class="text-white fw-bold">Editar perfil</h1>
+        </div>
+        <form class="container text-center" th:action="@{/user/edit}" th:object="${usuario}" method="post">
+        
+            <div class="row w-100 mx-0">
+                <div class="col-md-6 text-white p-2 mb-2">
+                    <h4>Username: </h4>
+                    <input type="text" th:field="*{username}" placeholder="username"/>
+                </div>
+                <div class="col-md-6 text-white p-2 mb-2">
+                    <h4>Email address: </h4>
+                    <input type="email" th:field="*{email}" placeholder="email"/>
+                </div>
+            </div>
+            <div class="row w-100 mx-0">
+                <div class="col-md-4 text-white p-2 mb-2">
+                    <h4>Name: </h4>
+                    <input type="text"  th:field="*{nombre}" placeholder="Name"/>
+                </div>
+                <div class="col-md-4 text-white p-2 mb-2">
+                    <h4>Surname: </h4>
+                    <input type="text" th:field="*{apellidos}" placeholder="Surname"/>
+                </div>
+                <div class="col-md-4 text-white p-2 mb-2">
+                    <h4>Date of Birth: </h4>
+                    <input type="date" th:field="*{fechaDeNacimiento}" placeholder="date_birth"/>
+                </div>
+                
+            </div>
+            
+    
+            <div class="row w-100 mx-0">
+                <div class="col-md-4 text-white p-2 mb-2">
+                    <h4>Actual password: </h4>
+                    <input type="text" name="oldPassword" placeholder="Actual password"/>
+                </div>
+    
+                <div class="col-md-4 text-white p-2 mb-2">
+                    <h4>New password: </h4>
+                    <input type="text" name="newPassword" placeholder="New password"/>
+                </div>
+    
+                <div class="col-md-4 text-white p-2 mb-2">
+                    <h4>Repeat new password: </h4>
+                    <input type="text" placeholder="Repeat new password"/>
+                </div>
+            </div>
+            
+            <div class="row pe-lg-5 me-lg-4 w-100">
+                <div class="d-flex justify-content-center justify-content-md-end ">
+                    <button type="submit" class="bg-primary rounded text-white py-2 px-4 text-decoration-none ">Editar</button>
+                </div>
+                
+            </div>
+            
+            
+        </form>
 
+        <!--perfileko argazkia igoteko-->
+        <div class="mt-3">
+            <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold text-white">Foto de perfil</h2>
+            <div class="form-check p-4 ps-5 mx-5">
+                <label class="form-check-label h3 text-white" for="credit">Perfileko argazkia igo</label>
+                <input class="form-control w-50" type="file" id="formFile">
+            </div>
+        </div>
+
+        <!--<div>
+            <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold">Imagen o video del resumen del curso</h2>
+            <div class="album py-2 ">
+                <div class="container">
+                    <div class="d-flex overflow-x-auto">
+                        <div class="form-check p-0">
+                            <label class="form-check-label h3" for="credit">Portadako argazkia igo</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    
+        <div class="m-4 p-4 mb-0 pb-0">
+            <h2 class="text-white fw-bold">¿Quieres hacerte premium?</h2>
+            <form class="m-4 ps-5 d-flex align-items-center">
+                <!--<input type="checkbox" name="premium" id="premium" class="form-check-input me-2" >
+                <label for="premium" class="h4 text-white mt-1">Sí</label>-->
+                
+                <!--<button class="btn btn-primary btn-lg px-4 me-md-2">Sí</button>-->
+                <a href="planPrecios.html" id="premiumBotoia" class="bg-primary rounded text-white py-2 px-4 text-decoration-none">Sí</a>
+            </form>
+        </div>
+        <div class="m-4 p-4 mb-0 pb-0">
+            <h2 class="text-white fw-bold">¿Quieres dejar de ser premium?</h2>
+            <form class="m-4 ps-5 d-flex align-items-center">
+                <!--<input type="checkbox" name="premium" id="premium" class="form-check-input me-2" >
+                <label for="premium" class="h4 text-white mt-1">Sí</label>-->
+                
+                <!--<button class="btn btn-primary btn-lg px-4 me-md-2">Sí</button>-->
+                <a href="panelUsuario.html" id="premiumBotoia" class="bg-primary rounded text-white py-2 px-4 text-decoration-none">Sí</a>
+            </form>
+        </div>
+    
+        <!--<div class="d-flex justify-content-end me-4 mb-4 mt-0">
+            
+            
+            
+        </div>-->
+
+        <div class="m-4 p-4">
+            <h2 class="text-white fw-bold">¿Quieres borrar la cuenta?</h2>
+            <form class="d-flex justify-content-center">
+                <button class="bg-danger p-3 rounded  shadow-lg text-white">Borrar cuenta</button>
+            </form>
+        </div>
+    </main>
+<!--
     <main>
         <div class="m-4 p-4">
             <h1 class="text-white fw-bold">Editar perfil</h1>
@@ -95,7 +212,7 @@
                 </div>
                 <div class="col-md-4 text-white p-2 mb-2">
                     <h4>Date of Birth: </h4>
-                    <input type="date" name="surname" value="" placeholder="date_birth"/>
+                    <input type="date" name="surname" value=""/>
                 </div>
                 
             </div>
@@ -123,7 +240,7 @@
             
             <div class="row pe-5 me-4 w-100">
                 <div class="d-flex justify-content-end">
-                    <a href="panelUsuario.html" type="button" class="bg-primary rounded text-white py-2 px-4 text-decoration-none ">Editar</a>
+                    <a href="borrateko.html" class="bg-primary rounded text-white py-2 px-4 text-decoration-none ">Editar</a>
                 </div>
                 
             </div>
@@ -139,12 +256,18 @@
             </form>
         </div>
 
-        <div class="d-flex justify-content-end me-4 mb-4 mt-0">
+        <div class="d-flex justify-content-end me-4 mb-4 mt-0">-->
             <!--<button class="btn btn-primary btn-lg px-4 me-md-2">Editar</button>-->
             
-            <a href="planPrecios.html" id="premiumBotoia" type="button" class="bg-primary rounded text-white py-2 px-4 text-decoration-none d-none">Editar</a>
+           <!-- <a href="planPrecios.html" id="premiumBotoia" class="bg-primary rounded text-white py-2 px-4 text-decoration-none d-none">Editar</a>
         </div>
-    </main>
+        <div class="m-4 p-4">
+            <h2 class="text-white fw-bold">¿Quieres borrar la cuenta?</h2>
+            <form class="d-flex justify-content-center">
+                <button class="bg-danger p-3 rounded  shadow-lg text-white">Borrar cuenta</button>
+            </form>
+        </div>
+    </main>-->
     <script defer src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
