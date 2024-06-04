@@ -79,20 +79,10 @@
           <button class="btn border rounded bg-white m-2">Verificar</button>
         </div>
         
-      <!--<div class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
-        <h4 class="me-4">Nivel de servicio</h4>
-        <input type="number">
-      </div>-->
-        
       </form>
       <div class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
         <button class="btn border rounded bg-danger m-2">Eliminar</button>
       </div>
-
-      <!--<div class="btn-group mx-4 w-50">
-        <button class="btn border rounded bg-white my-2">Verificar</button>
-        <button class="btn border rounded bg-danger my-2">Eliminar</button>
-      </div>--> 
 
       <div class="container-fluid d-flex flex-column flex-lg-row">
         <main class="row d-flex justify-content-center">
@@ -109,9 +99,6 @@
                     <img src="../images/logo.jpg" alt="logo" width="300">
                   </div>
                   
-                  <!--<video controls class="w-100 h-auto">
-                    <source src="../video/youngVib.mp4" type="video/mp4">
-                  </video>-->
                 </div>
                 <div class="row d-flex justify-content-between">
                   <div class="col-1 m-2 w-auto">
@@ -157,14 +144,14 @@
                           <div class="row mb-2">
                               <div class="col-12 d-flex align-items-center">
                                   <div class="rating me-3">
-                                      Idatzi kontaktu honi
+                                    <button class="btn btn-warning rounded">Idatzi kontaktu honi</button>
                                   </div>
                               </div>
                           </div>
                           <div class="row mb-2">
                               <div class="col-12 d-flex align-items-center">
                                   <div class="rating me-3">
-                                      Ikusi erabitzailearen beste kurtso batzuk
+                                    <button class="btn btn-warning rounded">Ikusi erabitzailearen beste kurtso batzuk</button>
                                   </div>
                               </div>
                           </div>
@@ -218,9 +205,27 @@
                   </div>
               </div>
           </div>
+          <hr>
+          <div class="container-fluid">
+            <h5>Da tu opinión</h5>
+            <form action="" class="row mb-2">
+              <div class="col-lg-4 d-flex py-2 mx-2">
+                <h5 class="me-2">Puntuación</h5>
+                <input type="number" min="1" max="5">
+              </div>
+              <div class="col d-flex py-2 mx-2">
+                <h5 class="me-2">Descripción</h5>
+                <input type="text">
+              </div>
+              <div class="col d-flex align-items-center">
+                <button class="btn btn-primary btn-lg px-4 me-md-2">Mandar</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-  </div>
+    </div>
+    
     <script defer src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
