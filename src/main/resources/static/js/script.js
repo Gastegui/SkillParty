@@ -5,9 +5,10 @@ var text1;
 var text2;
 var botoia;
 var aditionalInformation;
+var infoPanels;
 
 window.onload = function(){
-    //botoiak = document.getElementsByTagName("button");
+    //botoiak = document.getElementById("login");
     password1 = document.getElementById('firstPassword');
     password1.addEventListener("change", pasahitza1Gorde);
     password2 = document.getElementById('secondPassword');
@@ -17,6 +18,7 @@ window.onload = function(){
     creator.addEventListener("click", erakutsi);
     
     aditionalInformation = document.getElementById('gehigarri');
+    infoPanels = document.getElementById('infoCards');
 
     botoia = document.getElementById('testua');
    // botoia.addEventListener("click", konprobatu);
@@ -54,10 +56,14 @@ function erakutsi(){
     {
         aditionalInformation.classList.add("agertu");
         aditionalInformation.classList.remove("desagertu");
+        infoPanels.classList.add("agertu");
+        infoPanels.classList.remove("desagertu");
     }
     else{
         aditionalInformation.classList.add("desagertu");
         aditionalInformation.classList.remove("agertu");
+        infoPanels.classList.add("desagertu");
+        infoPanels.classList.remove("agertu");
     }
     
 }
