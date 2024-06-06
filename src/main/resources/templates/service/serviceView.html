@@ -3,16 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="/css/header.css">
     <link rel="stylesheet" href="/css/servicePage.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          var socket = new SockJS('/websocket-endpoint');
+          var stompClient = Stomp.over(socket);
+
+          stompClient.connect({}, function (frame) {
+              console.log('Connected: ' + frame);
+              stompClient.subscribe('/topic/ratings', function (message) {
+                  var rating = JSON.parse(message.body);
+                  updateRatings(rating);
+              });
+
+              stompClient.subscribe('/topic/ratings/delete', function (message) {
+                  location.reload();
+              });
+          });
+
+          function updateRatings(rating) {
+              // Actualizar el DOM con la nueva valoración
+              var ratingsList = document.getElementById('ratings-list');
+              var newRatingElement = document.createElement('div');
+              newRatingElement.classList.add('row', 'mb-2');
+              newRatingElement.setAttribute('data-rating-id', rating.id);
+              newRatingElement.innerHTML = `
+                  <div class="col-12 d-flex align-items-center">
+                      <div class="me-3 bg-danger rounded">
+                          ${rating.canDelete ? `<a class="btn" href="/service/deleteRating?id=${rating.id}&title=${rating.servicioTitulo}">Borrar valoración</a>` : ''}
+                      </div>
+                      <div class="me-3">
+                          <img src="${rating.usuarioImagen}" class="rounded h-auto p-3 m-0" width="100" alt="profile picture">
+                      </div>
+                      <div>
+                          <span>${rating.usuarioNombre} ${rating.usuarioApellidos}: </span>  
+                      </div>
+                      <div class="rating mx-3">
+                          <span>${rating.valoracion} estrellas</span>
+                      </div>
+                      <div>
+                          <span>${rating.comentario}</span>
+                      </div>
+                  </div>
+              `;
+              ratingsList.appendChild(newRatingElement);
+          }
+      });
+  </script>
 </head>
 <body>
   <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
     <div class="container-fluid">
-
       <a class="navbar-brand d-flex align-items-center" href="#" id="title">
         <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
         <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
@@ -61,7 +107,6 @@
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
-        
       </div>
     </div>
   </nav>
@@ -75,10 +120,8 @@
 
   <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
     <main class="row w-100 d-flex justify-content-center">
-
       <div class="container-fluid">
         <div class="row d-flex justify-content-center vw-100">
-
           <div class="col-10 col-lg-6 card me-lg-4">
             <div class="row text-start">
               <p class="h1 p-1 card-header" th:text="${servicio.titulo}">Lehen Zerbitzua</p>
@@ -88,7 +131,6 @@
                 <div class="carousel-indicators">
                   <button th:each="i : ${servicio.muestras}" type="button" data-bs-target="#carouselExampleIndicators" th:data-bs-slide-to="${i.posicion-1}" th:attrappend="aria-current=${i.posicion==1}?true" th:classappend="${i.posicion==1}?active" th:aria-label="|Slide ${i.posicion}|"></button>
                 </div>
-
                 <div class="carousel-inner">
                   <div th:each="i : ${servicio.muestras}" class="carousel-item text-center" th:classappend="${i.posicion==1}?active">
                     <video th:if="${i.multimedia.isVid()}" controls class="w-auto" height="500">
@@ -97,7 +139,6 @@
                     <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" class="w-auto" height="500" th:alt="|slide number ${i.posicion}|">
                   </div>
                 </div>
-
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
@@ -108,7 +149,6 @@
                 </button>
               </div>
             </div>
-
             <div class="row d-flex justify-content-center p-1">
               <p th:text="${servicio.descripcion}"></p>
             </div>
@@ -117,11 +157,9 @@
           <div class="col-10 col-lg-4 d-flex align-items-center justify-content-center card d-lg-inline mt-3 m-lg-0">
             <img th:src="@{|/uploads/${servicio.creador.id}/profile${servicio.creador.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="profile picture">
             <span class="h3 m-0 ps-2" th:text="${servicio.creador.nombre}"></span>
-
             <div class="col-10 m-2">
               <form class="offset-lg-2" th:action="@{/service/buy(title=${servicio.getTitulo()})}" method="post">
                 <div id="max-height" class="list-group">
-                  
                   <label th:each="i : ${servicio.opciones}" class="list-group-item d-flex gap-2">
                     <input class="form-check-input flex-shrink-0" type="radio" name="id" th:value="${i.id}">
                     <span>
@@ -129,10 +167,9 @@
                       <small th:text="|${i.getPrecio()}€|" class="d-block text-body-secondary"></small>
                     </span>
                   </label>
-
                 </div>
                 <div class="card opinion-card d-flex justify-content-center mt-3 p-0 bg-success">
-                  <button type="submit" class="btn btn-lg">Buy</a>
+                  <button type="submit" class="btn btn-lg">Buy</button>
                 </div>
               </form>   
             </div>
@@ -144,12 +181,12 @@
         
   <div class="container-fluid my-4">
     <div class="row d-flex justify-content-center"> 
-      <div class="col-11  card opinion-card p-0">
+      <div class="col-11 card opinion-card p-0">
         <div class="card-header opinion-header"> 
             Opiniones:
         </div>
-        <div class="card-body">
-          <div th:each="i : ${servicio.valoraciones}" class="row mb-2">
+        <div class="card-body" id="ratings-list">
+          <div th:each="i : ${servicio.valoraciones}" class="row mb-2" data-rating-id="${i.id}">
             <div class="col-12 d-flex align-items-center">
               <div class="me-3 bg-danger rounded">
                 <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="|/service/deleteRating?id=${i.id}&title=${servicio.titulo}|">Borrar valoración</a>
@@ -175,7 +212,6 @@
           <label>Comentario: <input type="text" th:field="*{comentario}"></label>
           <button type="submit">Mandar valoracion</button>
         </form>
-
       </div>
     </div>
   </div>

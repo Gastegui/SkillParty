@@ -1,76 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/mainPage.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/script.js"></script>
-    <title>Document</title>
+    <title>Main Page</title>
 </head>
 <body>
-  <nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
-    <div class="container-fluid">
-
-      <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-        <img src="images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-        <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-      </a>
-
-      <div class="btn-group" id="header-buttons">
-        <button class="botoiPro">SkillParty Pro</button>
-        <a href="/login" class="botoi">Saioa hasi</a>
-      </div>
-      
-      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-
-            <li class="nav-item">
-            <div id="menu-buttons">
-              <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-              <a class="nav-link active" aria-current="page" href="/login">Saioa hasi</a>
-            </div>
-          </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hizkuntza
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">English</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+    <nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
+        <div class="container-fluid">
+    
+        <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+            <img src="images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+        </a>
+    
+        <div class="btn-group" id="header-buttons">
+            <button class="botoiPro">SkillParty Pro</button>
+            <a href="/login" class="botoi">Saioa hasi</a>
         </div>
         
-      </div>
-    </div>
-  </nav>
-      
+        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+    
+            <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+    
+                <li class="nav-item">
+                <div id="menu-buttons">
+                <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                <a class="nav-link active" aria-current="page" href="/login">Saioa hasi</a>
+                </div>
+            </li>
+    
+                <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hizkuntza
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                </ul>
+                </li>
+            </ul>
+            <form class="d-flex mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            </div>
+            
+        </div>
+        </div>
+    </nav>
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 bg-black" id="photo">
-                <img src="images/logo.jpg" alt="Girl in a jacket" class="img-fluid">
+                <img src="images/logo.jpg" alt="Logo" class="img-fluid">
             </div>
         </div>
         <div class="row">
@@ -79,19 +78,23 @@
         <div class="row d-inline-flex flex-nowrap overflow-auto">
             <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                      </div>
-                      <small class="text-body-secondary">9 mins</small>
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"/>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                    <div class="card-body">
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-body-secondary">9 mins</small>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+            </div>
             <div class="col-xs-12 col-md-6 col-lg-4">
                 <button class="w-100 h-100">VER MÁS</button>
             </div>
@@ -102,26 +105,78 @@
         <div class="row d-inline-flex flex-nowrap overflow-auto">
             <div class="col-xs-12 col-md-6 col-lg-4">
                 <div class="card shadow-sm">
-                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                  <div class="card-body">
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                      </div>
-                      <small class="text-body-secondary">9 mins</small>
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title>Placeholder</title>
+                        <rect width="100%" height="100%" fill="#55595c"/>
+                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                    </svg>
+                    <div class="card-body">
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-body-secondary">9 mins</small>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col-xs-12 col-md-6 col-lg-4">
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-4">
                 <button class="w-100 h-100">VER MÁS</button>
+            </div>
+        </div>
+
+        <!-- CURSOS RECOMENDADOS -->
+        <div sec:authorize="isAuthenticated()" class="row">
+            <h1 class="text-black">CURSOS RECOMENDADOS</h1>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="row d-inline-flex flex-nowrap overflow-auto">
+            <!-- Cursos recomendados aquí -->
+            <div th:each="curso : ${cursosRecomendados}" class="col-xs-12 col-md-6 col-lg-4">
+                <div class="card shadow-sm" style="width: 350px; height: 450px;">
+                    <div class="d-flex justify-content-center">
+                        <img th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/portada${servicio.portada.extension}|}" class="w-75 h-100"/>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" th:text="${curso.descripcion}">Descripción del curso</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
+                            </div>
+                            <small class="text-body-secondary">Fecha de Creación: <span th:text="${#dates.format(curso.fechaDeCreacion, 'yyyy-MM-dd HH:mm')}">Fecha del curso</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICIOS RECOMENDADOS -->
+        <div sec:authorize="isAuthenticated()" class="row">
+            <h1 class="text-black">SERVICIOS RECOMENDADOS</h1>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="row d-inline-flex flex-nowrap overflow-auto">
+            <div th:each="servicio : ${serviciosRecomendados}" class="col-xs-12 col-md-6 col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="d-flex justify-content-center">
+                        <img th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/portada${servicio.portada.extension}|}" class="w-75 h-100"/>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="card-text" th:text="${servicio.descripcion}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-body-secondary">Fecha de Creación: <span th:text="${#dates.format(servicio.fechaDeCreacion, 'yyyy-MM-dd HH:mm')}">Fecha del servicio</span></small>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-
-      <script defer src="js/bootstrap.bundle.min.js"></script>
+    <script defer src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

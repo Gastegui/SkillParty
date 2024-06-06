@@ -8,5 +8,5 @@ import java.util.Optional;
 // Repositorio de Spring Data JPA para la entidad Usuario
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
-    Optional<Categoria> findByDescripcion(String descripcion);
+    Categoria findByDescripcion(String descripcion);
 }

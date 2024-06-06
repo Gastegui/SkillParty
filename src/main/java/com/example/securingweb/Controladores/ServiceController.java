@@ -62,6 +62,7 @@ public class ServiceController
     private ValorarServiciosRepository valorarServiciosRepository;
     private IdiomaRepository idiomaRepository;
     private ComprarServiciosRepository comprarServiciosRepository;
+    private WebSocketController webSocketController;
 
     @Autowired
     public ServiceController(ServicioRepository servicioRepository, 
@@ -73,7 +74,8 @@ public class ServiceController
                         MuestrasRepository muestrasRepository, 
                         ValorarServiciosRepository valorarServiciosRepository, 
                         IdiomaRepository idiomaRepository,
-                        ComprarServiciosRepository comprarServiciosRepository)
+                        ComprarServiciosRepository comprarServiciosRepository,
+                        WebSocketController webSocketController)
     {
         this.servicioRepository = servicioRepository;
         this.categoriaRepository = categoriaRepository;
@@ -85,6 +87,7 @@ public class ServiceController
         this.valorarServiciosRepository = valorarServiciosRepository;
         this.idiomaRepository = idiomaRepository;
         this.comprarServiciosRepository = comprarServiciosRepository;
+        this.webSocketController = webSocketController;
     }
 
     /**
@@ -353,7 +356,7 @@ public class ServiceController
         guardado.setFechaDeActualizacion(new Date());
         
         if (!guardado.getCategoria().getDescripcion().equals(categoriaParam)) { //Comprobar si se ha cambiado la categoría
-            Optional<Categoria> cat = categoriaRepository.findByDescripcion(categoriaParam);
+            Optional<Categoria> cat = Optional.ofNullable(categoriaRepository.findByDescripcion(categoriaParam));
             if (cat.isEmpty()) {
                 Categoria catNueva = new Categoria();
                 catNueva.setDescripcion(categoriaParam);
@@ -781,7 +784,7 @@ public class ServiceController
     public String createRating(@ModelAttribute ValorarServicios valoracion, 
                             @RequestParam(value="title", required = true) String titulo)
     {
-        Optional<Usuario> usuario = usuarioRepository.findByUsername(getUser().getUsername());
+        Optional<Usuario> usuario = Optional.ofNullable(usuarioRepository.findByUsername(getUser().getUsername()));
         if(usuario.isEmpty())
             return "redirect:/error/403";
 
@@ -804,6 +807,10 @@ public class ServiceController
         valoracion.setComentario(valoracion.getComentario().trim());
 
         valorarServiciosRepository.save(valoracion);
+
+        // Notificar a través del WebSocket
+        //webSocketController.notifyNewRating("New rating created for service: " + titulo);
+        webSocketController.notifyNewRating(valoracion);
 
         return "redirect:/service/view?title="+encode(titulo)+"&message=ratingCreated";
     }
@@ -835,6 +842,9 @@ public class ServiceController
 
         valorarServiciosRepository.delete(aBorrar.get());
 
+        // Notificar a través del WebSocket
+        webSocketController.notifyDeleteRating(aBorrar.get().getId());
+
         return "redirect:/service/view?title="+encode(title)+"&message=ratingDeleted";
     }
 
@@ -864,7 +874,7 @@ public class ServiceController
             throw new IllegalArgumentException("notEnoughData");
         }
 
-        Optional<Categoria> categoriaExistente = categoriaRepository.findByDescripcion(servicio.getCategoria().getDescripcion());
+        Optional<Categoria> categoriaExistente = Optional.ofNullable(categoriaRepository.findByDescripcion(servicio.getCategoria().getDescripcion()));
         Categoria categoria;
         if (categoriaExistente.isPresent()) {
             categoria = categoriaExistente.get();

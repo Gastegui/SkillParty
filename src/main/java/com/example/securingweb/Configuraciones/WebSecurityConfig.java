@@ -40,7 +40,10 @@ public class WebSecurityConfig
 				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ANY", "ADMIN")
 				.requestMatchers("/user/published", "/user/claim").hasAnyAuthority("CREATE_SERVICE", "CREATE_COURSE", "CREATE_ANY", "ADMIN")
 				.requestMatchers("login", "/user/login", "/user/create").permitAll() 
-				
+				//CHAT
+				.requestMatchers("/chat", "/send").permitAll()
+				//SOCKET
+				.requestMatchers("/websocket-endpoint").permitAll()
 				.anyRequest().authenticated() //Esto tal vez habría que quitarlo
 			)
 			.formLogin((form) -> form
