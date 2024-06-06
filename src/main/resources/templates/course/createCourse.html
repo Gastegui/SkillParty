@@ -4,134 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">    
-    <link href="../css/createCourse.css" rel="stylesheet">
-    <link href="../css/header.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">    
+    <link href="/css/createCourse.css" rel="stylesheet">
+    <link href="/css/header.css" rel="stylesheet">
     <title>Kurtsoa sortu</title>
 </head>
 <body class="bg-body-tertiary">
-    <nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
-        <div class="container-fluid">
-    
-          <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-          </a>
-    
-          <div class="btn-group" id="header-buttons">
-            <button class="botoiPro">SkillParty Pro</button>
-            <a href="../html/createUser.html" class="botoi">Kontua sortu</a>
+  <nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
+      <div class="container-fluid">
+  
+        <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+          <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+          <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+        </a>
+  
+        <div class="btn-group" id="header-buttons">
+          <button class="botoiPro">SkillParty Pro</button>
+          <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
+        </div>
+        
+        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+  
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+  
+              <li class="nav-item">
+              <div id="menu-buttons">
+                <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
+              </div>
+            </li>
+  
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hizkuntza
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">English</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="d-flex mt-3" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
           </div>
           
-          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-    
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-    
-                <li class="nav-item">
-                <div id="menu-buttons">
-                  <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-                  <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
-                </div>
-              </li>
-    
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Hizkuntza
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">English</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-            
-          </div>
         </div>
-      </nav>
+      </div>
+  </nav>
 
 
-    <div class="container">
-        <main>
-            <div class="py-2 text-center">
-                <img class="d-block mx-auto mb-4" src="../images/proba.svg" alt="" width="72" height="57">
-                <h2>Kurtso bat sortu</h2>
-                <p class="lead">Kurtso bat sortu nahi duzu? Igo zure materiala hemen!</p>
-            </div>
+  <div class="container">
+    <main>
+      <div class="py-2 text-center">
+          <img class="d-block mx-auto mb-4 w-auto" src="/images/skillPartyLogo.png" alt="" height="57">
+          <h2>Crear un curso</h2>
+          <p class="lead">¿Quieres crear un curso? ¡Hazlo aquí!</p>
+      </div>
 
-            <div class="row g-5 d-flex justify-content-center">
-            <div class="col-11">
-                <h4 class="mb-3">Oinarrizko informazioa</h4>
-                <form class="needs-validation" novalidate>
-                <div class="row g-3 d-flex flex-column">
-                    <div class="col-12">
-                        <label for="firstName" class="form-label">Kurtsoaren izena</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                        <div class="invalid-feedback">
-                            Valid course name is required.
-                        </div>
-                    </div>
+      <div class="row g-5 d-flex justify-content-center">
+        <div class="col-11">
+          <h4 class="mb-3">Información Básica</h4>
+          <form th:action="@{/course/create}" th:object="${Curso}" method="post" enctype="multipart/form-data" class="needs-validation">
+            <div class="row g-3 d-flex flex-column">
 
-                    <div class="col-12">
-                        <label for="lastName" class="form-label">Deskripzioa</label>
-                        <textarea type="text" class="form-control" id="description" placeholder="" value="" required></textarea>
-                        <div class="invalid-feedback">
-                            Valid description is required.
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="lastName" class="form-label">Hizkuntza</label>
-                      <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">Euskara</option>
-                        <option value="2">Gaztelera</option>
-                        <option value="3">Ingelesa</option>
-                      </select>
-                      <div class="invalid-feedback">
-                          Valid language is required.
-                      </div>
-                  </div>
+              <div class="col-12">
+                <label for="firstName" class="form-label">Título del curso</label>
+                <input type="text" class="form-control" id="firstName" th:field="*{titulo}" required>
+                <div class="invalid-feedback">
+                    El título del curso es obligatorio.
                 </div>
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <hr class="my-4">
+              </div>
 
-                            <div class="form-check p-0">
-                                <label class="form-check-label h3" for="credit">Portadako argazkia igo</label>
-                                <input class="form-control" type="file" id="formFile">
-                            </div>
-
-                            <hr class="my-4">
-
-                            <div class="form-check p-0">
-                                <label class="form-check-label h3" for="credit">Kurtsoko materiala igo (Bideo eta argazkiak)</label>
-                                <input class="form-control" type="file" id="formFile" multiple>
-                            </div>
-                            <button class="w-100 btn btn-primary btn-lg my-3" type="submit">Kurtsoa sortu</button>
-                        </div>
+              <div class="col-12">
+                <label for="description" class="form-label">Descripción</label>
+                <textarea class="form-control" id="description" th:field="*{descripcion}" required></textarea>
+                <div class="invalid-feedback">
+                    La descripción es obligatoria.
                 </div>
-                </form>
+              </div>
+
+              <div class="col-12">
+                <label for="lang" class="form-label">Idioma</label>
+                <select id="lang" class="form-select" aria-label="Default select example" name="idiomaParam" required>
+                  <option value="" disabled selected>Selecciona una opción</option> 
+                  <option value="eu">Euskara</option>
+                  <option value="es">Castellano</option>
+                  <option value="en">English</option>
+                </select>
+                <div class="invalid-feedback">
+                  Un idioma valido es obligatorio.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="category" class="form-label">Tipo</label>
+                <select class="form-select" id="category" aria-label="Default select example" name="tipoParam" required>
+                  <option value="" disabled selected>Selecciona una opción</option>
+                  <option value="informatica">Informática</option>
+                  <option value="matematica">Matemática</option>
+                  <option value="biologia">Biología</option>
+                </select>
+                <div class="invalid-feedback">
+                  El tipo del curso es obligatorio.
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="price" class="form-label">Precio</label>
+                <input type="number" min="0" class="form-control" id="price" name="precio" required>
+                <div class="invalid-feedback">
+                  El precio es obligatorio
+                </div>
+              </div>
+
             </div>
+            <div class="row g-3">
+              <div class="col-12">
+                <hr class="my-4">
+
+                <div class="form-check p-0">
+                    <label class="form-check-label h3" for="portada">Subir portada del curso</label>
+                    <input class="form-control" id="portada" name="file" type="file">
+                </div>
+
+                <button class="w-100 btn btn-primary btn-lg my-3" type="submit">Crear curso</button>
+              </div>
             </div>
-        </main>
-    </div>
-    <script src="../js/bootstrap.bundle.min.js"></script>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

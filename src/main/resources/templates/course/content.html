@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/startCourse.css">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/startCourse.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>CourseName</title>
 </head>
 <body>
@@ -14,13 +14,13 @@
         <div class="container-fluid">
     
           <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
             <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
           </a>
     
           <div class="btn-group" id="header-buttons">
             <button class="botoiPro">SkillParty Pro</button>
-            <a href="../html/createUser.html" class="botoi">Kontua sortu</a>
+            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
           </div>
           
           <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
@@ -68,31 +68,34 @@
 
       <div class="container-fluid">
         <div class="row my-3">
-            <h1>Kurtsoaren izena</h1>
+            <h1><a th:href="@{|/course/view?title=${elemento.padre.titulo}|}" th:text="|Curso: ${elemento.padre.titulo}|"></a></h1>
         </div>
         <div class="row  d-flex justify-content-center">
             <div class="col-10 card">
               <div class="row text-start">
-                <p class="h2 p-1 card-header">Bideoaren izena</p>
+                <p class="h2 p-1 card-header" th:text="${elemento.titulo}"></p>
               </div>
               <div class="row d-flex justify-content-center p-1">
-                <video controls class="w-100 h-auto">
-                  <source src="../video/youngVib.mp4" type="video/mp4">
+                <video th:if="${elemento.multimedia.isVid()}" controls class="w-100 h-auto">
+                  <source th:src="@{|/uploads/${elemento.padre.creador.id}/courses/${elemento.padre.id}/elemento${elemento.posicion}${elemento.multimedia.extension}|}" type="video/mp4">
                 </video>
+                <img th:if="${elemento.multimedia.isImg()}" class="w-100 h-auto" th:src="@{|/uploads/${elemento.padre.creador.id}/courses/${elemento.padre.id}/elemento${elemento.posicion}${elemento.multimedia.extension}|}" alt="Imagen del curso">
               </div>
               <div class="row d-flex justify-content-between">
                 <div class="col-1 m-2 w-auto">
-                  <button>Aurrekoa</button>
+                  <a class="btn btn-primary" th:if="${elemento.posicion != 1}" th:href="@{|/course/content?title=${elemento.padre.titulo}&pos=${elemento.posicion - 1}|}">Elemento anterior</a>
                 </div>
                 <div class="col-1 m-2 w-auto">
-                  <button>Hurrengoa</button>
+                  <a class="btn btn-primary" th:if="${elemento.posicion != tamaño}" th:href="@{|/course/content?title=${elemento.padre.titulo}&pos=${elemento.posicion + 1}|}">Elemento siguiente</a>
+                  <a class="btn btn-primary" th:if="${elemento.posicion == tamaño and acabado == false}" th:href="@{|/course/finish?title=${elemento.padre.titulo}|}">Dar curso por terminado</a>
+                  <span th:if="${elemento.posicion == tamaño and acabado == true}">Este curso ya ha sido dado por terminado</span>
                 </div>
               </div>
             </div>
-                <div class="col-10 card mt-3">
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam.</p>
-                </div>
+            <div class="col-10 card mt-3">
+                <p th:text="${elemento.texto}"></p>
+            </div>
       </div>
-      <script defer src="../js/bootstrap.bundle.min.js"></script>
+      <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

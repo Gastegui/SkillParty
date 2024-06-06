@@ -233,7 +233,7 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center">
-        <form th:action="@{/service/publish(private=${Servicio.publicado}? y : n)}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
+        <form th:action="@{/service/publish(private=${Servicio.publicado}? y : n)}&title=${Servicio.titulo}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
           <input hidden type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}">
           <button type="submit" th:text="${Servicio.publicado}? 'Hacer privado' : 'Hacer público'" id="botonPublicar"  class="btn btn-primary"></button>
         </form>

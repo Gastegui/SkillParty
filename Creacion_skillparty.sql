@@ -122,7 +122,7 @@ create table cursos
 	idioma_id bigint not null,
     publicado boolean not null,
 	verificado boolean not null,
-    puntuacion long not null
+    puntuacion bigint not null
 );
 
 alter table cursos add constraint FK_cursos foreign key (creador_id) references usuarios (id);
@@ -168,7 +168,7 @@ create table comprar_cursos
 	usuario_id BIGINT not null,
 	curso_id bigint not null,
 	fecha_de_compra datetime(6) NOT NULL,
-    precio bigint check(precio >= 0) not null,
+    precio decimal(38, 2) check(precio >= 0) not null,
 	terminado boolean not null
 );
 

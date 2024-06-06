@@ -1,6 +1,9 @@
 package com.example.securingweb.ORM.ficheros;
 
 import java.util.List;
+import com.example.securingweb.ORM.cursos.curso.Curso;
+import com.example.securingweb.ORM.cursos.elemento.Elemento;
+import com.example.securingweb.ORM.servicios.muestras.Muestra;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import jakarta.persistence.CascadeType;
@@ -30,6 +33,18 @@ public class Fichero
 
     @OneToMany(mappedBy = "imagen", cascade = CascadeType.ALL)
     private List<Usuario> usuarios;
+
+    @OneToMany(mappedBy = "multimedia", cascade = CascadeType.ALL)
+    private List<Muestra> muestras;
+
+    @OneToMany(mappedBy = "portada", cascade = CascadeType.ALL)
+    private List<Curso> cursos;
+
+    @OneToMany(mappedBy = "multimedia", cascade = CascadeType.ALL)
+    private List<Elemento> elementosMultimedias;
+
+    @OneToMany(mappedBy = "adjunto", cascade = CascadeType.ALL)
+    private List<Elemento> elementosAdjuntos;
 
     public void setDireccion(String d) {direccion=d;}
     public String getDireccion() {return direccion;}

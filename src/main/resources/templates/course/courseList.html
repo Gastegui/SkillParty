@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/css/listStyle.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-        <title>Historial</title>
+        <title>Cursos</title>
     </head>
     <body class="overflow-x-hidden">
         <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
@@ -19,7 +19,7 @@
                 <div class="btn-group" id="header-buttons">
                     <button class="botoiPro">SkillParty Pro</button>
                     <a href="/html/servicios.html" class="botoi">Servicios</a>
-                    <a href="/html/panelCreador.html" class="botoi">Panel de Creador</a>
+                    <a href="/html/panelUsuario.html" class="botoi">Usuario</a>
                 </div>
                 
                 
@@ -43,7 +43,7 @@
                                     <a class="nav-link active" aria-current="page" href="#">Servicios</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Panel del creador</a>
+                                    <a class="nav-link active" aria-current="page" href="#">Usuario</a>
                                 </li>
                             </div>
                             
@@ -72,31 +72,64 @@
                 </div>
             </div>
         </nav>
+        <div id="imageDiv">
+            <img src="/images/logo.png" alt="logo" class="image">
+        </div>
+        <div class="ms-5">
+            <h2 class="fw-bold">Cursos</h2>
+        </div>
+        <aside class="position-relative container ">
+            <div class="row">
+                
+                <li class="col dropdown me-auto ms-2 p-1 list-unstyled">
+                    <a class="nav-link dropdown-toggle border p-2 bg-white" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Filtroa jartzeko</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown">
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="es" id="es">
+                                <label for="es">Castellano</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="eu" id="eu">
+                                <label for="eu">Euskara</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="en" id="en">
+                                <label for="en">English</label>
+                            </div>
+                        </li>
+                    </ul>
+                </li> 
+                <form class="col-4 pt-1" >
+                    <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
+                </form>
+
+            </div>
+        </aside>
 
         <main class="container position-relative overflow-auto pt-4">
 
-            <div class="border m-2 p-2">
-                <h2>Cusos publicados</h2>
-            </div>
             <div class="album py-2">
-                <div class="container-fluid ">
-                    <div class="d-flex overflow-x-auto">
-                        
-                        <div class="p-2" th:if="cursos != null" th:each="i : ${cursos}">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                        <div th:each="i : ${cursos}" class="col">
                             <div class="card shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${i.titulo}"></h5>
                                 </div>
-                                <div class="d-flex justify-content-center">
-                                    <img th:src="@{|/uploads/${i.creador.id}/courses/${i.id}/portada${i.portada.extension}|}" alt="Portada del curso" width="300">   
-                                </div>
+                                <img th:src="@{|/uploads/${i.creador.id}/courses/${i.id}/portada${i.portada.extension}|}" class="bd-placeholder-img card-img-top" width="100%" height="225" />
                                 <div class="card-body">
                                     <p class="card-text" th:text="${i.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <a th:href="@{|/course/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                            <a th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>
                                         </div>
+                                        <p th:text="|Creador: ${i.creador.nombre}|"></p>
                                     </div>
                                 </div>
                             </div>
@@ -105,40 +138,18 @@
                     </div>
                 </div>
             </div>
-
-        <!-- Servicios-->
-            <div class="border m-2 mt-5 p-2">
-                <h2>Servicios publicados</h2>
+            <div class="d-flex justify-content-end pb-2">
+                <a th:if="${hayAnterior}" th:href="@{|/course/list?page=${pagActual - 1}|}" class="btn border mt-2 me-2 bg-white">
+                    <img src="/images/flecha_izqierda.png" alt="Página anterior" style="width: 20px; height: 20px;">
+                </a>
+                <p th:text="|Página acutal: ${pagActual}|"></p>
+                <a th:if="${haySiguiente}" th:href="@{|/course/list?page=${pagActual + 1}|}" class="btn border mt-2 me-2 bg-white">
+                    <img src="/images/flecha.png" alt="Página siguiente" style="width: 20px; height: 20px;">
+                </a>
             </div>
-            <div class="album py-2">
-                <div class="container-fluid ">
-                    <div class="d-flex overflow-x-auto">
-                        
-                            <div class="p-2" th:if="${servicios != null}" th:each="i : ${servicios}">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title" th:text="${i.titulo}"></h5>
-                                    </div>
-                                    <div class="d-flex justify-content-center">
-                                        <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="Portada del servicio" width="300">   
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text" th:text="${i.descripcion}"></p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group">
-                                                <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
-                                                <a th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                    </div>
-                </div>
-            </div>
-
         </main>
-    <script defer src="/js/bootstrap.bundle.min.js"></script>
+
+
+        <script defer src="/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

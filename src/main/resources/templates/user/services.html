@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/css/listStyle.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-        <title>Historial</title>
+        <title>Servicios del creador</title>
     </head>
     <body class="overflow-x-hidden">
         <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
@@ -88,13 +88,13 @@
                                     <h5 class="card-title" th:text="${i.titulo}"></h5>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="logo" width="300">   
+                                    <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="Portada del servicio" width="300">   
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text" th:text="${i.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                            <a th:if="${creador}" th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
                                             <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
                                         </div>
                                     </div>
@@ -106,10 +106,10 @@
                 </div>
             </div>
 
-            <div class="border m-2 mt-5 p-2">
+            <div class="border m-2 mt-5 p-2" th:if="creador">
                 <h2>Servicios sin publicar</h2>
             </div>
-            <div class="album py-2">
+            <div class="album py-2" th:if="creador">
                 <div class="container-fluid ">
                     <div class="d-flex overflow-x-auto">
                         
@@ -119,7 +119,7 @@
                                         <h5 class="card-title" th:text="${i.titulo}"></h5>
                                     </div>
                                     <div class="d-flex justify-content-center">
-                                        <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="logo" width="300">   
+                                        <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="Portada del servicio" width="300">   
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text" th:text="${i.descripcion}"></p>

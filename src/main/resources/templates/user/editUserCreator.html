@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="/css/header.css">
-    <link rel="stylesheet" href="/css/vistaCurso.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -79,107 +78,114 @@
     </nav>
 
     <main>
-        <div class="m-4 p-4">
-            <h1 class="text-white fw-bold">Editar perfil</h1>
-        </div>
-        <form class="container">
+        <form th:action="@{/user/edit}" th:object="${usuario}" method="post" enctype="multipart/form-data">
+            <div class="mx-4 px-4">
+                <h1 class="text-white fw-bold">Editar perfil</h1>
+            </div>
+            <div class="container text-center">
+                <div class="row w-100">
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Nombre de usuario: </h4>
+                        <input type="text" th:field="*{username}" placeholder="Nombre de usuario"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Correo electrónico: </h4>
+                        <input type="email" th:field="*{email}" placeholder="Correo electrónico"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Número de teléfono: </h4>
+                        <input type="number" th:field="*{telefono}" placeholder="Número de teléfono"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Nombre: </h4>
+                        <input type="text" th:field="*{nombre}" placeholder="Nombre"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Apellidos: </h4>
+                        <input type="text" th:field="*{apellidos}" placeholder="Apellidos"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Fecha de nacimiento: </h4>
+                        <input type="date" th:field="*{fechaDeNacimiento}" placeholder="Fecha de nacimiento"/>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Contraseña actual: </h4>
+                        <input type="text" name="oldPassword" placeholder="Contraseña actual"/>
+                    </div>
         
-            <div class="row d-flex text-center w-100 mx-0">
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Name: </h4>
-                    <input type="text" name="name" value="" placeholder="Name"/>
-                </div>
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Surname: </h4>
-                    <input type="text" name="surname" value="" placeholder="Surname"/>
-                </div>
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Date of Birth: </h4>
-                    <input type="date" name="surname" value="" placeholder="date_birth"/>
-                </div>
-                
-            </div>
-            <div class="row d-flex text-center w-100 mx-0">
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Email address: </h4>
-                    <input type="text" name="surname" value="" placeholder="email"/>
-                </div>
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Username: </h4>
-                    <input type="text" name="surname" value="" placeholder="username"/>
-                </div>
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Password: </h4>
-                    <input type="text" name="surname" value="" placeholder="password"/>
+                    <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                        <h4>Contraseña nueva: </h4>
+                        <input type="text" name="newPassword" placeholder="Contraseña nueva"/>
+                    </div>
+        
+                    <div class="col-lg-4 col-sm-12 text-white p-2 mb-2">
+                        <h4>Repite la contraseña nueva: </h4>
+                        <input type="text" placeholder="Repite la contraseña nueva"/>
+                    </div>
+                    <div class="col-12 text-white p-2 mb-2 d-flex justify-content-center">
+                        <div class="form-check p-4 ps-5 w-75">
+                            <label class="form-check-label h3 text-white" for="credit">Cambiar la foto de perfil</label>
+                            <input class="form-control" type="file" name="file" id="formFile">
+                        </div>
+                    </div>
                 </div>
             </div>
+        
+            <div class="container mt-3">
+                <div class="row">
+                    <div id="glass" class="col-md-4">
+                        <div class="container">
+                            <div class="card">
+                                <div class="content">
+                                    <h2>01</h2>
+                                    <h3>Cursos</h3>
+                                    <p>Podrás crear tus propios cursos y publicarlos al público.</p>
+                                    <div>
+                                        <input type="checkbox" id="creator">
+                                        <label for="creator" class="text-white">Elegir</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="glass" class="col-md-4">
+                        <div class="container">
+                            <div class="card">
+                                <div class="content">
+                                    <h2>02</h2>
+                                    <h3>Servicios</h3>
+                                    <p>Podrás publicar tus servicios y ganar dinero con contrataciones.</p>
+                                    <div>
+                                        <input type="checkbox" id="creator">
+                                        <label for="creator" class="text-white">Elegir</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="glass" class="col-md-4">
+                        <div class="container">
+                            <div class="card">
+                                <div class="content">
+                                    <h2>03</h2>
+                                    <h3>Kit konpleto</h3>
+                                    <p>Podrás hacer los dos.</p>
+                                    <div>
+                                        <input type="checkbox" id="creator">
+                                        <label for="creator" class="text-white">Elegir</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="row d-flex text-center w-100 mx-0">
-                <div class="col-md-6 text-white p-2 mb-2">
-                    <h4>Repeat password: </h4>
-                    <input type="text" name="surname" value="" placeholder="repeatPassword"/>
-                </div>
-                <div class="col-md-6 text-white p-2 mb-2">
-                    <h4>Telephone number: </h4>
-                    <input type="number" name="telephone" value="" placeholder="telephone number"/>
+                <div class="row w-100 m-3 pt-md-3 pe-md-4 justify-content-between">
+                    <a th:href="@{|/user/delete|}" class="col-md-2 btn btn-danger btn-lg px-4 me-md-2">Borrar</a>
+                    <button type="submit" class="col-md-2 btn btn-primary btn-lg px-4 me-md-2">Editar</button>
                 </div>
             </div>
         </form>
-    
-        <div class="container">
-            <div class="row">
-                <div id="glass" class="col-md-4">
-                    <div class="container">
-                        <div class="card">
-                            <div class="content">
-                                <h2>01</h2>
-                                <h3>Cursos</h3>
-                                <p>Podrás crear tus propios cursos y publicarlos al público.</p>
-                                <form>
-                                    <input type="checkbox" name="creator" id="creator">
-                                    <label for="creator" class="text-white">Elegir</label>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="glass" class="col-md-4">
-                    <div class="container">
-                        <div class="card">
-                            <div class="content">
-                                <h2>02</h2>
-                                <h3>Servicios</h3>
-                                <p>Podrás publicar tus servicios y ganar dinero con contrataciones.</p>
-                                <form>
-                                    <input type="checkbox" name="creator" id="creator">
-                                    <label for="creator" class="text-white">Elegir</label>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="glass" class="col-md-4">
-                    <div class="container">
-                        <div class="card">
-                            <div class="content">
-                                <h2>03</h2>
-                                <h3>Kit konpleto</h3>
-                                <p>Podrás hacer los dos.</p>
-                                <form>
-                                    <input type="checkbox" name="creator" id="creator">
-                                    <label for="creator" class="text-white">Elegir</label>
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex justify-content-end m-3">
-            <button class="btn btn-primary btn-lg px-4 me-md-2">Editar</button>
-        </div>
     </main>
     <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>

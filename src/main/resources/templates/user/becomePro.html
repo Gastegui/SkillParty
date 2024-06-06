@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/panelUsuario.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/validarPromo.js"></script>
+    <title>Panel de creador</title>
+</head>
+<body>
+
+    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+        <div class="container-fluid">
+
+        <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+        </a>
+
+        <div class="btn-group" id="header-buttons">
+            <button class="botoiPro">SkillParty Pro</button>
+            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
+            <a href="/html/cursos.html" class="botoi">Kurtsoak</a>
+            <a href="/html/PanelUsuario.html" class="botoi">Panel del usuario</a>
+        </div>
+        
+        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+
+                <div id="menu-buttons">
+                <li class="nav-item">
+                    <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
+                </li>
+                </div>
+                
+
+                <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hizkuntza
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Euskara</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="#">Castellano</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                </ul>
+                </li>
+            </ul>
+            <form class="d-flex mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            </div>
+            
+        </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5">
+
+        <div class="row">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-primary">Cesta</span>
+            <span class="badge bg-primary rounded-pill">1</span>
+            </h4>
+    
+            <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                <h6 class="my-0">Pro</h6>
+                <small class="text-muted">Para tener cuenta pro</small>
+                </div>
+                <span class="text-muted">15€</span>
+            </li>
+            
+            <li class="list-group-item d-flex justify-content-between bg-light d-none conPromocion">
+                <div class="text-success">
+                    <h6 class="my-0">Promo code</h6>
+                    <small>SKILLPARTY</small>
+                </div>
+                <span class="text-success">−5€</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total</span>
+                <p class="fw-bold d-none conPromocion">10€</p>
+                <p class="fw-bold" id="sinPromocion">15€</p>
+            </li>
+            </ul>
+    
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="textoPromocion" placeholder="Promo code">
+                    <button type="submit" class="btn btn-secondary">Comprobar</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-7 col-lg-8 mt-3">
+            <h4 class="mb-3">Para comprar pro</h4>
+            <form class="needs-validation" novalidate>
+            
+            <hr class="my-4">
+    
+            <h4 class="mb-3">Información de la tarjeta</h4>
+    
+            <div class="my-3">
+                <div class="form-check">
+                    <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                    <label class="form-check-label" for="credit">Credit card</label>
+                </div>
+                <div class="form-check">
+                    <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                    <label class="form-check-label" for="debit">Debit card</label>
+                </div>
+                <div class="form-check">
+                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+                    <label class="form-check-label" for="paypal">PayPal</label>
+                </div>
+            </div>
+    
+            <div class="row gy-3">
+                <div class="col-md-6">
+                    <label for="cc-name" class="form-label">Name on card</label>
+                    <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                    <small class="text-muted">Full name as displayed on card</small>
+                    <div class="invalid-feedback">
+                        Name on card is required
+                    </div>
+                </div>
+    
+                <div class="col-md-6">
+                <label for="cc-number" class="form-label">Credit card number</label>
+                <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                <div class="invalid-feedback">
+                    Credit card number is required
+                </div>
+                </div>
+    
+                <div class="col-md-3">
+                <label for="cc-expiration" class="form-label">Expiration</label>
+                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                <div class="invalid-feedback">
+                    Expiration date required
+                </div>
+                </div>
+    
+                <div class="col-md-3">
+                <label for="cc-cvv" class="form-label">CVV</label>
+                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                <div class="invalid-feedback">
+                    Security code required
+                </div>
+                </div>
+            </div>
+    
+            <hr class="my-4">
+            <a href="/snake" type="button" class="w-100 bg-primary text-white rounded p-3 text-decoration-none">Comprar</a>
+            </form>
+        </div>
+        </div>
+    </main>
+    <script defer src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

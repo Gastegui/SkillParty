@@ -122,7 +122,12 @@
     <main class="row w-100 d-flex justify-content-center">
       <div class="container-fluid">
         <div class="row d-flex justify-content-center vw-100">
+<<<<<<< Updated upstream
           <div class="col-10 col-lg-6 card me-lg-4">
+=======
+
+          <div class="col-10 col-lg-4 card me-lg-4">
+>>>>>>> Stashed changes
             <div class="row text-start">
               <p class="h1 p-1 card-header" th:text="${servicio.titulo}">Lehen Zerbitzua</p>
             </div>
@@ -133,10 +138,10 @@
                 </div>
                 <div class="carousel-inner">
                   <div th:each="i : ${servicio.muestras}" class="carousel-item text-center" th:classappend="${i.posicion==1}?active">
-                    <video th:if="${i.multimedia.isVid()}" controls class="w-auto" height="500">
+                    <video th:if="${i.multimedia.isVid()}" controls class="w-100 h-auto">
                       <source th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" type="video/mp4">
                     </video>
-                    <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" class="w-auto" height="500" th:alt="|slide number ${i.posicion}|">
+                    <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" class="w-100 h-auto" th:alt="|slide number ${i.posicion}|">
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -192,7 +197,7 @@
                 <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="|/service/deleteRating?id=${i.id}&title=${servicio.titulo}|">Borrar valoración</a>
               </div>
               <div class="me-3">
-                <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="profile picture">
+                <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil">
               </div>
               <div>
                 <span th:text="|${i.usuario.nombre} ${i.usuario.apellidos}: |"></span>  

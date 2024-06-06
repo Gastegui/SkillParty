@@ -8,6 +8,9 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.example.securingweb.ORM.cursos.comprarCursos.ComprarCurso;
+import com.example.securingweb.ORM.cursos.curso.Curso;
+import com.example.securingweb.ORM.cursos.valorarCursos.ValorarCurso;
 import com.example.securingweb.ORM.ficheros.Fichero;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
@@ -74,11 +77,21 @@ public class Usuario implements UserDetails
     @OneToMany(mappedBy="creador", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<Servicio> servicios;
     
+    @OneToMany(mappedBy = "creador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Curso> cursos;
+
     @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<ComprarServicio> serviciosComprados;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComprarCurso> cursosComprados;
+
     @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true)
     private List<ValorarServicios> serviciosValorados;
+
+    @OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ValorarCurso> cursosValorados;
+
     // Métodos getter y setter para los atributos de la clase
 
     public Long getId()
@@ -147,13 +160,25 @@ public class Usuario implements UserDetails
     {
         return servicios;
     }
+    public List<Curso> getCursosCreados()
+    {
+        return cursos;
+    }
     public List<ComprarServicio> getServiciosComprados()
     {
         return serviciosComprados;
     }
+    public List<ComprarCurso> getCursosComprados()
+    {
+        return cursosComprados;
+    }
     public List<ValorarServicios> getServiciosValorados()
     {
         return serviciosValorados;
+    }
+    public List<ValorarCurso> getCursosValorados()
+    {
+        return cursosValorados;
     }
     public BigDecimal getSaldo()
     {

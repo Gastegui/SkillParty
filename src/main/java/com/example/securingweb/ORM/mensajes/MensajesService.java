@@ -29,14 +29,15 @@ public class MensajesService {
         return mensajesRepository.findAll();
     }
 
-    public List<Mensajes> getMensajesByUser(String username) {
-        Usuario usuario = usuariosRepository.findByUsername(username);
+    public List<Mensajes> getMensajesByUser(String username) 
+    {
+        Usuario usuario = usuariosRepository.findByUsername(username).orElse(null);
         return mensajesRepository.findByUsuario(usuario);
     }
 
     public List<Mensajes> getMensajesBetweenUsers(String user1Username, String user2Username) {
-        Usuario user1 = usuariosRepository.findByUsername(user1Username);
-        Usuario user2 = usuariosRepository.findByUsername(user2Username);
+        Usuario user1 = usuariosRepository.findByUsername(user1Username).orElse(null);
+        Usuario user2 = usuariosRepository.findByUsername(user2Username).orElse(null);
 
         List<Mensajes> mensajes = new ArrayList<>();
         mensajes.addAll(mensajesRepository.findByUsuarioAndContactoClienteOrderByFechaEnvioAsc(user1, user2));
@@ -50,8 +51,8 @@ public class MensajesService {
     }
 
     public Mensajes saveMessage(String senderUsername, String recipientUsername, String texto) {
-        Usuario sender = usuariosRepository.findByUsername(senderUsername);
-        Usuario recipient = usuariosRepository.findByUsername(recipientUsername);
+        Usuario sender = usuariosRepository.findByUsername(senderUsername).orElse(null);
+        Usuario recipient = usuariosRepository.findByUsername(recipientUsername).orElse(null);
 
         Contactos contacto = contactosRepository.findByClienteAndCreador(recipient, sender);
         if (contacto == null) {

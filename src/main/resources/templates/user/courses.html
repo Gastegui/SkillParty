@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="/css/listStyle.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-        <title>Historial</title>
+        <title>Cursos del creador</title>
     </head>
     <body class="overflow-x-hidden">
         <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
@@ -76,13 +76,13 @@
         <main class="container position-relative overflow-auto pt-4">
 
             <div class="border m-2 p-2">
-                <h2>Cusos publicados</h2>
+                <h2>Cursos publicados</h2>
             </div>
             <div class="album py-2">
                 <div class="container-fluid ">
                     <div class="d-flex overflow-x-auto">
-                        
-                        <div class="p-2" th:if="cursos != null" th:each="i : ${cursos}">
+
+                        <div class="p-2" th:each="i : ${cursosSi}">
                             <div class="card shadow-sm">
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${i.titulo}"></h5>
@@ -94,40 +94,38 @@
                                     <p class="card-text" th:text="${i.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a th:href="@{|/course/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                            <a th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                            <a th:if="${creador}" th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                            <a th:href="@{|/course/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        
                     </div>
                 </div>
             </div>
 
-        <!-- Servicios-->
-            <div class="border m-2 mt-5 p-2">
-                <h2>Servicios publicados</h2>
+            <div class="border m-2 mt-5 p-2" th:if="${creador}">
+                <h2>Cursos sin publicar</h2>
             </div>
-            <div class="album py-2">
+            <div class="album py-2" th:if="creador">
                 <div class="container-fluid ">
                     <div class="d-flex overflow-x-auto">
                         
-                            <div class="p-2" th:if="${servicios != null}" th:each="i : ${servicios}">
+                            <div class="p-2" th:each="i : ${cursosNo}">
                                 <div class="card shadow-sm">
                                     <div class="card-body">
                                         <h5 class="card-title" th:text="${i.titulo}"></h5>
                                     </div>
                                     <div class="d-flex justify-content-center">
-                                        <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="Portada del servicio" width="300">   
+                                        <img th:src="@{|/uploads/${i.creador.id}/courses/${i.id}/portada${i.portada.extension}|}" alt="Portada del curso" width="300">   
                                     </div>
                                     <div class="card-body">
                                         <p class="card-text" th:text="${i.descripcion}"></p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
-                                                <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
-                                                <a th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                                <a th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
                                             </div>
                                         </div>
                                     </div>
@@ -137,8 +135,10 @@
                     </div>
                 </div>
             </div>
-
+       
         </main>
-    <script defer src="/js/bootstrap.bundle.min.js"></script>
+
+
+        <script defer src="/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

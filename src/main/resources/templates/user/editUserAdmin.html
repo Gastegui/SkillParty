@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/vistaCurso.css">
     <link rel="stylesheet" href="/css/style.css">
-    
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    
+
     <title>Document</title>
 </head>
 <body>
@@ -79,55 +79,52 @@
     </nav>
 
     <main>
-        <div class="mx-4 px-4">
-            <h1 class="text-white fw-bold">Editar perfil</h1>
+        <div class="m-4 p-4">
+            <h1 class="text-white fw-bold">Editar perfil de administrador</h1>
         </div>
-        <form class="container text-center" th:action="@{/user/edit}" th:object="${usuario}" method="post">
+        <form class="container text-center" th:action="@{/user/edit}" th:object="${usuario}" method="post" enctype="multipart/form-data">
         
-            <div class="row w-100">
-                <div class="col-md-6 text-white p-2 mb-2">
+            <div class="row w-100 mx-0">
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                     <h4>Nombre de usuario: </h4>
                     <input type="text" th:field="*{username}" placeholder="Nombre de usuario"/>
                 </div>
-                <div class="col-md-6 text-white p-2 mb-2">
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                     <h4>Correo electrónico: </h4>
                     <input type="email" th:field="*{email}" placeholder="Correo electrónico"/>
                 </div>
-            </div>
-            <div class="row w-100">
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Nombre: </h4>
-                    <input type="text"  th:field="*{nombre}" placeholder="Nombre"/>
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                    <h4>Número de teléfono: </h4>
+                    <input type="number" th:field="*{telefono}" placeholder="Número de teléfono"/>
                 </div>
-                <div class="col-md-4 text-white p-2 mb-2">
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
+                    <h4>Nombre: </h4>
+                    <input type="text" th:field="*{nombre}" placeholder="Nombre"/>
+                </div>
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                     <h4>Apellidos: </h4>
                     <input type="text" th:field="*{apellidos}" placeholder="Apellidos"/>
                 </div>
-                <div class="col-md-4 text-white p-2 mb-2">
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                     <h4>Fecha de nacimiento: </h4>
                     <input type="date" th:field="*{fechaDeNacimiento}" placeholder="Fecha de nacimiento"/>
                 </div>
-                
-            </div>
-            
-    
-            <div class="row w-100 mx-0">
-                <div class="col-md-4 text-white p-2 mb-2">
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                     <h4>Contraseña actual: </h4>
                     <input type="text" name="oldPassword" placeholder="Contraseña actual"/>
                 </div>
     
-                <div class="col-md-4 text-white p-2 mb-2">
+                <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                     <h4>Contraseña nueva: </h4>
                     <input type="text" name="newPassword" placeholder="Contraseña nueva"/>
                 </div>
     
-                <div class="col-md-4 text-white p-2 mb-2">
-                    <h4>Repetir contraseña nueva: </h4>
-                    <input type="text" placeholder="Repetir contraseña nueva"/>
+                <div class="col-lg-4 col-sm-12 text-white p-2 mb-2">
+                    <h4>Repite la contraseña nueva: </h4>
+                    <input type="text" placeholder="Repite la contraseña nueva"/>
                 </div>
             </div>
-            
+
             <div class="my-3 d-flex justify-content-center">
                 <div class="form-check p-4 ps-5 w-75">
                     <label class="form-check-label h3 text-white" for="credit">Cambiar la foto de perfil</label>
@@ -139,21 +136,8 @@
                 <a th:href="@{|/user/delete|}" class="col-md-2 btn btn-danger btn-lg px-4 me-md-2">Borrar</a>
                 <button type="submit" class="col-md-2 btn btn-primary btn-lg px-4 me-md-2">Editar</button>
             </div>
-            
         </form>
-
-        <div th:if="${usuario.isPro == false}" class="m-4 p-4 mb-0 pb-0">
-            <h2 class="text-white fw-bold">¿Quieres hacerte premium?</h2>
-            <div class="m-4 ps-5 d-flex align-items-center">
-                <a href="/user/prices" id="premiumBotoia" class="bg-primary rounded text-white py-2 px-4 text-decoration-none">Sí</a>
-            </div>
-        </div>
-        <div th:if="${usuario.isPro == true}" class="m-4 p-4 mb-0 pb-0">
-            <h2 class="text-white fw-bold">¿Quieres dejar de ser premium?</h2>
-            <div class="m-4 ps-5 d-flex align-items-center">
-                <a href="/user/panel" id="premiumBotoia" class="bg-primary rounded text-white py-2 px-4 text-decoration-none">Sí</a>
-            </div>
-        </div>
+        
     </main>
     <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>

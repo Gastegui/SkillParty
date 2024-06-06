@@ -1,5 +1,6 @@
 package com.example.securingweb.Controladores;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import com.example.securingweb.ORM.cursos.comprarCursos.ComprarCursoRepository;
+import com.example.securingweb.ORM.cursos.curso.Curso;
+import com.example.securingweb.ORM.cursos.curso.CursoRepository;
+import com.example.securingweb.ORM.cursos.elemento.Elemento;
+import com.example.securingweb.ORM.ficheros.FicheroRepository;
+import com.example.securingweb.ORM.ficheros.FicheroService;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServiciosRepository;
+import com.example.securingweb.ORM.servicios.muestras.Muestra;
+import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.servicios.servicio.ServicioRepository;
 import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 import com.example.securingweb.ORM.usuarios.usuario.UsuarioRepository;
@@ -35,19 +45,31 @@ public class UserController
     private PasswordEncoder passwordEncoder;
     private ComprarServiciosRepository comprarServiciosRepository;
     private ServicioRepository servicioRepository;
+    private FicheroService ficheroService;
+    private FicheroRepository ficheroRepository;
+    private CursoRepository cursoRepository;
+    private ComprarCursoRepository comprarCursoRepository;
 
     @Autowired
     public UserController(UsuarioService usuarioService,
                         UsuarioRepository usuarioRepository,
                         PasswordEncoder passwordEncoder,
                         ComprarServiciosRepository comprarServiciosRepository,
-                        ServicioRepository servicioRepository)
-    {
+                        ServicioRepository servicioRepository,
+                        FicheroService ficheroService,
+                        FicheroRepository ficheroRepository,
+                        CursoRepository cursoRepository,
+                        ComprarCursoRepository comprarCursoRepository)
+        {
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.comprarServiciosRepository = comprarServiciosRepository;
         this.servicioRepository = servicioRepository;
+        this.ficheroService = ficheroService;
+        this.ficheroRepository = ficheroRepository;
+        this.cursoRepository = cursoRepository;
+        this.comprarCursoRepository = comprarCursoRepository;
     }
     
     /**
@@ -79,9 +101,11 @@ public class UserController
 
     /* Metodo POST */
     @PostMapping("/create")
-    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="creator", required=false) String creador, @RequestParam(value="fecha_nacimiento", required=true) String fechaStr, Model modelo) 
+    public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="creator", required=false) String creador, 
+    @RequestParam(value="fecha_nacimiento", required=true) String fechaStr,
+    @RequestParam(value="file", required = true) MultipartFile file,
+    Model modelo) 
     {   
-        //TODO: ponerle la foto de perfil al usuario, y poder editarla
         if(nuevo.getUsername().isEmpty())
         {
             return "redirect:/user/Create?noUser";
@@ -119,7 +143,7 @@ public class UserController
         
         if(creador != null)
         {
-            user.setAutoridad("CREATE_SERVICE");
+            user.setAutoridad("CREATE_ALL"); //TODO: esto debería de depender de lo que se ponga en el formulario
             user.setTelefono(nuevo.getTelefono());
         }
         
@@ -129,13 +153,23 @@ public class UserController
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
         
+        try
+        {
+            user.setImagen(ficheroService.crearPerfil(file, user));
+            ficheroRepository.save(user.getImagen());
+        }
+        catch(IOException e)
+        {
+            return "redirect:/user/create?message=fileError";
+        }
+
         if(usuarioService.guardarUsuario(user) == null)
         {
-            return "redirect:/user/create?exists";
+            return "redirect:/user/create?message=userExists";
         }
         else
         {
-            return "redirect:/user/login?created";
+            return "redirect:/user/login?userCreated";
         }
     }
 
@@ -162,7 +196,8 @@ public class UserController
         HttpServletRequest request, 
         HttpServletResponse response, 
         @RequestParam(value = "oldPassword") String oldPass,
-        @RequestParam(value = "newPassword") String newPass)
+        @RequestParam(value = "newPassword") String newPass,
+        @RequestParam(value = "file") MultipartFile file)
     {
         Optional<Usuario> guardado = usuarioRepository.findById(getUser().getId());
 
@@ -206,7 +241,17 @@ public class UserController
 
         guardado.get().setEmail(nuevo.getEmail().trim());
 
-        //MARK: FOTO DE PERFIL
+        if(!file.isEmpty())
+        {
+            try
+            {
+                ficheroRepository.save(ficheroService.cambiarPerfil(file, guardado.get(), guardado.get().getImagen()));
+            }
+            catch(IOException e)
+            {
+                return "redirect:/user/edit?message=fileError";
+            }
+        }
 
         usuarioRepository.save(guardado.get());
         logout(request, response);
@@ -215,7 +260,7 @@ public class UserController
     }
 
 
-    @PostMapping("delete")
+    @GetMapping("delete")
     public String deleteUser(HttpServletRequest request, HttpServletResponse response)
     {
         Usuario actual = getUser();
@@ -231,9 +276,47 @@ public class UserController
         if(guardado.isEmpty())
             return "redirect:/?message=userNotFound";
 
+        try
+        {
+            ficheroService.borrarFichero(actual.getImagen());
+    
+            for(Servicio i : actual.getServiciosCreados())
+            {
+                ficheroService.borrarFichero(i.getPortada());
+                for(Muestra j : i.getMuestras())
+                    ficheroService.borrarFichero(j.getMultimedia());
+            }
+    
+            for(Curso i : actual.getCursosCreados())
+            {
+                ficheroService.borrarFichero(i.getPortada());
+                for(Elemento j : i.getElementos())
+                {
+                    if(j.getAdjunto()!= null)
+                        ficheroService.borrarFichero(j.getAdjunto());
+                    ficheroService.borrarFichero(j.getMultimedia());
+                }
+            }
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
         usuarioRepository.delete(guardado.get());
         logout(request, response);
         return "redirect:/";
+    }
+
+    @GetMapping("becomePro")
+    public String becomePro()  
+    {
+        Usuario usuario = getUser();
+
+        if(usuario == null || usuario.isPro())
+            return "redirect:/error/403";
+
+        return "user/becomePro";
     }
 
     @GetMapping("panel")
@@ -274,8 +357,8 @@ public class UserController
         if(usuario == null)
             return "redirect:/error/403";
 
-        //modelo.addAttribute("cursosSinAcabar", ...);
-        //modelo.addAttribute("cursosAcabados", ...);
+        modelo.addAttribute("cursosSinAcabar", comprarCursoRepository.findByTerminadoFalseAndUsuarioId(usuario.getId()));
+        modelo.addAttribute("cursosAcabados", comprarCursoRepository.findByTerminadoTrueAndUsuarioId(usuario.getId()));
         modelo.addAttribute("serviciosSinAcabar", comprarServiciosRepository.findByTerminadoFalseAndUsuarioId(usuario.getId()));
         modelo.addAttribute("serviciosAcabados", comprarServiciosRepository.findByTerminadoTrueAndUsuarioId(usuario.getId()));
 
@@ -283,31 +366,109 @@ public class UserController
     }
 
     @GetMapping("published")
-    public String published(Model modelo)
+    public String published(Model modelo,
+                            @RequestParam(value="id", required = false, defaultValue = "no") String id)
     {
-        Usuario usuario = getUser();
+        Usuario usuario;
 
-        if(usuario == null || !usuario.isCreatorAny())
-            return "redirect:/error/403";
+        if(id.equals("no"))
+        {
+            usuario = getUser();
+            if(usuario == null || !usuario.isCreatorAny())
+                return "redirect:/error/403";
 
-        //modelo.addAttribute("cursos", ...);
+        } 
+        else
+        {
+            try
+            {
+                Optional<Usuario> opt = usuarioRepository.findById(Long.parseLong(id));
+                if(opt.isEmpty())
+                    throw new NumberFormatException();
+                usuario = opt.get();
+            }
+            catch(NumberFormatException e)
+            {
+                return "/?message=userNotFound";
+            }
+        }
+        
+
+        modelo.addAttribute("cursos", cursoRepository.findAllByPublicadoTrueAndCreadorId(usuario.getId()));
         modelo.addAttribute("servicios", servicioRepository.findAllByPublicadoTrueAndCreadorId(usuario.getId()));
 
         return "user/published";
     }
 
-    @GetMapping("services")
-    public String services(Model modelo)
+    @GetMapping({"services", "seeServices"})
+    public String services(Model modelo, @RequestParam(value = "id", required = false, defaultValue = "") String id)
     {
-        Usuario usuario = getUser();
+        Usuario usuario;
 
-        if(usuario == null || !usuario.isCreatorAny())
-            return "redirect:/error/403";
+        if(!id.isBlank())
+        {
+            usuario = getUser();
+
+            if(usuario == null || !usuario.isCreatorService())
+                return "redirect:/error/403";
+            modelo.addAttribute("creador", true);
+        }
+        else
+        {
+            try
+            {
+                Optional<Usuario> opt = usuarioRepository.findById(Long.parseLong(id));
+                if(opt.isEmpty())
+                    return "/?message=userNotFound";
+                    usuario = opt.get();
+            }
+            catch (NumberFormatException e)
+            {
+                return "/?message=userNotFound";
+            }
+
+            modelo.addAttribute("creador", false);
+        }
+
 
         modelo.addAttribute("serviciosNo", servicioRepository.findAllByPublicadoFalseAndCreadorId(usuario.getId()));
         modelo.addAttribute("serviciosSi", servicioRepository.findAllByPublicadoTrueAndCreadorId(usuario.getId()));
 
         return "user/services";
+    }
+
+    @GetMapping({"courses", "seeCourses"})
+    public String courses(Model modelo, @RequestParam(value="id", required = false, defaultValue = "") String id)
+    {
+        Usuario usuario;
+        if(id.isBlank())
+        {
+            usuario = getUser();
+    
+            if(usuario == null || !usuario.isCreatorCourse())
+                return "redirect:/error/403";
+            modelo.addAttribute("creador", true);
+            modelo.addAttribute("cursosNo", cursoRepository.findAllByPublicadoFalseAndCreadorId(usuario.getId()));
+        }
+        else
+        {
+            try
+            {
+                Optional<Usuario> opt = usuarioRepository.findById(Long.parseLong(id));
+                if(opt.isEmpty())
+                    return "/?message=userNotFound";
+                    usuario = opt.get();
+            }
+            catch (NumberFormatException e)
+            {
+                return "/?message=userNotFound";
+            }
+            modelo.addAttribute("creador", false);
+        }
+
+        modelo.addAttribute("cursosSi", cursoRepository.findAllByPublicadoTrueAndCreadorId(usuario.getId()));
+
+        return "user/courses";
     }
 
     @GetMapping("claim")

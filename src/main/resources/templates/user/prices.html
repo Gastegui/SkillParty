@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/listStyle.css">
+        <link rel="stylesheet" href="/css/listStyle.css">
         
-        <link rel="stylesheet" href="../css/precios.css">
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/precios.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <title>Historial</title>
     </head>
@@ -14,14 +14,14 @@
         <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-                    <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+                    <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
                     <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
                 </a>
             
                 <div class="btn-group" id="header-buttons">
                     <button class="botoiPro">SkillParty Pro</button>
-                    <a href="../html/servicios.html" class="botoi">Servicios</a>
-                    <a href="../html/panelCreador.html" class="botoi">Panel de Creador</a>
+                    <a href="/html/servicios.html" class="botoi">Servicios</a>
+                    <a href="/html/panelCreador.html" class="botoi">Panel de Creador</a>
                 </div>
                 
                 
@@ -75,7 +75,6 @@
             </div>
         </nav>
         
-
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
             <symbol id="check" viewBox="0 0 16 16">
             <title>Check</title>
@@ -83,42 +82,41 @@
             </symbol>
         </svg>
         
-        <!--<div class="contenedor py-3">-->
-            <main class="container py-3">
+        <main class="container py-3">
             <div class="row row-cols-1 row-cols-md-2 mb-3 text-center  d-flex justify-content-center">
+                <div class="col" sec:authorize="isAuthenticated() == false">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Free</h4>
+                        </div>
+                        <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li>Cursos y servicios</li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <a href="/user/create" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">Free</h4>
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Pro</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small></h1>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Más cursos para realizar</li>
+                                <li>Descuentos en los servicios</li>
+                                <li>Prioridad en los servicios</li>
+                                <li>Realizar cursos de pago gratis</li>
+                            </ul>
+                            <a href="/user/becomePro" class="w-100 btn btn-lg btn-primary">Get started</a>
+                        </div>
                     </div>
-                    <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>Cursos y servicios</li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                    <a href="panelUsuario.html" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</a>
-                    </div>
-                </div>
-                </div>
-                <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm">
-                    <div class="card-header py-3">
-                    <h4 class="my-0 fw-normal">Pro</h4>
-                    </div>
-                    <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small></h1>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>Más cursos para realizar</li>
-                        <li>Descuentos en los servicios</li>
-                        <li>Prioridad en los servicios</li>
-                        <li>Realizar cursos de pago gratis</li>
-                    </ul>
-                    <a href="createUsuarioPro.html" class="w-100 btn btn-lg btn-primary">Get started</a>
-                    </div>
-                </div>
                 </div>
             </div>
         
@@ -126,52 +124,42 @@
         
             <div class="table-responsive d-block">
                 <table class="table text-center">
-                <thead>
-                    <tr>
-                    <th style="width: 34%;"></th>
-                    <th style="width: 22%;">Free</th>
-                    <th style="width: 22%;">Pro</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row" class="text-start">Cursos y servicios</th>
-                    <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
-                    <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
-                    </tr>
-                    <tr>
-                    <th scope="row" class="text-start">Cursos adicionales</th>
-                    <td></td>
-                    <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
-                    </tr>
-                </tbody>
-        
-                <tbody>
-                    <tr>
-                    <th scope="row" class="text-start">Descuentos</th>
-                    <td></td>
-                    <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
-                    </tr>
-                    <tr>
-                    <th scope="row" class="text-start">Prioridad</th>
-                    <td></td>
-                    <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
-                    </tr>
-                    <!--<tr>
-                    <th scope="row" class="text-start">Unlimited members</th>
-                    <td></td>
-                    <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
-                    </tr>
-                    <tr>
-                    <th scope="row" class="text-start">Extra security</th>
-                    <td></td>
-                    <td></td>
-                    </tr>-->
-                </tbody>
+                    <thead>
+                        <tr>
+                            <th style="width: 34%;"></th>
+                            <th style="width: 22%;">Free</th>
+                            <th style="width: 22%;">Pro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-start">Cursos y servicios</th>
+                            <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                            <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-start">Cursos adicionales</th>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                        </tr>
+                    </tbody>
+            
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-start">Descuentos</th>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-start">Prioridad</th>
+                            <td></td>
+                            <td><svg class="bi" width="24" height="24"><use xlink:href="#check"/></svg></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
-            </main>
+        </main>
 
-        <script defer src="../js/bootstrap.bundle.min.js"></script>
+        <script defer src="/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

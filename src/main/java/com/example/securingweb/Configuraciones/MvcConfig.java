@@ -17,8 +17,10 @@ public class MvcConfig implements WebMvcConfigurer
 {
 	public void addViewControllers(ViewControllerRegistry registry) 
 	{
-		registry.addViewController("/user/login").setViewName("user/login");
+		registry.addViewController("/").setViewName("mainPage");
 		registry.addViewController("/login").setViewName("user/login");
+		registry.addViewController("/user/login").setViewName("user/login");
+		registry.addViewController("/user/prices").setViewName("user/prices");
 		registry.addViewController("/error/403").setViewName("error/403");
 		registry.addViewController("/error/404").setViewName("error/404");
 	}
@@ -27,7 +29,7 @@ public class MvcConfig implements WebMvcConfigurer
 	public LocaleResolver localeResolver()
 	{
 		SessionLocaleResolver slr = new SessionLocaleResolver();
-		slr.setDefaultLocale(new Locale("es"));
+		slr.setDefaultLocale(Locale.forLanguageTag("es"));
 		return slr;
 	}
 

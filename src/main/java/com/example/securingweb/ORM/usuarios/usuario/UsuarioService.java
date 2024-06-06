@@ -50,7 +50,7 @@ public class UsuarioService implements UserDetailsService
     @Override
     public Usuario loadUserByUsername(String nombre) 
     {   
-        Optional<Usuario> ret = Optional.ofNullable(usuarioRepository.findByUsername(nombre));
+        Optional<Usuario> ret = usuarioRepository.findByUsername(nombre);
         if (ret.isEmpty()) 
         {
             throw new UsernameNotFoundException("No existe el usuario");
@@ -60,7 +60,7 @@ public class UsuarioService implements UserDetailsService
 
     public Optional<Usuario> findByUsername(String username) 
     {
-        return Optional.ofNullable(usuarioRepository.findByUsername(username));
+        return usuarioRepository.findByUsername(username);
     }
 
     public Usuario guardarUsuario(Usuario usuario) 
@@ -139,10 +139,10 @@ public class UsuarioService implements UserDetailsService
     public List<Servicio> obtenerRecomendacionesServicios(int edad) 
     {
         List<Servicio> serviciosRecomendados = new ArrayList<>();
-        Categoria arte = categoriaRepository.findByDescripcion("ARTE");
-        Categoria ciencia = categoriaRepository.findByDescripcion("CIENCIA");
-        Categoria informatica = categoriaRepository.findByDescripcion("INFORMATICA");
-        Categoria geografia = categoriaRepository.findByDescripcion("GEOGRAFIA");
+        Categoria arte = categoriaRepository.findByDescripcion("Arte");
+        Categoria ciencia = categoriaRepository.findByDescripcion("Ciencia");
+        Categoria informatica = categoriaRepository.findByDescripcion("Informática");
+        Categoria geografia = categoriaRepository.findByDescripcion("Geografía");
 
         if (edad >= 0 && edad < 20) {
             serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionGreaterThan(arte, 6L));

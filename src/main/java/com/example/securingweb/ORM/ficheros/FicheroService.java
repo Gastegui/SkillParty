@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.example.securingweb.ORM.cursos.curso.Curso;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import com.example.securingweb.ORM.usuarios.usuario.Usuario;
 
@@ -37,7 +37,7 @@ public class FicheroService
     /**
      * Crea la foto de perfil del usuario
      */
-    public void crearPerfil(MultipartFile file, Usuario usuario) throws IOException
+    public Fichero crearPerfil(MultipartFile file, Usuario usuario) throws IOException
     {
         String extension = getExtension(file.getOriginalFilename());
         String filePath = buildFilePathProfile(System.getProperty("user.home"), usuario.getId().toString(), extension);
@@ -51,13 +51,13 @@ public class FicheroService
         Fichero nuevo = new Fichero();
         nuevo.setDireccion(filePath);
         nuevo.setExtension(extension);
-        usuario.setImagen(nuevo);
+        return nuevo;
     }
 
     /**
      * Cambia la foto de perfil del usuario
      */
-    public void cambiarPerfil(MultipartFile file, Usuario usuario, Fichero fichero) throws IOException
+    public Fichero cambiarPerfil(MultipartFile file, Usuario usuario, Fichero fichero) throws IOException
     {
         String extension = getExtension(file.getOriginalFilename());
         String path = buildFilePathProfile(System.getProperty("user.home"), usuario.getId().toString(), extension);
@@ -67,7 +67,7 @@ public class FicheroService
 
         fichero.setDireccion(path);
         fichero.setExtension(extension);
-
+        return fichero;
     }
 
     /**
@@ -96,7 +96,7 @@ public class FicheroService
     /**
      * Crea cualquier tipo de fichero que usan los cursos. El nombre tiene que ser: portada, elemento1, elemento2...
      */
-    /*
+    
     public Fichero crearFicheroCurso(MultipartFile file, Curso curso, String nombre) throws IOException
     {
         String extension = getExtension(file.getOriginalFilename());
@@ -115,7 +115,7 @@ public class FicheroService
         nuevo.setExtension(extension);
         return nuevo;
     }
-    */
+    
 
     /**
      * Borrar el fichero guardado, y guardar el nuevo (solo servicios)
@@ -139,7 +139,7 @@ public class FicheroService
     /**
      * Borrar el fichero guardado, y guardar el nuevo (solo cursos)
      */
-    /*
+    
     public void cambiarFicheroCurso(MultipartFile file, Curso curso, String nombre, Fichero fichero) throws IOException
     {
         String extension = getExtension(file.getOriginalFilename());
@@ -148,14 +148,14 @@ public class FicheroService
 
         Path newPath = Paths.get(newPathStr);
 
-        deleteOldFileIfExists(fichero.getDireccion());
+        deleteFile(fichero.getDireccion());
 
         saveFile(file, newPath);
 
         fichero.setDireccion(newPathStr);
         fichero.setExtension(extension);
     }
-    */
+    
     /**
      * Le cambia el nombre al fichero (no lo mueve de carpeta)
      * Hace return del fichero con el nombre cambiado

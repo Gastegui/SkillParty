@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/coursePage.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/download.js"></script>
+    <title>Document</title>
+</head>
+<body class="overflow-x-hidden">
+    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
+        <div class="container-fluid">
+    
+          <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+          </a>
+    
+          <div class="btn-group" id="header-buttons">
+            <button class="botoiPro">SkillParty Pro</button>
+            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
+          </div>
+          
+          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+    
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+    
+                <li class="nav-item">
+                <div id="menu-buttons">
+                  <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
+                  <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
+                </div>
+              </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Hizkuntza
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="d-flex mt-3" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </nav>
+
+      <div class="d-flex justify-content-center bg-info mx-4 " th:if="${curso.verificado}">
+        <p class="m-auto text-white p-2">Verificado por el administrador</p>
+      </div>
+      <div class="bg-info mx-4 mb-2 " th:if="${curso.verificado == false and admin}">
+        <form th:action="@{|/course/verify?title=${curso.titulo}|}" method="post">
+          <div class="d-flex justify-content-center py-2 mx-2">
+            <h4 class="me-2">Nivel del curso</h4>
+            <input type="number" min="1" max="5" name="puntuacion">
+          </div>
+          <div class="d-flex justify-content-center py-2">
+            <button type="submit" class="btn border rounded bg-white m-2">Verificar</button>
+          </div>
+        </form>
+        <form th:action="@{|/course/delete?title=${curso.titulo}|}" method="get" class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
+          <button type="submit" class="btn border rounded bg-danger m-2">Eliminar</button>
+        </form>
+      </div>
+      <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
+        <main class="row w-100 d-flex justify-content-center">
+
+          <div class="container-fluid">
+            <div class="row d-flex justify-content-center vw-100">
+
+              <div class="col-10 col-lg-6 card me-4">
+                <div class="row text-start">
+                  <p class="h1 p-1 card-header" th:text="${curso.titulo}"></p>
+                </div>
+                <div class="row">
+                  <div class=" d-flex justify-content-center p-1">
+                    <img th:src="@{|/uploads/${curso.creador.id}/courses/${curso.id}/portada${curso.portada.extension}|}" alt="logo" class="w-100 h-auto">
+                  </div>
+                </div>
+            
+                <div class="row d-flex justify-content-center p-1">
+                  <p class="fw-bold">Descripción:</p>
+                  <p class="ms-4" th:text="${curso.descripcion}"></p>
+                </div>
+
+                <div class="row d-flex justify-content-center p-1">
+                  <p class="fw-bold">Tipo:</p>
+                  <p class="ms-4" th:text="${curso.tipo.descripcion}"></p>
+                </div>
+              </div>
+
+              <div class="col-10 col-lg-4  d-flex align-items-center justify-content-center card d-lg-inline mt-3 m-lg-0">
+                <img th:src="@{|/uploads/${curso.creador.id}/profile${curso.creador.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil">
+                <p class="h3 m-0 ps-2" th:text="${curso.creador.nombre}"></p>
+
+                <div class="row m-2">
+                    <div class="card opinion-card">
+                      <div class="card-body">
+                          <div class="row mb-2">
+                              <div class="col-12 d-flex align-items-center">
+                                  <div class="rating me-3">
+                                    <a th:href="@{/snake}" class="btn btn-warning rounded">Ponerse en contacto con el creador</a>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row mb-2">
+                              <div class="col-12 d-flex align-items-center">
+                                  <div class="rating me-3">
+                                    <a th:href="@{|/user/seeCourses?id=${curso.creador.id}|}" class="btn btn-warning rounded">Ver otros cursos del mismo creador</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="card opinion-card mt-2">
+                    <div class="card-body">
+                      <p th:text="|Precio: ${curso.precio}€|"></p>
+                      <form th:action="@{|/course/buy?title=${curso.titulo}|}" method="post" class="card opinion-card d-flex justify-content-center mt-3 p-0 bg-success">
+                        <button th:if="${comprado == false}" type="submit" class="btn btn-lg">Comprar curso</button>
+                        <a th:if="${comprado == true}" th:href="@{|/course/content?title=${curso.titulo}&pos=1|}" class="btn btn-lg">Entrar al curso</a>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+    </div>
+
+    <div class="container-fluid my-4">
+      <div class="row d-flex justify-content-center"> 
+        <div class="col-11  card opinion-card p-0">
+          <div class="card-header opinion-header"> 
+              Opiniones:
+          </div>
+          <div class="card-body">
+              <div class="row mb-2" th:each="i : ${curso.valoraciones}">
+                <div class="col-12 d-flex align-items-center">
+                  <div class="me-3 bg-danger rounded">
+                    <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="|/course/deleteRating?id=${i.id}&title=${curso.titulo}|">Borrar valoración</a>
+                  </div>
+                  <div class="me-3">
+                    <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil">
+                  </div>
+                  <div>
+                    <span th:text="|${i.usuario.nombre} ${i.usuario.apellidos}: |"></span>  
+                  </div>
+                  <div class="rating mx-3">
+                    <span th:text="|${i.valoracion} estrellas|">★★★☆☆</span>
+                  </div>
+                  <div>
+                    <span th:text="${i.comentario}"></span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="container-fluid" sec:authorize="isAuthenticated()">
+            <h5>Da tu opinión</h5>
+            <form th:action="@{|/course/rate?title=${curso.titulo}|}" th:object="${ValorarCursos}" method="post" class="row mb-2">
+              <div class="col-lg-4 d-flex py-2 mx-2">
+                <h5 class="me-2">Puntuación</h5>
+                <input type="number" min="1" max="5" th:field="*{valoracion}">
+              </div>
+              <div class="col d-flex py-2 mx-2">
+                <h5 class="me-2">Descripción</h5>
+                <input type="text" th:field="*{comentario}">
+              </div>
+              <div class="col d-flex align-items-center">
+                <button type="submit" class="btn btn-primary btn-lg px-4 me-md-2">Mandar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script defer src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -25,30 +25,43 @@ public class WebSecurityConfig
 				.requestMatchers("/", "/home").permitAll() 
 				.requestMatchers("/js/*", "/css/*", "/video/*", "/images/*").permitAll() 
 				.requestMatchers("/snake", "/juegos/snake.js", "/juegos/snake.css").permitAll() 
-				.requestMatchers("/error", "/error/403", "error/404").permitAll() 
+				.requestMatchers("/error", "/error/403", "/error/404").permitAll() 
 				.requestMatchers("/uploads/*/services/**", "/uploads/*/courses/**", "/uploads/*/profile.*").permitAll()
-				//permitir los archivos que se hayan subido al chat solo a los authenticated
+				
 				//SERVICIOS
-				.requestMatchers("/service", "/service/view", "service/list").permitAll()
-				.requestMatchers("/service/create", "/service/createOption", "service/createSample", "service/publish").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
-				.requestMatchers("/service/delete", "/service/deleteOption", "service/deleteSample").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
-				.requestMatchers("/service/edit", "/service/editOption", "service/editSample", "service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
-				.requestMatchers("/service/rate", "/service/deleteRating", "service/buy").authenticated()
+				.requestMatchers("/service", "/service/view", "/service/list").permitAll()
+				.requestMatchers("/service/create", "/service/createOption", "/service/createSample", "/service/publish").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/service/delete", "/service/deleteOption", "/service/deleteSample").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/service/edit", "/service/editOption", "/service/editSample", "/service/editSamplePos").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/service/rate", "/service/deleteRating", "/service/buy", "/service/finish").authenticated()
+				
+				//CURSOS
+				.requestMatchers("/course", "/course/view", "/course/list").permitAll()
+				.requestMatchers("/course/create", "/course/createElement", "/course/publish").hasAnyAuthority("CREATE_COURSE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/course/delete", "/course/deleteElement").hasAnyAuthority("CREATE_COURSE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/course/edit", "/course/editElement").hasAnyAuthority("CREATE_COURSE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/course/rate", "/course/deleteRating", "/course/buy", "/course/content", "/course/finish").authenticated()
+				
 				//USUARIOS
+				.requestMatchers("/login", "/user/login", "/user/create").permitAll() 
 				.requestMatchers("/user/addBalance", "/user/edit", "user/panel", "/user/bought").authenticated()
 				.requestMatchers("/user/pending", "/user/services").hasAnyAuthority("CREATE_SERVICE", "CREATE_ANY", "ADMIN")
 				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ANY", "ADMIN")
 				.requestMatchers("/user/published", "/user/claim").hasAnyAuthority("CREATE_SERVICE", "CREATE_COURSE", "CREATE_ANY", "ADMIN")
-				.requestMatchers("login", "/user/login", "/user/create").permitAll() 
+				.requestMatchers("/user/seeServices", "/user/seeCourses").permitAll()
+				
 				//CHAT
 				.requestMatchers("/chat", "/send").permitAll()
+				
 				//SOCKET
 				.requestMatchers("/websocket-endpoint").permitAll()
+				
 				.anyRequest().authenticated() //Esto tal vez habría que quitarlo
 			)
 			.formLogin((form) -> form
 				.loginPage("/user/login")
-				.defaultSuccessUrl("/")
+				.defaultSuccessUrl("/?message=logged")
+				.failureUrl("/user/login?message=invalidCombination")
 				.permitAll()
 			)
 			.logout((logout) -> logout

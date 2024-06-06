@@ -1,5 +1,6 @@
 package com.example.securingweb.ORM.usuarios.usuario;
 
+import java.util.Optional;
 //import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> 
 {
     // Método para buscar un usuario por su nombre de usuario
-    Usuario findByUsername(String username);
+    Optional<Usuario> findByUsername(String username);
 
     @Procedure(procedureName = "descontarSaldoCurso")
     void descontarSaldoCurso(@Param("usuario_id") Long usuarioId, @Param("curso_id") Long cursoId);

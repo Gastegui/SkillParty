@@ -1,6 +1,7 @@
 package com.example.securingweb.ORM.idiomas;
 
 import java.util.List;
+import com.example.securingweb.ORM.cursos.curso.Curso;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,6 +25,9 @@ public class Idioma
 
     @OneToMany(mappedBy="idioma", cascade = CascadeType.ALL)
     private List<Servicio> servicios;
+
+    @OneToMany(mappedBy = "idioma", cascade = CascadeType.ALL)
+    private List<Curso> cursos;
     
     public void setIdioma(String i){idioma=i;}
     public String getIdioma(){return idioma;}
