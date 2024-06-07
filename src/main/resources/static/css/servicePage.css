@@ -5,11 +5,17 @@ body {
   overflow-x: hidden;
 }
 
-.fixed-height {
-  height: 407px;
-}
-
 #max-height {
   max-height: 200px;
   overflow-y: scroll;
+}
+
+@media (min-width: 460px) {
+  .fixed-height {
+    height: 484px;
+  }
+
+  .fixed-height * {
+    max-height: 484px;
+  }
 }

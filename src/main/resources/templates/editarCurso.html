@@ -74,8 +74,7 @@
             <div class="row text-start">
               <input type="text" name="username" value="" placeholder="Lehen zerbitzua" class="h1 p-1 card-header"/>
             </div>
-
-            <div class="row d-flex justify-content-center p-1">
+            <div class="row d-flex justify-content-center p-1 fixed-height">
               <video controls class="w-100 h-auto">
                 <source src="../video/youngVib.mp4" type="video/mp4">
               </video>
@@ -160,27 +159,6 @@
         </div>
       </div>
       <br>
-        <!--<hr>-->
-          <!--Imagen o video del resumen del curso-->
-          <!--<div>
-            <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold">Imagen o video del resumen del curso</h2>
-          
-            <div class="album py-2 ">
-              <div class="container">
-                  <div class="d-flex overflow-x-auto">
-                      
-                      <div class="form-check p-0">
-                        <label class="form-check-label h3" for="credit">Portadako argazkia igo</label>
-                        <input class="form-control" type="file" id="formFile">
-                      </div>
-
-                  </div>
-              </div>
-            </div>
-          </div>-->
-
-          <!--<br>
-          <hr>-->
   <!--barruko kontenidua-->
 
           <div>
@@ -194,7 +172,7 @@
                         <form class="card shadow-sm">
                             <div class="card-body">
                               <div class="btn-group d-flex justify-content-between mb-3">
-                                <button><-</button>
+                                <button>&lt;-</button>
                                 <button>-></button>
                               </div>
                               <h5 class="card-title">Titulua</h5>
@@ -244,7 +222,7 @@
                         <form class="card shadow-sm">
                             <div class="card-body">
                               <div class="btn-group d-flex justify-content-between mb-3">
-                                <button><-</button>
+                                <button>&lt;-</button>
                                 <button>-></button>
                               </div>
                               <h5 class="card-title">Titulua</h5>
@@ -265,8 +243,7 @@
                                                 name="body"
                                                 placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
                                                 ></textarea>
-                                <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
-                                -->
+
                                 <div class="d-flex justify-content-end">
                                   <div class="btn-group m-2">
                                     <button class="btn btn-primary me-2">
@@ -287,7 +264,7 @@
                         <form class="card shadow-sm">
                             <div class="card-body">
                               <div class="btn-group d-flex justify-content-between mb-3">
-                                <button><-</button>
+                                <button>&lt;-</button>
                                 <button>-></button>
                               </div>
                               <h5 class="card-title">Titulua</h5>
@@ -308,8 +285,7 @@
                                                 name="body"
                                                 placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
                                                 ></textarea>
-                                <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
-                                -->
+
                                 <div class="d-flex justify-content-end">
                                   <div class="btn-group m-2">
                                     <button class="btn btn-primary me-2">
@@ -333,7 +309,7 @@
                             <div class="card-body">
                               <h5 class="card-title">Titulua</h5>
                             </div>
-                            <div class="form-check p-0">
+                            <div class="form-check p-2">
                               <label class="form-check-label h3" for="credit">Argazkia edo bideoa igo</label>
                               <input class="form-control" type="file" id="formFile">
                             </div>
@@ -344,10 +320,11 @@
                                                 name="body"
                                                 placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam aliquam laboriosam aliquid blanditiis. Nisi, itaque mollitia dolore ut aliquam placeat sit eos, iste in dolorem cupiditate quos inventore odit nam."
                                                 ></textarea>
-                                <!-- <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores similique porro, accusamus error tenetur. Fugit praesentium expedita, eaque deserunt voluptatibus itaque quaerat, ipsam maiores magnam est atque minus tempore. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere deleniti beatae necessitatibus saepe mollitia ipsa minima labore alias perspiciatis dignissimos, dolorem eveniet, non, reiciendis sit itaque libero animi debitis unde!</p>
-                                -->
-                                
                                 <div class="d-flex justify-content-end m-2">
+                                  <div class="form-check p-2">
+                                    <label class="form-check-label h6" for="credit">Adjuntos</label>
+                                    <input class="form-control" type="file" id="formFile">
+                                  </div>
                                   <button class="btn btn-primary px-4 me-md-2">
                                     Añadir
                                   </button>
@@ -357,7 +334,7 @@
                             
                           </form>
                       </div>
-                     
+
                   </div>
               </div>
             </div>
@@ -366,11 +343,7 @@
      <div class="btn-group m-3 px-2 d-flex">
         <button class="btn btn-primary rounded px-4 me-2 me-md-2">Borrar curso</button>
         <button class="btn btn-primary rounded px-4 me-md-2">Publicar curso</button>
-      </div> 
-       <!--<div class="m-3 px-2 d-flex justify-content-end">
-        <button class="btn btn-primary px-4 me-md-2">Publicar curso</button>
-      </div>-->
-   
+      </div>  
     </main>
     <script defer src="../js/bootstrap.bundle.min.js"></script>
 </body>
