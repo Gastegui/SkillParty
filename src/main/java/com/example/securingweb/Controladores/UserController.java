@@ -338,10 +338,33 @@ public class UserController
         if(usuario == null)
             return "redirect:/error/403";
 
+        if(usuario.isAdmin())
+            return "user/panelAdmin"; //pagina
+
         if(usuario.isCreatorAny())
             return "user/panelCreator"; //pagina
         
         return "user/panelUser"; //pagina
+    }
+
+    @GetMapping("verify")
+    public String revise(Model modelo)
+    {
+        if(getUser() == null)
+            return "redirect:/error/403";
+
+        Optional<Usuario> usuario = usuarioRepository.findByUsername(getUser().getUsername());
+
+        if(usuario.isEmpty())
+            return "redirect:/?message=userNotFound";
+
+        if(!usuario.get().isAdmin())
+            return "redirect:/error/403";
+
+        modelo.addAttribute("cursos", cursoRepository.findAllByVerificadoFalse());
+        modelo.addAttribute("servicios", servicioRepository.findAllByVerificadoFalse());
+
+        return "user/verify"; //pagina
     }
 
     @GetMapping("pending")

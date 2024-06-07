@@ -49,6 +49,7 @@ public class WebSecurityConfig
 				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/user/published", "/user/claim").hasAnyAuthority("CREATE_SERVICE", "CREATE_COURSE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/user/seeServices", "/user/seeCourses").permitAll()
+				.requestMatchers("/user/verify").hasAnyAuthority("ADMIN")
 				
 				//CHAT
 				.requestMatchers("/chat", "/send").permitAll()

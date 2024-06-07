@@ -18,4 +18,5 @@ public interface CursoRepository extends JpaRepository<Curso, Long>
     Page<Curso> findAllByPublicado(boolean publicado, Pageable pageable);
     List<Curso> findAllByPublicadoTrueAndCreadorId(Long creadorId);
     List<Curso> findAllByPublicadoFalseAndCreadorId(Long creadorId);
+    List<Curso> findAllByVerificadoFalse();
 }

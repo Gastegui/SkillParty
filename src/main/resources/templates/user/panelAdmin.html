@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http:/www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../../css/panelUsuario.css">
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/panelUsuario.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <title>Panel de administrador</title>
 </head>
@@ -15,15 +15,15 @@
         <div class="container-fluid">
 
         <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="../../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
             <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
         </a>
 
         <div class="btn-group" id="header-buttons">
             <button class="botoiPro">SkillParty Pro</button>
-            <a href="../../html/createUser.html" class="botoi">Kontua sortu</a>
-            <a href="../../html/cursos.html" class="botoi">Kurtsoak</a>
-            <a href="../../html/PanelUsuario.html" class="botoi">Panel del usuario</a>
+            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
+            <a href="/html/cursos.html" class="botoi">Kurtsoak</a>
+            <a href="/html/PanelUsuario.html" class="botoi">Panel del usuario</a>
         </div>
         
         <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
@@ -81,66 +81,126 @@
 
         <div class="container col-xxl-8 px-4 py-5">
             
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                <div class="col-10 col-sm-8 col-lg-6">
-                <img src="../../images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
-                </div>
-                <div class="col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Editar perfil</h1>
-                <p class="lead">Para cambiar datos de perfil, accede aquí</p>
-                <a class="btn btn-primary btn-lg px-4 me-md-2" href="editarPerfilAdministrador.html">Entrar</a>  
-                </div>
-            </div>  
-
             <div class="row flex-lg-row- align-items-center g-5 py-5">
                 <div class="col-lg-6">
-                <img src="../../images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
                 </div>
                 <div class="col-10 col-sm-8 col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Revisar cursos</h1>
-                <p class="lead">Para revisar los nuevos cursos, accede aquí y revísalas</p>
-                <a class="btn btn-primary btn-lg px-4 me-md-2" href="../vistaCurso.html">Entrar</a>
-                <!--
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Entrar</button>-->
+                <h1 class="display-5 fw-bold lh-1 mb-3">Revisar cursos y servicios</h1>
+                <p class="lead">Para revisar los nuevos cursos y servicios, accede aquí y revísalos</p>
+                <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/verify">Entrar</a>
                 </div>
             </div>
 
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
-                <img src="../images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
                 </div>
                 <div class="col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Revisar servicios</h1>
-                <p class="lead">Para revisar los nuevos servicios, accede aquí y revísalas</p>
-                <a class="btn btn-primary btn-lg px-4 me-md-2" href="../vistaServicio.html">Entrar</a>  
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Servicios pendientes</h1>
+                  <p class="lead">Ver que servicios están pendientes de entregar.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/pending">Entrar</a>    
                 </div>
-            </div>
-
-            <div class="row flex-lg-row- align-items-center g-5 py-5">
-                <div class="col-lg-6">
-                <img src="../../images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
-                </div>
-                <div class="col-10 col-sm-8 col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Visibilizar servicios</h1>
-                <p class="lead">Para ver la lista de los servicios, accede aquí.</p>
-                <a class="btn btn-primary btn-lg px-4 me-md-2" href="../servicios.html">Entrar</a> 
-                </div>
-            </div>
-            
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                <div class="col-10 col-sm-8 col-lg-6">
-                <img src="../../images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
-                </div>
-                <div class="col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3">Visibilizar cursos</h1>
-                <p class="lead">Para ver la lista de los cursos, accede aquí.</p>
-                <a class="btn btn-primary btn-lg px-4 me-md-2" href="../cursos.html">Entrar</a>    
-                </div>
-            </div>                  
+              </div>
         
-
+              <div class="row flex-lg-row- align-items-center g-5 py-5">
+                <div class="col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Cursos y Servicios contratados</h1>
+                  <p class="lead">Ver los cursos realizados y servicios contratados.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/bought">Entrar</a>   
+                </div>
+              </div>
+        
+              <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Cursos y servicios publicados</h1>
+                  <p class="lead">Ver los cursos y servicios publicados.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/published">Entrar</a>    
+                </div>
+              </div>
+        
+              <div class="row flex-lg-row- align-items-center g-5 py-5">
+                <div class="  col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Crear un curso</h1>
+                  <p class="lead">Crear un curso nuevo.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/course/create">Entrar</a>    
+                </div>
+              </div>
+              <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Ver cursos creados</h1>
+                  <p class="lead">Ver todos los cursos creados, incluso los que no están publicados.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/courses">Entrar</a>    
+                </div>
+              </div>
+              <div class="row flex-lg-row- align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Crear un servicio</h1>
+                  <p class="lead">Crear un servicio nuevo.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/service/create">Entrar</a>    
+                </div>
+              </div>
+              <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Ver servicios creados</h1>
+                  <p class="lead">Ver todos los servicios creados, incluso los que no están publicados.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/services">Entrar</a>    
+                </div>
+              </div>
+        
+              <div class="row flex-lg-row- align-items-center g-5 py-5">
+                <div class="  col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Editar perfil</h1>
+                  <p class="lead">Editar datos del perfil</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/edit">Entrar</a> 
+                </div>
+              </div>
+        
+              <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Reclamar fondos</h1>
+                  <p class="lead">Si quieres recoger los fondos, accede aquí</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/user/claim">Entrar</a>    
+                </div>
+              </div>
+        
+              <div class="row flex-lg-row- align-items-center g-5 py-5">
+                <div class="  col-lg-6">
+                  <img src="/images/skillPartyLogo.png" class="d-block mx-lg-auto img-fluid" alt="logo" width="700" height="500" loading="lazy">
+                </div>
+                <div class="col-10 col-sm-8 col-lg-6">
+                  <h1 class="display-5 fw-bold lh-1 mb-3">Tramite de quejas o sugerencias</h1>
+                  <p class="lead">Si tienes alguna queja o sugerencia, accede aquí y tramítala.</p>
+                  <a class="btn btn-primary btn-lg px-4 me-md-2" href="/snake">Entrar</a>
+                </div>
+              </div>
+        
         </div>
     </main>
-    <script defer src="s../../js/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

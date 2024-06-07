@@ -20,8 +20,10 @@ public interface ServicioRepository extends JpaRepository<Servicio, Long>
     Page<Servicio> findAllByPublicado(boolean publicado, Pageable pageable);
     List<Servicio> findAllByPublicadoTrueAndCreadorId(Long creadorId);
     List<Servicio> findAllByPublicadoFalseAndCreadorId(Long creadorId);
+    List<Servicio> findAllByVerificadoFalse();
 
     List<Servicio> findByCategoriaAndPuntuacionGreaterThan(Categoria categoria, Long puntuacion);
     List<Servicio> findByCategoriaAndPuntuacion(Categoria categoria, Long puntuacion);
     List<Servicio> findByCategoriaAndPuntuacionLessThan(Categoria categoria, Long puntuacion);
+
 }
