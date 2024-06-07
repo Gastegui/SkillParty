@@ -16,7 +16,7 @@ create table usuarios
 	id BIGINT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	nombre VARCHAR(255) NOT NULL,
 	apellidos VARCHAR (255) NOT NULL,
-	fecha_de_nacimiento DATE NOT NULL,
+	fecha_de_nacimiento datetime(6) NOT NULL,
 	telefono varchar(255),
 	email VARCHAR(255) not null,
     username VARCHAR(255) NOT NULL UNIQUE,

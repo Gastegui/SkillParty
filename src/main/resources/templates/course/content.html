@@ -67,19 +67,19 @@
       </nav>
 
       <div class="container-fluid">
-        <div class="row my-3">
-            <h1><a th:href="@{|/course/view?title=${elemento.padre.titulo}|}" th:text="|Curso: ${elemento.padre.titulo}|"></a></h1>
+        <div class="row">
+            <a class="h1 text-decoration-none" th:href="@{|/course/view?title=${elemento.padre.titulo}|}" th:text="|Curso: ${elemento.padre.titulo}|"></a>
         </div>
         <div class="row  d-flex justify-content-center">
-            <div class="col-10 card">
+            <div class="col-10 col-md-9 col-lg-7 card">
               <div class="row text-start">
                 <p class="h2 p-1 card-header" th:text="${elemento.titulo}"></p>
               </div>
-              <div class="row d-flex justify-content-center p-1">
+              <div class="row d-flex justify-content-center p-1 fixed-height">
                 <video th:if="${elemento.multimedia.isVid()}" controls class="w-100 h-auto">
                   <source th:src="@{|/uploads/${elemento.padre.creador.id}/courses/${elemento.padre.id}/elemento${elemento.posicion}${elemento.multimedia.extension}|}" type="video/mp4">
                 </video>
-                <img th:if="${elemento.multimedia.isImg()}" class="w-100 h-auto" th:src="@{|/uploads/${elemento.padre.creador.id}/courses/${elemento.padre.id}/elemento${elemento.posicion}${elemento.multimedia.extension}|}" alt="Imagen del curso">
+                <img th:if="${elemento.multimedia.isImg()}" class="w-auto" th:src="@{|/uploads/${elemento.padre.creador.id}/courses/${elemento.padre.id}/elemento${elemento.posicion}${elemento.multimedia.extension}|}" alt="Imagen del curso">
               </div>
               <div class="row d-flex justify-content-between">
                 <div class="col-1 m-2 w-auto">

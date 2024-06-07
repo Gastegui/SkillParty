@@ -10,4 +10,5 @@ public interface ComprarServiciosRepository extends JpaRepository<ComprarServici
     List<ComprarServicio> findByTerminadoFalseAndServicioCreadorId(Long creadorId);
     List<ComprarServicio> findByTerminadoFalseAndUsuarioId(Long usuarioId);
     List<ComprarServicio> findByTerminadoTrueAndUsuarioId(Long usuarioId);
+    List<ComprarServicio> findByServicioCreadorId(Long creadorId);
 }

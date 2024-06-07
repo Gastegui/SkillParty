@@ -44,10 +44,10 @@ public class WebSecurityConfig
 				
 				//USUARIOS
 				.requestMatchers("/login", "/user/login", "/user/create").permitAll() 
-				.requestMatchers("/user/addBalance", "/user/edit", "user/panel", "/user/bought").authenticated()
-				.requestMatchers("/user/pending", "/user/services").hasAnyAuthority("CREATE_SERVICE", "CREATE_ANY", "ADMIN")
-				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ANY", "ADMIN")
-				.requestMatchers("/user/published", "/user/claim").hasAnyAuthority("CREATE_SERVICE", "CREATE_COURSE", "CREATE_ANY", "ADMIN")
+				.requestMatchers("/user/addBalance", "/user/edit", "user/panel", "/user/bought", "/user/becomePro").authenticated()
+				.requestMatchers("/user/pending", "/user/services").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ALL", "ADMIN")
+				.requestMatchers("/user/published", "/user/claim").hasAnyAuthority("CREATE_SERVICE", "CREATE_COURSE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/user/seeServices", "/user/seeCourses").permitAll()
 				
 				//CHAT

@@ -1,7 +1,7 @@
 package com.example.securingweb.ORM.usuarios.usuario;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,7 +204,7 @@ public class Usuario implements UserDetails
             
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("USER_PRO"))
+            if(a.getAutoridad().equals("USER_PRO") || a.getAutoridad().equals("ADMIN"))
                 return true;
         }
         return false;
@@ -216,7 +216,7 @@ public class Usuario implements UserDetails
             
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("CREATE_ALL"))
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("ADMIN"))
                 return true;
         }
         return false;
@@ -228,7 +228,7 @@ public class Usuario implements UserDetails
 
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE"))
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE") || a.getAutoridad().equals("ADMIN"))
                 return true;
         }
         return false;
@@ -240,7 +240,7 @@ public class Usuario implements UserDetails
 
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_COURSE"))
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_COURSE") || a.getAutoridad().equals("ADMIN"))
                 return true;
         }
         return false;
@@ -252,7 +252,7 @@ public class Usuario implements UserDetails
             
         for(Autoridad a : autoridades)
         {
-            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE") || a.getAutoridad().equals("CREATE_COURSE"))
+            if(a.getAutoridad().equals("CREATE_ALL") || a.getAutoridad().equals("CREATE_SERVICE") || a.getAutoridad().equals("CREATE_COURSE") || a.getAutoridad().equals("ADMIN"))
                 return true;
         }
         return false;

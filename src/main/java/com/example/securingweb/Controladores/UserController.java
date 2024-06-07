@@ -2,8 +2,9 @@ package com.example.securingweb.Controladores;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.securingweb.ORM.cursos.comprarCursos.ComprarCurso;
 import com.example.securingweb.ORM.cursos.comprarCursos.ComprarCursoRepository;
 import com.example.securingweb.ORM.cursos.curso.Curso;
 import com.example.securingweb.ORM.cursos.curso.CursoRepository;
 import com.example.securingweb.ORM.cursos.elemento.Elemento;
 import com.example.securingweb.ORM.ficheros.FicheroRepository;
 import com.example.securingweb.ORM.ficheros.FicheroService;
+import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServicio;
 import com.example.securingweb.ORM.servicios.comprarServicios.ComprarServiciosRepository;
 import com.example.securingweb.ORM.servicios.muestras.Muestra;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
@@ -91,6 +94,24 @@ public class UserController
         
     }
 
+    private Date getFecha(String fechaStr)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date;
+        try
+        {
+            date = sdf.parse(fechaStr+" 00:00:00");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error parseando la fecha");
+            return null;
+        }
+        long timeInMillis = date.getTime();
+        return new Date(timeInMillis);
+        
+    }
+
     /* Metodo GET */
     @GetMapping("/create")
     public String cargarLogin(Model modelo)
@@ -104,6 +125,7 @@ public class UserController
     public String createUser(@ModelAttribute Usuario nuevo, @RequestParam(value="creator", required=false) String creador, 
     @RequestParam(value="fecha_nacimiento", required=true) String fechaStr,
     @RequestParam(value="file", required = true) MultipartFile file,
+    @RequestParam(value = "aditional", required = false) String telefono,
     Model modelo) 
     {   
         if(nuevo.getUsername().isEmpty())
@@ -125,26 +147,12 @@ public class UserController
         user.setPorCobrar(BigDecimal.valueOf(0));
         user.setPuntuacion((long)0); //TODO: poner la puntuación a los usuarios bien
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        java.util.Date date;
-        try
-        {
-            date = sdf.parse(fechaStr+" 00:00:00");
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error parseando la fecha");
-            return null;
-        }
-        long timeInMillis = date.getTime();
-        Date fecha = new Date(timeInMillis);
-        
-        user.setFechaDeNacimiento(fecha);
+        user.setFechaDeNacimiento(getFecha(fechaStr));
         
         if(creador != null)
         {
             user.setAutoridad("CREATE_ALL"); //TODO: esto debería de depender de lo que se ponga en el formulario
-            user.setTelefono(nuevo.getTelefono());
+            user.setTelefono(telefono);
         }
         
         user.setAutoridad("USER");
@@ -153,22 +161,23 @@ public class UserController
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
         
-        try
-        {
-            user.setImagen(ficheroService.crearPerfil(file, user));
-            ficheroRepository.save(user.getImagen());
-        }
-        catch(IOException e)
-        {
-            return "redirect:/user/create?message=fileError";
-        }
 
-        if(usuarioService.guardarUsuario(user) == null)
+        if((user = usuarioService.guardarUsuario(user)) == null)
         {
             return "redirect:/user/create?message=userExists";
         }
         else
         {
+            try
+            {
+                user.setImagen(ficheroService.crearPerfil(file, user));
+                ficheroRepository.save(user.getImagen());
+                usuarioRepository.save(user);
+            }
+            catch(IOException e)
+            {
+                return "redirect:/user/create?message=fileError";
+            }
             return "redirect:/user/login?userCreated";
         }
     }
@@ -197,7 +206,8 @@ public class UserController
         HttpServletResponse response, 
         @RequestParam(value = "oldPassword") String oldPass,
         @RequestParam(value = "newPassword") String newPass,
-        @RequestParam(value = "file") MultipartFile file)
+        @RequestParam(value = "file") MultipartFile file,
+        @RequestParam(value = "fecha", required = true) String fechaStr)
     {
         Optional<Usuario> guardado = usuarioRepository.findById(getUser().getId());
 
@@ -224,9 +234,7 @@ public class UserController
             return "redirect:/user/edit?message=notEnoughData";
     
         guardado.get().setApellidos(nuevo.getApellidos().trim());
-
-        if(!guardado.get().getFechaDeNacimiento().equals(nuevo.getFechaDeNacimiento()))
-            guardado.get().setFechaDeNacimiento(nuevo.getFechaDeNacimiento());
+        guardado.get().setFechaDeNacimiento(getFecha(fechaStr));
 
         if(guardado.get().isCreatorAny() || guardado.get().isAdmin())
         {
@@ -241,7 +249,7 @@ public class UserController
 
         guardado.get().setEmail(nuevo.getEmail().trim());
 
-        if(!file.isEmpty())
+        if(file != null)
         {
             try
             {
@@ -268,13 +276,16 @@ public class UserController
         if(actual == null)
             return "redirect:/";
 
-        if(actual.isAdmin())
-            return "redirect:/error/403";
-
         Optional<Usuario> guardado = usuarioRepository.findById(actual.getId());
 
         if(guardado.isEmpty())
             return "redirect:/?message=userNotFound";
+
+        actual = guardado.get();
+
+        if(actual.isAdmin())
+            return "redirect:/error/403";
+
 
         try
         {
@@ -305,7 +316,7 @@ public class UserController
 
         usuarioRepository.delete(guardado.get());
         logout(request, response);
-        return "redirect:/";
+        return "redirect:/?message=userDeleted";
     }
 
     @GetMapping("becomePro")
@@ -405,12 +416,21 @@ public class UserController
     {
         Usuario usuario;
 
-        if(!id.isBlank())
+        if(id.isBlank())
         {
             usuario = getUser();
 
-            if(usuario == null || !usuario.isCreatorService())
+            if(usuario == null)
                 return "redirect:/error/403";
+            
+            Optional<Usuario> opt = usuarioRepository.findByUsername(usuario.getUsername());
+
+            if(opt.isEmpty())
+                return "redirect:/?message=userNotFound";
+
+            if(!opt.get().isCreatorService())
+                return "redirect:/error/403";
+
             modelo.addAttribute("creador", true);
         }
         else
@@ -419,12 +439,12 @@ public class UserController
             {
                 Optional<Usuario> opt = usuarioRepository.findById(Long.parseLong(id));
                 if(opt.isEmpty())
-                    return "/?message=userNotFound";
-                    usuario = opt.get();
+                    return "redirect:/?message=userNotFound";
+                usuario = opt.get();
             }
             catch (NumberFormatException e)
             {
-                return "/?message=userNotFound";
+                return "redirect:/?message=userNotFound";
             }
 
             modelo.addAttribute("creador", false);
@@ -444,9 +464,18 @@ public class UserController
         if(id.isBlank())
         {
             usuario = getUser();
-    
-            if(usuario == null || !usuario.isCreatorCourse())
+
+            if(usuario == null)
                 return "redirect:/error/403";
+            
+            Optional<Usuario> opt = usuarioRepository.findByUsername(usuario.getUsername());
+
+            if(opt.isEmpty())
+                return "redirect:/?message=userNotFound";
+
+            if(!opt.get().isCreatorCourse())
+                return "redirect:/error/403";
+
             modelo.addAttribute("creador", true);
             modelo.addAttribute("cursosNo", cursoRepository.findAllByPublicadoFalseAndCreadorId(usuario.getId()));
         }
@@ -472,14 +501,56 @@ public class UserController
     }
 
     @GetMapping("claim")
-    public String getClaim(Model modelo)
+    public String getClaim(Model modelo, @RequestParam(value="year", required = false) String añoStr)
     {
         Usuario usuario = getUser();
 
         if(usuario == null || !usuario.isCreatorAny())
             return "redirect:/error/403";
 
+        Optional<Usuario> guardado = usuarioRepository.findByUsername(usuario.getUsername());
+        
+        if(guardado.isEmpty())    
+            return "redirect:/?message=userNotFound";
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+
+        int año = cal.get(Calendar.YEAR);
+
+        if(añoStr != null)
+        {
+            try
+            {
+                año = Integer.parseInt(añoStr);
+            }
+            catch(NumberFormatException e)
+            {
+                
+            }
+        }
+
+        Long lista[] = new Long[12];
+
+        for(int i = 0; i < lista.length; i++)
+            lista[i] = 0L;
+
+        for(ComprarCurso i : comprarCursoRepository.findByCursoCreadorId(guardado.get().getId()))
+        {
+            cal.setTime(i.getFecha());
+            if(cal.get(Calendar.YEAR) == año)
+                lista[cal.get(Calendar.MONTH)] += i.getPrecio().longValue();
+        }
+        
+        for(ComprarServicio i : comprarServiciosRepository.findByServicioCreadorId(guardado.get().getId()))
+        {
+            cal.setTime(i.getFecha());
+            if(cal.get(Calendar.YEAR) == año)
+                lista[cal.get(Calendar.MONTH)] += i.getOpcionCompra().getPrecio().longValue();
+        }
+                
         modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("beneficios", lista);
 
         return "user/fondos";
     }
@@ -501,14 +572,57 @@ public class UserController
     }
 
     @GetMapping("addBalance")
-    public String getAddBalance(Model modelo)
+    public String getAddBalance(Model modelo, @RequestParam(value = "year", required = false) String añoStr)
     {
         Usuario usuario = getUser();
 
         if(usuario == null)
             return "redirect:/error/403";
+            
+        Optional<Usuario> guardado = usuarioRepository.findByUsername(usuario.getUsername());
+            
+        if(guardado.isEmpty())    
+            return "redirect:/?message=userNotFound";
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+
+        int año = cal.get(Calendar.YEAR);
+
+        if(añoStr != null)
+        {
+            try
+            {
+                año = Integer.parseInt(añoStr);
+            }
+            catch(NumberFormatException e)
+            {
+                
+            }
+        }
+
+        Long lista[] = new Long[12];
+
+        for(int i = 0; i < lista.length; i++)
+            lista[i] = 0L;
+
+        for(ComprarCurso i : guardado.get().getCursosComprados())
+        {
+            cal.setTime(i.getFecha());
+            if(cal.get(Calendar.YEAR) == año)
+                lista[cal.get(Calendar.MONTH)] += i.getPrecio().longValue();
+        }
         
+        for(ComprarServicio i : guardado.get().getServiciosComprados())
+        {
+            cal.setTime(i.getFecha());
+            if(cal.get(Calendar.YEAR) == año)
+                lista[cal.get(Calendar.MONTH)] += i.getOpcionCompra().getPrecio().longValue();
+        }
+               
+            
         modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("gastos", lista);
 
         return "user/addBalance";
     }

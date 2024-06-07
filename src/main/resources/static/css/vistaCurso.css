@@ -1,5 +1,16 @@
-html, body {
+html,
+body {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+@media (min-width: 460px) {
+  .fixed-height {
+    height: 484px;
+  }
+
+  .fixed-height * {
+    max-height: 484px;
+  }
 }

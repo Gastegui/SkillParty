@@ -13,4 +13,5 @@ public interface ComprarCursoRepository extends JpaRepository<ComprarCurso, Long
     List<ComprarCurso> findByTerminadoTrueAndUsuarioId(Long usuarioId);
     List<ComprarCurso> findByUsuarioUsername(String username);
     Optional<ComprarCurso> findByUsuarioUsernameAndCursoTitulo(String username, String titulo);
+    List<ComprarCurso> findByCursoCreadorId(Long creadorId);
 }

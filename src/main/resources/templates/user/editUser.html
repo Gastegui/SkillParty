@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-md-4 text-white p-2 mb-2">
                     <h4>Fecha de nacimiento: </h4>
-                    <input type="date" th:field="*{fechaDeNacimiento}" placeholder="Fecha de nacimiento"/>
+                    <input type="date" name="fecha" th:field="${usuario.fechaDeNacimiento}"/>
                 </div>
                 
             </div>
@@ -130,7 +130,7 @@
             
             <div class="my-3 d-flex justify-content-center">
                 <div class="form-check p-4 ps-5 w-75">
-                    <label class="form-check-label h3 text-white" for="credit">Cambiar la foto de perfil</label>
+                    <label class="form-check-label h3 text-white" for="formFile">Cambiar la foto de perfil</label>
                     <input class="form-control" type="file" name="file" id="formFile">
                 </div>
             </div>
@@ -151,7 +151,7 @@
         <div th:if="${usuario.isPro == true}" class="m-4 p-4 mb-0 pb-0">
             <h2 class="text-white fw-bold">¿Quieres dejar de ser premium?</h2>
             <div class="m-4 ps-5 d-flex align-items-center">
-                <a href="/user/panel" id="premiumBotoia" class="bg-primary rounded text-white py-2 px-4 text-decoration-none">Sí</a>
+                <a href="/user/panel" id="premiumBotoia2" class="bg-primary rounded text-white py-2 px-4 text-decoration-none">Sí</a>
             </div>
         </div>
     </main>

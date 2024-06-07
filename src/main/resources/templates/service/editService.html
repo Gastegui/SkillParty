@@ -70,10 +70,9 @@
     <main>
       <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
         <div class="row w-100 d-flex justify-content-center">
-          <form th:action="@{/service/edit}" th:object="${Servicio}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
+          <form th:action="@{|/service/edit?tituloViejo=${Servicio.getTitulo()}|}" th:object="${Servicio}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
             <div class="row text-start">
-              <input type="text" th:field="*{titulo}" placeholder="Service name" class="h1 p-1 card-header"/>
-              <input hidden type="text" name="tituloViejo" th:value="${Servicio.getTitulo()}">
+              <input type="text" th:field="*{titulo}" placeholder="Service name" class="h1 p-1 card-header" required/>
             </div>
 
             <div class="row">
@@ -92,23 +91,25 @@
                   </div>
 
                   <div class="row d-flex justify-content-center p-3">
-                    <textarea	rows="4" cols="50" th:field="*{descripcion}" placeholder="Service description"></textarea>
+                    <textarea	rows="4" cols="50" th:field="*{descripcion}" placeholder="Service description" required></textarea>
                   </div>
                   
-                  <select class="form-select" id="inputGroupSelect01" name="categoriaParam"> 
-                    <option value="Fisica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Fisica")}'>Fisica</option>
-                    <option value="Informatica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Informatica")}'>Informatica</option>
-                    <option value="Mecanica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Mecanica")}'>Mecanica</option>
-                    <option value="Biologia" th:selected='${Servicio.getCategoria().getDescripcion().equals("Biologia")}'>Biologia</option>
-                    <option value="Matematica" th:selected='${Servicio.getCategoria().getDescripcion().equals("Matematica")}'>Matematica</option>
+                  <select class="form-select" id="inputGroupSelect01" name="categoriaParam" required> 
+                    <option value="" disabled selected>Selecciona una categoría</option>
+                    <option value="Fisica">Fisica</option>
+                    <option value="Informatica">Informatica</option>
+                    <option value="Mecanica">Mecanica</option>
+                    <option value="Biologia">Biologia</option>
+                    <option value="Matematica">Matematica</option>
                   </select>
 
                   <br/>
 
-                  <select class="form-select" id="inputGroupSelect02" name="idiomaParam"> 
-                    <option value="es" th:selected='${Servicio.getIdioma().getIdioma().equals("es")}'>Castellano</option>
-                    <option value="eu" th:selected='${Servicio.getIdioma().getIdioma().equals("eu")}'>Vasco</option>
-                    <option value="en" th:selected='${Servicio.getIdioma().getIdioma().equals("en")}'>Ingles</option>
+                  <select class="form-select" id="inputGroupSelect02" name="idiomaParam" required> 
+                    <option value="" selected disabled>Selecciona un idioma</option>
+                    <option value="es">Castellano</option>
+                    <option value="eu">Euskara</option>
+                    <option value="en">English</option>
                 </select>
 
                   <div class="d-flex justify-content-between">
@@ -233,7 +234,7 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center">
-        <form th:action="@{/service/publish(private=${Servicio.publicado}? y : n)}&title=${Servicio.titulo}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
+        <form th:action="@{|/service/publish?private=${Servicio.publicado ? 'y' : 'n'}&title=${Servicio.titulo}|}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
           <input hidden type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}">
           <button type="submit" th:text="${Servicio.publicado}? 'Hacer privado' : 'Hacer público'" id="botonPublicar"  class="btn btn-primary"></button>
         </form>

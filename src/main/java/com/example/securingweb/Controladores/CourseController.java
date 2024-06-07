@@ -527,7 +527,7 @@ public class CourseController
             nuevo.setPosicion(posLong);
             nuevo.setPadre(curso);
             
-            if(!adjunto.isEmpty())
+            if(adjunto != null)
             {
                 nuevo.setAdjunto(ficheroService.crearFicheroCurso(adjunto, curso, "adjunto"+pos));
                 ficheroRepository.save(nuevo.getAdjunto());
@@ -645,7 +645,7 @@ public class CourseController
         if(!guardado.get().getPadre().getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
 
-        if(!multimediaParam.isEmpty())
+        if(multimediaParam != null)
         {
             Optional<Fichero> multimedia = ficheroRepository.findByDireccion(guardado.get().getMultimedia().getDireccion());
             if(multimedia.isEmpty())
@@ -664,7 +664,7 @@ public class CourseController
             }
         }
 
-        if(!adjuntoParam.isEmpty())
+        if(adjuntoParam != null)
         {
             
             try

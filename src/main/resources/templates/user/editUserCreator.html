@@ -106,7 +106,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                         <h4>Fecha de nacimiento: </h4>
-                        <input type="date" th:field="*{fechaDeNacimiento}" placeholder="Fecha de nacimiento"/>
+                        <input type="date" name="fecha" th:value="${usuario.fechaDeNacimiento}" />
                     </div>
                     <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                         <h4>Contraseña actual: </h4>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="col-12 text-white p-2 mb-2 d-flex justify-content-center">
                         <div class="form-check p-4 ps-5 w-75">
-                            <label class="form-check-label h3 text-white" for="credit">Cambiar la foto de perfil</label>
+                            <label class="form-check-label h3 text-white" for="formFile">Cambiar la foto de perfil</label>
                             <input class="form-control" type="file" name="file" id="formFile">
                         </div>
                     </div>

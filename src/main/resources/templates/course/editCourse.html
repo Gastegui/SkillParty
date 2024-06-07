@@ -172,7 +172,7 @@
                             <a th:if="${i.posicion != 1}" th:href="@{|/course/editElementPos?title=${Curso.titulo}&id=${i.id}&dir=izq|}">&lt;--</a>
                             <a th:if="${i.posicion != ListaElementos.size()}" th:href="@{|/course/editElementPos?title=${Curso.titulo}&id=${i.id}&dir=der|}">--&gt;</a>
                           </div>
-                          <h5 class="card-title"><input type="text" th:value="${i.titulo}" name="titulo"></h5>
+                          <h5 class="card-title"><input type="text" th:value="${i.titulo}" name="titulo" placeholder="Titulo del elemento" required></h5>
                         </div>
                         <div class="d-flex justify-content-center">
                           <video th:if="${i.multimedia.isVid()}" controls width="300px">
@@ -186,7 +186,7 @@
                         </div>
             
                         <div class="card-body">
-                          <textarea	rows="4" cols="50" name="texto" th:text="${i.texto}"></textarea>
+                          <textarea	rows="4" cols="50" name="texto" th:text="${i.texto}" placeholder="Texto del elemento"></textarea>
                           
                           <div class="d-flex justify-content-end">
 
@@ -208,7 +208,7 @@
                   <div class="p-2 d-flex align-items-center">
                     <form class="card shadow-sm" th:action="@{|/course/createElement?title=${Curso.titulo}&pos=${ListaElementos.size()+1}|}" enctype="multipart/form-data" method="post">
                         <div class="card-body">
-                          <h5 class="card-title"><input type="text" name="titulo" placeholder="Título del curso" required></h5>
+                          <h5 class="card-title"><input type="text" name="titulo" placeholder="Título del elemento" required></h5>
                         </div>
                         <div class="card-body">
                           <label class="" for="credit">Video o imagen del elemento</label>

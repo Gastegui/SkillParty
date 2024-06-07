@@ -90,7 +90,7 @@
                         <div tH.if="${cursosSinAcabar != null}" th:each="i : ${cursosSinAcabar}" class="p-2">
                             <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <h5 class="card-title" th:text="i.curso.titulo"></h5>
+                                    <h5 class="card-title" th:text="${i.curso.titulo}"></h5>
                                 </div>
                                 <div class="d-flex justify-content-center">
                                     <img th:src="@{|/uploads/${i.curso.creador.id}/courses/${i.curso.id}/portada${i.curso.portada.extension}|}" alt="Portada del curso" width="300">   
