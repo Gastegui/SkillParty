@@ -91,7 +91,7 @@
                 <div class="list-group">
                     <th:block th:each="user : ${usuarios}">
                         <a th:href="@{/chat(recipient=${user.username})}" th:classappend="${user.username == selectedRecipient} ? 'active' : ''" class="list-group-item list-group-item-action user-list-item" th:unless="${user.username == #authentication.name}">
-                            <img th:src="@{|/uploads/${user.username}/perfil${user.imagen.extension}|}" alt="Profile Picture" width="30" height="30"/>
+                            <img th:src="@{|/uploads/${user.id}/profile${user.imagen.extension}|}" alt="Profile Picture" width="30" height="30"/>
                             <span th:text="${user.username}"></span>
                         </a>
                     </th:block>
@@ -104,14 +104,14 @@
                     <div th:each="mensaje : ${mensajes}">
                         <div th:if="${mensaje.usuario.username == #authentication.name}" class="chat-log__item chat-log__item--own">
                             <h3 class="chat-log__author">
-                                <img th:src="@{|/uploads/${mensaje.usuario.username}/perfil${mensaje.usuario.imagen.extension}|}" alt="Profile Picture" width="30" height="30"/>
+                                <img th:src="@{|/uploads/${mensaje.usuario.id}/profile${mensaje.usuario.imagen.extension}|}" alt="Profile Picture" width="30" height="30"/>
                                 <span th:text="${mensaje.usuario.nombre} + ' ' + ${mensaje.usuario.apellidos} + ' ' + ${#dates.format(mensaje.fechaEnvio, 'HH:mm')}"></span>
                             </h3>
                             <div class="chat-log__message" th:text="${mensaje.texto}"></div>
                         </div>
                         <div th:if="${mensaje.usuario.username != #authentication.name}" class="chat-log__item chat-log__item--left">
                             <h3 class="chat-log__author">
-                                <img th:src="@{|/uploads/${mensaje.usuario.username}/perfil${mensaje.usuario.imagen.extension}|}" alt="Profile Picture" width="30" height="30"/>
+                                <img th:src="@{|/uploads/${mensaje.usuario.id}/profile${mensaje.usuario.imagen.extension}|}" alt="Profile Picture" width="30" height="30"/>
                                 <span th:text="${mensaje.usuario.nombre} + ' ' + ${mensaje.usuario.apellidos} + ' ' + ${#dates.format(mensaje.fechaEnvio, 'HH:mm')}"></span>
                             </h3>
                             <div class="chat-log__message" th:text="${mensaje.texto}"></div>
