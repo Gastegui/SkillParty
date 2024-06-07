@@ -347,7 +347,7 @@ public class ServiceController
         if (!guardado.getCreador().equals(getUser()) && !getUser().isAdmin())
             return "redirect:/error/403";
         
-        if(servicioRepository.findByTitulo(nuevo.getTitulo()).isPresent())
+        if(!guardado.getTitulo().equals(nuevo.getTitulo()) && servicioRepository.findByTitulo(nuevo.getTitulo()).isPresent())
             return "redirect:/service/edit?title="+encode(tituloViejo)+"&message=serviceExists";
 
         guardado.setDescripcion(nuevo.getDescripcion());
