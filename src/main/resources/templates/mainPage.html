@@ -75,55 +75,55 @@
         <div class="row">
             <h1 class="text-black">TOP 3 CURSOS</h1>
         </div>
-        <div class="row d-inline-flex flex-nowrap overflow-auto">
-            <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="d-flex overflow-x-auto">
+            <div th:each="curso : ${topCursos}" class="p-2">
                 <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"/>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                    </svg>
                     <div class="card-body">
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title" th:text="${curso.titulo}"></h5>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img th:src="@{|/uploads/${curso.creador.id}/courses/${curso.id}/portada${curso.portada.extension}|}" alt="Portada del curso" width="300">   
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" th:text="${curso.descripcion}"></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <a th:href="@{|/course/view?title=${curso.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
                             </div>
-                            <small class="text-body-secondary">9 mins</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-6 col-lg-4">
-                <button class="w-100 h-100">VER MÁS</button>
+            <div class="col-xs-4 col-md-3 p-2">
+                <a class="btn btn-light w-100 h-100 d-flex align-items-center justify-content-center" th:href="@{|/course/list|}">VER MÁS</a>
             </div>
         </div>
+        
+
         <div class="row">
             <h1 class="text-black">TOP 3 SERVICIOS</h1>
         </div>
-        <div class="row d-inline-flex flex-nowrap overflow-auto">
-            <div class="col-xs-12 col-md-6 col-lg-4">
+        <div class="d-flex overflow-x-auto">
+            <div th:each="servicio : ${topServicios}" class="p-2">
                 <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"/>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                    </svg>
                     <div class="card-body">
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title" th:text="${servicio.titulo}"></h5>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/portada${servicio.portada.extension}|}" alt="Portada del curso" width="300">   
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" th:text="${servicio.descripcion}"></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <a th:href="@{|/services/view?title=${servicio.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
                             </div>
-                            <small class="text-body-secondary">9 mins</small>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-6 col-lg-4">
-                <button class="w-100 h-100">VER MÁS</button>
+            <div class="col-xs-4 col-md-3 p-2">
+                <a class="btn btn-light w-100 h-100 d-flex align-items-center justify-content-center" th:href="@{|/services/list|}">VER MÁS</a>
             </div>
         </div>
 
@@ -136,40 +136,16 @@
             <div th:each="curso : ${cursosRecomendados}" class="col-xs-12 col-md-6 col-lg-4">
                 <div class="card shadow-sm" style="width: 350px; height: 450px;">
                     <div class="d-flex justify-content-center">
-                        <img th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/portada${servicio.portada.extension}|}" class="w-75 h-100"/>
+                        <img th:src="@{|/uploads/${curso.creador.id}/courses/${curso.id}/portada${curso.portada.extension}|}" class="w-75 h-100"/>
                     </div>
                     <div class="card-body">
+                        <h2 class="card-text" th:text="${curso.titulo}">Nombre del curso</h2>
                         <p class="card-text" th:text="${curso.descripcion}">Descripción del curso</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
                             </div>
                             <small class="text-body-secondary">Fecha de Creación: <span th:text="${#dates.format(curso.fechaDeCreacion, 'yyyy-MM-dd HH:mm')}">Fecha del curso</span></small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SERVICIOS RECOMENDADOS -->
-        <div sec:authorize="isAuthenticated()" class="row">
-            <h1 class="text-black">SERVICIOS RECOMENDADOS</h1>
-        </div>
-        <div sec:authorize="isAuthenticated()" class="row d-inline-flex flex-nowrap overflow-auto">
-            <div th:each="servicio : ${serviciosRecomendados}" class="col-xs-12 col-md-6 col-lg-4">
-                <div class="card shadow-sm">
-                    <div class="d-flex justify-content-center">
-                        <img th:src="@{|/uploads/${servicio.creador.id}/services/${servicio.id}/portada${servicio.portada.extension}|}" class="w-75 h-100"/>
-                    </div>
-
-                    <div class="card-body">
-                        <p class="card-text" th:text="${servicio.descripcion}">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            </div>
-                            <small class="text-body-secondary">Fecha de Creación: <span th:text="${#dates.format(servicio.fechaDeCreacion, 'yyyy-MM-dd HH:mm')}">Fecha del servicio</span></small>
                         </div>
                     </div>
                 </div>

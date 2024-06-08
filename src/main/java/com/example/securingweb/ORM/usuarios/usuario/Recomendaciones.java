@@ -2,26 +2,19 @@ package com.example.securingweb.ORM.usuarios.usuario;
 
 import java.util.List;
 
-import com.example.securingweb.ORM.servicios.servicio.Servicio;
+import com.example.securingweb.ORM.cursos.curso.Curso;
 
 public class Recomendaciones 
 {
-    //private List<Curso> cursosRecomendados;
-    private List<Servicio> serviciosRecomendados;
+    private List<Curso> cursosRecomendados;
 
-    public Recomendaciones(/*List<Curso> cursosRecomendados, */List<Servicio> serviciosRecomendados) 
+    public Recomendaciones(List<Curso> cursosRecomendados) 
     {
-        //this.cursosRecomendados = cursosRecomendados;
-        this.serviciosRecomendados = serviciosRecomendados;
+        this.cursosRecomendados = cursosRecomendados;
     }
 
-    /*public List<Curso> getCursosRecomendados() 
+    public List<Curso> getCursosRecomendados() 
     {
         return cursosRecomendados;
-    }*/
-
-    public List<Servicio> getServiciosRecomendados() 
-    {
-        return serviciosRecomendados;
     }
 }

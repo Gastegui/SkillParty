@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.securingweb.ORM.cursos.tipos.Tipo;
+
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> 
 {
@@ -19,4 +21,9 @@ public interface CursoRepository extends JpaRepository<Curso, Long>
     List<Curso> findAllByPublicadoTrueAndCreadorId(Long creadorId);
     List<Curso> findAllByPublicadoFalseAndCreadorId(Long creadorId);
     List<Curso> findAllByVerificadoFalse();
+
+    List<Curso> findByTipoAndPuntuacionGreaterThan(Tipo tipo, Long puntuacion);
+    List<Curso> findByTipoAndPuntuacion(Tipo tipo, Long puntuacion);
+    List<Curso> findByTipoAndPuntuacionLessThan(Tipo tipo, Long puntuacion);
+
 }

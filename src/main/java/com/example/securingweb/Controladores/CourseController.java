@@ -409,7 +409,7 @@ public class CourseController
         guardado.setFechaDeActualizacion(new Date());
         
         if (!guardado.getTipo().getDescripcion().equals(tipoParam)) { //Comprobar si se ha cambiado el tipo
-            Optional<Tipo> tipo = tipoRepository.findByDescripcion(tipoParam);
+            Optional<Tipo> tipo = Optional.ofNullable(tipoRepository.findByDescripcion(tipoParam));
             if (tipo.isEmpty()) {
                 Tipo tipoNuevo = new Tipo();
                 tipoNuevo.setDescripcion(tipoParam);
@@ -987,7 +987,7 @@ public class CourseController
             throw new IllegalArgumentException("notEnoughData");
         }
 
-        Optional<Tipo> tipoExistente = tipoRepository.findByDescripcion(curso.getTipo().getDescripcion());
+        Optional<Tipo> tipoExistente = Optional.ofNullable(tipoRepository.findByDescripcion(curso.getTipo().getDescripcion()));
         Tipo tipo;
         if (tipoExistente.isPresent()) {
             tipo = tipoExistente.get();

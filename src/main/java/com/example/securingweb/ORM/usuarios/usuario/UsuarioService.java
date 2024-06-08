@@ -6,6 +6,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.securingweb.ORM.cursos.curso.Curso;
+import com.example.securingweb.ORM.cursos.curso.CursoRepository;
+import com.example.securingweb.ORM.cursos.tipos.Tipo;
+import com.example.securingweb.ORM.cursos.tipos.TipoRepository;
 import com.example.securingweb.ORM.servicios.categoria.Categoria;
 import com.example.securingweb.ORM.servicios.categoria.CategoriaRepository;
 import com.example.securingweb.ORM.servicios.servicio.Servicio;
@@ -27,19 +31,16 @@ public class UsuarioService implements UserDetailsService
 {
     private UsuarioRepository usuarioRepository;
     private AutoridadRepository autoridadRepository;
-    //private CursoRepository cursoRepository;
-    private ServicioRepository servicioRepository;
-    private CategoriaRepository categoriaRepository;
+    private CursoRepository cursoRepository;
+    private TipoRepository tipoRepository;
 
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository, AutoridadRepository autoridadRepository,
-                          /*CursoRepository cursoRepository, */ServicioRepository servicioRepository,
-                            CategoriaRepository categoriaRepository) {
+                            CursoRepository cursoRepository, TipoRepository tipoRepository) {
         this.usuarioRepository = usuarioRepository;
         this.autoridadRepository = autoridadRepository;
-        //this.cursoRepository = cursoRepository;
-        this.servicioRepository = servicioRepository;
-        this.categoriaRepository = categoriaRepository;
+        this.cursoRepository = cursoRepository;
+        this.tipoRepository = tipoRepository;
     }
 
     public List<Usuario> obtenerTodosLosUsuarios() 
@@ -114,70 +115,45 @@ public class UsuarioService implements UserDetailsService
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
-    /*public List<Curso> obtenerRecomendacionesCursos(int edad) 
+    public List<Curso> obtenerRecomendacionesCursos(int edad) 
     {
         List<Curso> cursosRecomendados = new ArrayList<>();
-        if (edad >= 0 && edad < 20) 
-        {
-            cursosRecomendados = cursoRepository.findByCategoriaAndPuntuacionGreaterThan("ARTE", 6);
-        } 
-        else if (edad >= 20 && edad < 40) 
-        {
-            cursosRecomendados = cursoRepository.findByCategoriaAndPuntuacion("CIENCIA", 8);
-        } 
-        else if (edad >= 40 && edad < 60) 
-        {
-            cursosRecomendados = cursoRepository.findByCategoriaAndPuntuacion("INFORMATICA", 4);
-        } 
-        else if (edad >= 60 && edad < 80) 
-        {
-            cursosRecomendados = cursoRepository.findByCategoriaAndPuntuacionLessThan("GEOGRAFIA", 7);
-        }
-        return cursosRecomendados;
-    }*/
-
-    public List<Servicio> obtenerRecomendacionesServicios(int edad) 
-    {
-        List<Servicio> serviciosRecomendados = new ArrayList<>();
-        Categoria arte = categoriaRepository.findByDescripcion("Arte");
-        Categoria ciencia = categoriaRepository.findByDescripcion("Ciencia");
-        Categoria informatica = categoriaRepository.findByDescripcion("Informática");
-        Categoria geografia = categoriaRepository.findByDescripcion("Geografía");
+        Tipo arte = tipoRepository.findByDescripcion("Arte");
+        Tipo ciencia = tipoRepository.findByDescripcion("Ciencia");
+        Tipo informatica = tipoRepository.findByDescripcion("Informática");
+        Tipo geografia = tipoRepository.findByDescripcion("Geografía");
 
         if (edad >= 0 && edad < 20) {
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionGreaterThan(arte, 6L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionGreaterThan(ciencia, 7L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionLessThan(informatica, 6L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionGreaterThan(geografia, 4L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(arte, 6L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(ciencia, 7L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(informatica, 6L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(geografia, 4L));
         } else if (edad >= 20 && edad < 40) {
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(arte, 7L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(ciencia, 8L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(informatica, 5L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(geografia, 5L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(arte, 7L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(ciencia, 8L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(informatica, 5L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(geografia, 5L));
         } else if (edad >= 40 && edad < 60) {
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(arte, 8L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(ciencia, 9L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(informatica, 4L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacion(geografia, 6L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(arte, 8L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(ciencia, 9L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(informatica, 4L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(geografia, 6L));
         } else if (edad >= 60 && edad < 80) {
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionLessThan(arte, 9L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionLessThan(ciencia, 10L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionGreaterThan(informatica, 3L));
-            serviciosRecomendados.addAll(servicioRepository.findByCategoriaAndPuntuacionLessThan(geografia, 7L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(arte, 9L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(ciencia, 10L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(informatica, 3L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(geografia, 7L));
         }
-
-        return serviciosRecomendados;
+        return cursosRecomendados;
     }
-
 
     public Recomendaciones obtenerRecomendaciones(Long usuarioId) 
     {
         Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         int edad = calcularEdad(usuario.getFechaDeNacimiento());
 
-        //List<Curso> cursosRecomendados = obtenerRecomendacionesCursos(edad);
-        List<Servicio> serviciosRecomendados = obtenerRecomendacionesServicios(edad);
+        List<Curso> cursosRecomendados = obtenerRecomendacionesCursos(edad);
 
-        return new Recomendaciones(/*cursosRecomendados, */serviciosRecomendados);
+        return new Recomendaciones(cursosRecomendados);
     }
 }

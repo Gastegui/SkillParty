@@ -11,6 +11,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
+        var isAuthenticated = /*[[${isAuthenticated}]]*/ false;
+          if (isAuthenticated) {
+
           var socket = new SockJS('/websocket-endpoint');
           var stompClient = Stomp.over(socket);
 
@@ -53,6 +56,7 @@
               `;
               ratingsList.appendChild(newRatingElement);
           }
+        }
       });
   </script>
 </head>
