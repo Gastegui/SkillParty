@@ -52,7 +52,7 @@ public class WebSecurityConfig
 				.requestMatchers("/user/verify").hasAnyAuthority("ADMIN")
 				
 				//CHAT
-				.requestMatchers("/chat", "/send").permitAll()
+				.requestMatchers("/chat", "/send").authenticated()
 				
 				//SOCKET
 				.requestMatchers("/websocket-endpoint").permitAll()
