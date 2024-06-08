@@ -10,10 +10,6 @@ import com.example.securingweb.ORM.cursos.curso.Curso;
 import com.example.securingweb.ORM.cursos.curso.CursoRepository;
 import com.example.securingweb.ORM.cursos.tipos.Tipo;
 import com.example.securingweb.ORM.cursos.tipos.TipoRepository;
-import com.example.securingweb.ORM.servicios.categoria.Categoria;
-import com.example.securingweb.ORM.servicios.categoria.CategoriaRepository;
-import com.example.securingweb.ORM.servicios.servicio.Servicio;
-import com.example.securingweb.ORM.servicios.servicio.ServicioRepository;
 import com.example.securingweb.ORM.usuarios.autoridad.Autoridad;
 import com.example.securingweb.ORM.usuarios.autoridad.AutoridadRepository;
 
