@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/vistaCurso.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
   
-    <title>Editar curso</title>
+    <title>SkillParty - Editar curso</title>
     <style>
       html, body {
           height: 100%;
@@ -134,7 +134,7 @@
                         <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/elemento${i.posicion}${i.multimedia.extension}|}" alt="logo" width="300">   
                       </div>
                       <div class="form-check p-2 ">
-                        <p>Para cambiar la foto o video:</p>
+                        <p>Cambiar foto o video:</p>
                         <input class="form-control" type="file" name="multimedia">
                       </div>
           
