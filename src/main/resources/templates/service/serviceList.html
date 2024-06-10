@@ -43,7 +43,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </li>
+                    </li> 
                 </ul>
                 <form class="col-4 pt-1" >
                     <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${i.titulo}"></h5>
                                 </div>
-                                <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" alt="portada" class="bd-placeholder-img card-img-top" width="100" height="225" />
+                                <img th:src="@{|/uploads/${i.creador.id}/services/${i.id}/portada${i.portada.extension}|}" class="bd-placeholder-img card-img-top" width="100" height="225" alt="Portada del servicio"/>
                                 <div class="card-body">
                                     <p th:text="${i.descripcion}" class="card-text"></p>
                                     <div class="d-flex justify-content-between align-items-center">
