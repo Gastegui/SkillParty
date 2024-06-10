@@ -1,83 +1,63 @@
-<nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
-    <div class="container">
+  <nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
+    <div class="container-fluid p-0">
 
-        <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="../images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-        </a>
+      <a class="navbar-brand d-flex align-items-center" href="#" id="title">
+        <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
+        <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
+      </a>
 
-        <div class="d-flex flex-row">
 
-        
-        <div class="d-flex flex-row me-2 me-md-3 me-lg-4 align-items-center">
-            <img src="../images/logo.jpg" alt="logo" height="50">
-            <h2>10€</h2>
+      <div class="btn-group" id="header-buttons">
+        <div sec:authorize="isAuthenticated()" class="p-0 m-0 d-flex align-items-center">
+          <h2 class="m-0" th:text="${usuario.saldo}"></h2>
+          <img src="/images/PC.png" class="mx-4 p-0" alt="PCLogo" height="55" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
         </div>
-        
-        <!--Para quitar el a -> d-none. Para ponerlo -> d-inline-->
-        <div class="btn-group me-2" id="header-buttons">
-            <!--Iniciar sesion-->
-            <a href="/createUser.html" class="botoi me-1 me-md-2 px-2 py-2 px-md-3 py-md-2 px-md-4 py-md-3 d-none">Kontua sortu</a>
-            <!--Crear cuenta-->
-            <a href="../html/index.html" class="botoi me-1 me-md-2 px-2 py-2 px-md-3 py-md-2 px-md-4 py-md-3 d-none">Saioa hasi</a>
-            <!--En los demás-->
-            <button class="botoiPro me-1 me-md-2 px-1 py-1 px-md-3 py-md-2 px-lg-4 py-lg-3">SkillParty Pro</button>
-            <!--Estos no se si vamos a poner-->
-            <a href="../html/cursos.html" class="botoi me-1 me-md-2 px-1 py-1 px-md-3 py-md-2 px-lg-4 py-lg-3 d-none">Cursos</a>
-            <a href="../html/servicios.html" class="botoi me-1 me-md-2 px-2 py-2 px-md-3 py-md-2 px-lg-4 py-lg-3">Servicios</a>
-            <!--Estos depende de que usuario sea-->
-            <a href="../html/panelCreador.html" class="botoi me-1 me-md-2 px-2 py-2 px-md-3 py-md-2 px-lg-4 py-lg-3 d-none">Panel del creador</a>
-            <a href="../html/PanelUsuario.html" class="botoi me-1 me-md-2 px-2 py-2 px-md-3 py-md-2 px-lg-4 py-lg-3 d-none">Panel del usuario</a>
-            <a href="../html/Administrador/panelAdministrador.html" class="botoi me-1 me-md-2 px-2 py-2 px-md-3 py-md-2 px-lg-4 py-lg-3">Administrador</a>
+
+        <a id="create-account-button" th:href="@{/user/create}" class="botoi d-none">Crear cuenta</a>
+        <a th:href="@{/user/prices}" class="botoiPro text-decoration-none">SkillParty Pro</a>
+        <a id="service-button" th:href="@{/service/list}" class="botoi">Servicios</a>
+        <a id="course-button" th:href="@{/course/list}" class="botoi">Cursos</a>
+        <a id="login-button" th:href="@{/login}" class="botoi" sec:authorize="!isAuthenticated()">Iniciar sesión</a>
+        <a th:href="@{/user/panel}" class="botoi" sec:authorize="isAuthenticated()">Panel</a>
+      </div>
+      
+      <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Skillparty</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-    </div>
-        
-        
-        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" th:href="@{/}">Pagina principal</a>
+              <a href="#" class="nav-link active" sec:authorize="isAuthenticated()" onclick="document.getElementById('logout-form-hamburger').submit();">Cerrar sesión</a>
+            <form id="logout-form-hamburger" th:action="@{/logout}" method="POST" style="display: none;">
+            </form>
+            <div id="menu-buttons">
+              <a class="nav-link active d-none" aria-current="page" id="create-account-button-hamburger" th:href="@{/user/create}">Crear cuenta</a>
+              <a class="nav-link active botoiPro" aria-current="page" th:href="@{/user/prices}">SkillParty Pro</a>
+              <a class="nav-link active" aria-current="page" id="service-button-hamburgesa" th:href="@{/service/list}">Servicios</a>
+              <a class="nav-link active" aria-current="page" id="course-button-hamburgesa" th:href="@{/course/list}">Cursos</a>
+              <a class="nav-link active" aria-current="page" id="login-button-hamburgesa" th:href="@{/login}" sec:authorize="!isAuthenticated()">Iniciar sesión</a>
+              <a class="nav-link active" aria-current="page" th:href="@{/user/panel}" sec:authorize="isAuthenticated()">Panel</a>
             </div>
+          </li>
 
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <div id="menu-buttons">
-                            <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
-                            <a class="nav-link active" aria-current="page" href="#">Saioa hasi</a>
-                            <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-                            <a class="nav-link active" aria-current="page" href="#">Cursos</a>
-                            <a class="nav-link active" aria-current="page" href="#">Servicios</a>
-                            <a class="nav-link active" aria-current="page" href="#">Panel del creador</a>
-                            <a class="nav-link active" aria-current="page" href="#">Panel del usuario</a>
-                            <a class="nav-link active" aria-current="page" href="#">Administrador</a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Hizkuntza
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/login(lang=eu)}">Euskara</a><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" th:href="@{/login(lang=es)}">Castellano</a><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" th:href="@{/login(lang=en)}">English</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Idioma
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">English</a></li>
+              </ul>
+            </li>
+          </ul>
         </div>
+        
+      </div>
     </div>
-</nav>
+  </nav>

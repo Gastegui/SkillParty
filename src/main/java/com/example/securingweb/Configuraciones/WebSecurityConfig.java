@@ -66,8 +66,10 @@ public class WebSecurityConfig
 				.permitAll()
 			)
 			.logout((logout) -> logout
-				.permitAll()
-			);
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/?message=logout")
+                .permitAll()
+            );
 
         return http.build();
     }
