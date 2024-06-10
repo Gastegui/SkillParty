@@ -62,10 +62,3 @@ function erakutsi(){
     
 }
 
-if(premium.classList.contains("d-none"))
-    {
-        premium.classList.remove("d-none");
-    }
-    else{
-        premium.classList.add("d-none");
-    }
