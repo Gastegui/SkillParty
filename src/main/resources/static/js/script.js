@@ -8,7 +8,6 @@ var aditionalInformation;
 var infoPanels;
 
 window.onload = function(){
-    //botoiak = document.getElementById("login");
     password1 = document.getElementById('firstPassword');
     password1.addEventListener("change", pasahitza1Gorde);
     password2 = document.getElementById('secondPassword');
@@ -21,7 +20,6 @@ window.onload = function(){
     infoPanels = document.getElementById('infoCards');
 
     botoia = document.getElementById('testua');
-   // botoia.addEventListener("click", konprobatu);
 }
 
 function pasahitza1Gorde(event){
@@ -52,18 +50,22 @@ function konprobatu(){
 function erakutsi(){
 
     
-    if(aditionalInformation.className == "form-floating desagertu")
+    if(aditionalInformation.classList.contains("d-none"))
     {
-        aditionalInformation.classList.add("agertu");
-        aditionalInformation.classList.remove("desagertu");
-        infoPanels.classList.add("agertu");
-        infoPanels.classList.remove("desagertu");
+        aditionalInformation.classList.remove("d-none");
+        infoPanels.classList.remove("d-none");
     }
     else{
-        aditionalInformation.classList.add("desagertu");
-        aditionalInformation.classList.remove("agertu");
-        infoPanels.classList.add("desagertu");
-        infoPanels.classList.remove("agertu");
+        aditionalInformation.classList.add("d-none");
+        infoPanels.classList.add("d-none");
     }
     
 }
+
+if(premium.classList.contains("d-none"))
+    {
+        premium.classList.remove("d-none");
+    }
+    else{
+        premium.classList.add("d-none");
+    }
