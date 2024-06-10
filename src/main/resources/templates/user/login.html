@@ -17,7 +17,7 @@
     </video>
   </div>
 
-  <nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
+  <!--<nav id="header" class="navbar navbar-dark animated-nav row custom-height p-0" aria-label="Dark offcanvas navbar">
     <div class="container-fluid">
 
       <a class="navbar-brand d-flex align-items-center" href="#" id="title">
@@ -71,7 +71,8 @@
         
       </div>
     </div>
-  </nav>
+  </nav>-->
+  <nav th:insert="~{include/nav :: nav}"></nav>
 
   <div class="container-fluid m-0 vh-100 d-flex flex-column">
     <div class="row flex-grow-1">
@@ -94,5 +95,6 @@
     </div>
   </div>
     <script defer src="/js/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/login.js"></script>
 </body>
 </html>

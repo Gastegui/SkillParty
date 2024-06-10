@@ -3,75 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/listStyle.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <title>Cursos del creador</title>
     </head>
     <body class="overflow-x-hidden">
-        <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-                    <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-                    <p class="h1 animated-title titulo ms-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-                </a>
-            
-                <div class="btn-group" id="header-buttons">
-                    <button class="botoiPro">SkillParty Pro</button>
-                    <a href="/html/servicios.html" class="botoi">Servicios</a>
-                    <a href="/html/panelCreador.html" class="botoi">Panel de Creador</a>
-                </div>
-                
-                
-                <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-                    <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-            
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                            </li>
-                
-                            <div id="menu-buttons">
-                                <li class="nav-item">
-                                    <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Servicios</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Panel del creador</a>
-                                </li>
-                            </div>
-                            
-                
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hizkuntza
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Euskara</a></li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="#">Castellano</a></li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="#">English</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <form class="d-flex mt-3" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <nav th:insert="~{include/nav :: nav}"></nav>
 
         <main class="container position-relative overflow-auto pt-4">
 
@@ -94,8 +33,8 @@
                                     <p class="card-text" th:text="${i.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a th:if="${creador}" th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
-                                            <a th:href="@{|/course/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
+                                            <a th:if="${creador}" th:href="@{/course/edit(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                            <a th:href="@{/course/view(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Ver</a>      
                                         </div>
                                     </div>
                                 </div>
@@ -125,7 +64,7 @@
                                         <p class="card-text" th:text="${i.descripcion}"></p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
-                                                <a th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                                <a th:href="@{/course/edit(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Editar</a>      
                                             </div>
                                         </div>
                                     </div>

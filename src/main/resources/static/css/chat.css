@@ -5,9 +5,31 @@ body {
   overflow-x: hidden;
 }
 
-/*body {
-	background: #E5DDD5 url("https://www.toptal.com/designers/subtlepatterns/patterns/sports.png") fixed;
-}*/
+.chat-log__item--left {
+	background-color: #f1f1f1; /* Cambiar color de fondo para los mensajes de la izquierda */
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.chat-log__item--own {
+	background-color: #e0ffe0; /* Color diferente para los mensajes propios */
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.user-list-item {
+	display: flex;
+	align-items: center;
+}
+.user-list-item img {
+	border-radius: 50%;
+	margin-right: 10px;
+}
+.chat-log__author img {
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
 .page-header {
 	background: #006A4E;
 	margin: 0;

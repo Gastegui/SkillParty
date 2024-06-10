@@ -11,66 +11,12 @@
     <title>Document</title>
 </head>
 <body>
-    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
-        <div class="container-fluid">
-    
-          <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-          </a>
-    
-          <div class="btn-group" id="header-buttons">
-            <button class="botoiPro">SkillParty Pro</button>
-            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
-          </div>
-          
-          <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-    
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-    
-                <li class="nav-item">
-                <div id="menu-buttons">
-                  <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-                  <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
-                </div>
-              </li>
-    
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Hizkuntza
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">English</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-            
-          </div>
-        </div>
-      </nav>
+  <nav th:insert="~{include/nav :: nav}"></nav>
 
     <main>
       <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
         <div class="row w-100 d-flex justify-content-center">
-          <form th:action="@{|/service/edit?tituloViejo=${Servicio.getTitulo()}|}" th:object="${Servicio}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
+          <form th:action="@{/service/edit(tituloViejo=${Servicio.getTitulo()})}" th:object="${Servicio}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
             <div class="row text-start">
               <input type="text" th:field="*{titulo}" placeholder="Service name" class="h1 p-1 card-header" required/>
             </div>
@@ -114,7 +60,7 @@
 
                   <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary px-4 m-2">Edit</button>
-                    <a th:href="|/service/delete?title=${Servicio.titulo}|" class="btn btn-danger px-4 m-2">Delete service</a>
+                    <a th:href="@{/service/delete(title=${Servicio.titulo})}" class="btn btn-danger px-4 m-2">Delete service</a>
                   </div>
               </div>
             </div>
@@ -141,7 +87,7 @@
                           <input type="number" name="precio" th:value="${i.precio}" step=".01" required placeholder="€€€">
                         </div>
                         <button type="submit" class="btn btn-light mx-3">Edit</button>
-                        <a th:href="|/service/deleteOption?id=${i.getId()}&title=${Servicio.getTitulo()}|" class="btn btn-light">Borrar</a>
+                        <a th:href="@{/service/deleteOption(id=${i.getId()},title=${Servicio.getTitulo()})}" class="btn btn-light">Borrar</a>
                       </form>
                     </div>
                   </div>
@@ -184,8 +130,8 @@
                 <form th:action="@{/service/editSample(id=${i.id}, title=${Servicio.getTitulo()})}" method="post" enctype="multipart/form-data" class="card shadow-sm">
 
                   <div class="d-flex mb-3" th:classappend="|${i.posicion == 1 ? 'justify-content-end' : ' '} ${i.posicion == ListaMuestras.size() ? 'justify-content-start' : ' '} ${i.posicion != 1 and i.posicion != ListaMuestras.size() ? 'justify-content-between' : ' '}|">
-                    <a class="btn" th:if="${i.posicion != 1}" th:href="|/service/editSamplePos?title=${Servicio.getTitulo()}&id=${i.id}&dir=izq|">&lt;--</a>
-                    <a class="btn" th:if="${i.posicion != ListaMuestras.size()}" th:href="|/service/editSamplePos?title=${Servicio.getTitulo()}&id=${i.id}&dir=der|">--&gt;</a>
+                    <a class="btn" th:if="${i.posicion != 1}" th:href="@{/service/editSamplePos(title=${Servicio.getTitulo()},id=${i.id},dir=izq)}">&lt;--</a>
+                    <a class="btn" th:if="${i.posicion != ListaMuestras.size()}" th:href="@{/service/editSamplePos(title=${Servicio.getTitulo()},id=${i.id},dir=der)}">--&gt;</a>
                   </div>
 
                   <div class="d-flex justify-content-center">
@@ -204,7 +150,7 @@
                       <button type="submit" class="btn btn-primary px-4 me-md-2">
                         Editar
                       </button>
-                      <a th:href="|/service/deleteSample?id=${i.getId()}&title=${Servicio.getTitulo()}|" class="btn btn-primary px-4 me-md-2">
+                      <a th:href="@{/service/deleteSample(id=${i.getId()},title=${Servicio.getTitulo()})}" class="btn btn-primary px-4 me-md-2">
                         Borrar
                       </a>
                     </div>
@@ -234,12 +180,12 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center">
-        <form th:action="@{|/service/publish?private=${Servicio.publicado ? 'y' : 'n'}&title=${Servicio.titulo}|}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
+        <form th:action="@{/service/publish(private=${Servicio.publicado ? 'y' : 'n'},title=${Servicio.titulo})}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
           <input hidden type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}">
           <button type="submit" th:text="${Servicio.publicado}? 'Hacer privado' : 'Hacer público'" id="botonPublicar"  class="btn btn-primary"></button>
         </form>
         <div id="verServicio">
-          <a th:if="${Servicio.publicado}" th:href="|/service/view?title=${Servicio.titulo}|" class="btn btn-primary px-4 me-md-2">Ver pantalla del servicio</a>
+          <a th:if="${Servicio.publicado}" th:href="@{/service/view(title=${Servicio.titulo})}" class="btn btn-primary px-4 me-md-2">Ver pantalla del servicio</a>
         </div>
       </div>
     </main>

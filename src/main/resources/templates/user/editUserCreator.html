@@ -18,64 +18,7 @@
         </video>
     </div>
 
-    <nav id="header" class="navbar navbar-dark animated-nav row custom-height" aria-label="Dark offcanvas navbar">
-        <div class="container-fluid">
-    
-        <a class="navbar-brand d-flex align-items-center" href="#" id="title">
-            <img src="/images/skillPartyLogo.png" class="navbar-toggler" alt="SkillParty" width="100" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">
-            <p class="h1 animated-title titulo" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarDark">SkillParty</p>
-        </a>
-    
-        <div class="btn-group" id="header-buttons">
-            <button class="botoiPro">SkillParty Pro</button>
-            <a href="/html/createUser.html" class="botoi">Kontua sortu</a>
-            <a href="/html/panelCreador.html" class="botoi">Panel de Creador</a>
-        </div>
-        
-        <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbarDark" aria-labelledby="offcanvasNavbarDarkLabel">
-            <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarDarkLabel">Hamburger menu</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-    
-            <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-    
-                <li class="nav-item">
-                <div id="menu-buttons">
-                <a class="nav-link active botoiPro" aria-current="page" href="#">SkillParty Pro</a>
-                <a class="nav-link active" aria-current="page" href="#">Kontua sortu</a>
-                <a class="nav-link active" aria-current="page" href="#">Panel del creador</a>
-                
-                </div>
-            </li>
-    
-                <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Hizkuntza
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">English</a></li>
-                </ul>
-                </li>
-            </ul>
-            <form class="d-flex mt-3" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            </div>
-            
-        </div>
-        </div>
-    </nav>
+    <nav th:insert="~{include/nav :: nav}"></nav>
 
     <main>
         <form th:action="@{/user/edit}" th:object="${usuario}" method="post" enctype="multipart/form-data">
@@ -106,7 +49,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                         <h4>Fecha de nacimiento: </h4>
-                        <input type="date" name="fecha" th:value="${usuario.fechaDeNacimiento}" />
+                        <input type="date" name="fecha"/>
                     </div>
                     <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                         <h4>Contraseña actual: </h4>
@@ -133,7 +76,7 @@
         
             <div class="container mt-3">
                 <div class="row">
-                    <div id="glass" class="col-md-4">
+                    <divclass="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">
@@ -141,14 +84,14 @@
                                     <h3>Cursos</h3>
                                     <p>Podrás crear tus propios cursos y publicarlos al público.</p>
                                     <div>
-                                        <input type="checkbox" id="creator">
-                                        <label for="creator" class="text-white">Elegir</label>
+                                        <input type="checkbox" id="curso_input">
+                                        <label for="curso_input" class="text-white">Elegir</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="glass" class="col-md-4">
+                    <div class="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">
@@ -156,14 +99,14 @@
                                     <h3>Servicios</h3>
                                     <p>Podrás publicar tus servicios y ganar dinero con contrataciones.</p>
                                     <div>
-                                        <input type="checkbox" id="creator">
-                                        <label for="creator" class="text-white">Elegir</label>
+                                        <input type="checkbox" id="servicio_input">
+                                        <label for="servicio_input" class="text-white">Elegir</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="glass" class="col-md-4">
+                    <div class="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">
@@ -171,8 +114,8 @@
                                     <h3>Kit konpleto</h3>
                                     <p>Podrás hacer los dos.</p>
                                     <div>
-                                        <input type="checkbox" id="creator">
-                                        <label for="creator" class="text-white">Elegir</label>
+                                        <input type="checkbox" id="todos_input">
+                                        <label for="todos_input" class="text-white">Elegir</label>
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +124,7 @@
                 </div>
 
                 <div class="row w-100 m-3 pt-md-3 pe-md-4 justify-content-between">
-                    <a th:href="@{|/user/delete|}" class="col-md-2 btn btn-danger btn-lg px-4 me-md-2">Borrar</a>
+                    <a th:href="@{/user/delete}" class="col-md-2 btn btn-danger btn-lg px-4 me-md-2">Borrar</a>
                     <button type="submit" class="col-md-2 btn btn-primary btn-lg px-4 me-md-2">Editar</button>
                 </div>
             </div>

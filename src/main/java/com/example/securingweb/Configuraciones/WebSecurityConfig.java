@@ -43,7 +43,7 @@ public class WebSecurityConfig
 				.requestMatchers("/course/rate", "/course/deleteRating", "/course/buy", "/course/content", "/course/finish").authenticated()
 				
 				//USUARIOS
-				.requestMatchers("/login", "/user/login", "/user/create").permitAll() 
+				.requestMatchers("/login", "/user/login", "/user/create", "/user/prices").permitAll() 
 				.requestMatchers("/user/addBalance", "/user/edit", "user/panel", "/user/bought", "/user/becomePro").authenticated()
 				.requestMatchers("/user/pending", "/user/services").hasAnyAuthority("CREATE_SERVICE", "CREATE_ALL", "ADMIN")
 				.requestMatchers("/user/courses").hasAnyAuthority("CREATE_COURSE", "CREATE_ALL", "ADMIN")
@@ -66,8 +66,10 @@ public class WebSecurityConfig
 				.permitAll()
 			)
 			.logout((logout) -> logout
-				.permitAll()
-			);
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/?message=logout")
+                .permitAll()
+            );
 
         return http.build();
     }
