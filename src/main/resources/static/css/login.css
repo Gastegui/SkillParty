@@ -1,9 +1,3 @@
-html, body {
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
 .form-signin {
   max-width: 330px;
   padding: 1rem;

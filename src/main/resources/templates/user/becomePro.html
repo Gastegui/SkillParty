@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="/css/nav.css">
-    <link rel="stylesheet" href="/css/panelUsuario.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/validarPromo.js"></script>
-    <title>Panel de creador</title>
+    <title>SkillParty - SkillParty Pro</title>
 </head>
 <body>
   <header th:insert="~{include/nav :: nav}"></header>
@@ -26,17 +25,17 @@
             <li class="list-group-item d-flex justify-content-between lh-sm">
                 <div>
                 <h6 class="my-0">Pro</h6>
-                <small class="text-muted">Para tener cuenta pro</small>
+                <small class="text-muted">Cuenta pro</small>
                 </div>
                 <span class="text-muted">15€</span>
             </li>
             
             <li class="list-group-item d-flex justify-content-between bg-light d-none conPromocion">
                 <div class="text-success">
-                    <h6 class="my-0">Promo code</h6>
+                    <h6 class="my-0">Código de promoción</h6>
                     <small>SKILLPARTY</small>
                 </div>
-                <span class="text-success">−5€</span>
+                <span class="text-success">-5€</span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span>Total</span>
@@ -47,13 +46,13 @@
     
             <form class="card p-2">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="textoPromocion" placeholder="Promo code">
+                    <input type="text" class="form-control" id="textoPromocion" placeholder="Código de promoción">
                     <button type="submit" class="btn btn-secondary">Comprobar</button>
                 </div>
             </form>
         </div>
         <div class="col-md-7 col-lg-8 mt-3">
-            <h4 class="mb-3">Para comprar pro</h4>
+            <h4 class="mb-3">Comprar pro</h4>
             <form class="needs-validation" novalidate>
             
             <hr class="my-4">
@@ -63,11 +62,11 @@
             <div class="my-3">
                 <div class="form-check">
                     <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                    <label class="form-check-label" for="credit">Credit card</label>
+                    <label class="form-check-label" for="credit">Tarjeta de crédito</label>
                 </div>
                 <div class="form-check">
                     <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                    <label class="form-check-label" for="debit">Debit card</label>
+                    <label class="form-check-label" for="debit">Tarjeta de débido</label>
                 </div>
                 <div class="form-check">
                     <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
@@ -77,27 +76,27 @@
     
             <div class="row gy-3">
                 <div class="col-md-6">
-                    <label for="cc-name" class="form-label">Name on card</label>
+                    <label for="cc-name" class="form-label">Titular de la tarjeta</label>
                     <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                    <small class="text-muted">Full name as displayed on card</small>
+                    <small class="text-muted">Nombre completo en la tarjeta</small>
                     <div class="invalid-feedback">
-                        Name on card is required
+                        El nombre completo es obligatorio
                     </div>
                 </div>
     
                 <div class="col-md-6">
-                <label for="cc-number" class="form-label">Credit card number</label>
+                <label for="cc-number" class="form-label">Número de la tarjeta</label>
                 <input type="text" class="form-control" id="cc-number" placeholder="" required>
                 <div class="invalid-feedback">
-                    Credit card number is required
+                    El número de la tarjeta
                 </div>
                 </div>
     
                 <div class="col-md-3">
-                <label for="cc-expiration" class="form-label">Expiration</label>
+                <label for="cc-expiration" class="form-label">Fecha de caducidad</label>
                 <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
                 <div class="invalid-feedback">
-                    Expiration date required
+                    La fecha de caducidad es obligatorio
                 </div>
                 </div>
     
@@ -105,13 +104,13 @@
                 <label for="cc-cvv" class="form-label">CVV</label>
                 <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
                 <div class="invalid-feedback">
-                    Security code required
+                    El código de seguridad es obligatorio
                 </div>
                 </div>
             </div>
     
             <hr class="my-4">
-            <a href="/snake" class="w-100 bg-primary text-white rounded p-3 text-decoration-none">Continue to checkout</a>
+            <a href="/snake" class="w-100 bg-primary text-white rounded p-3 text-decoration-none">Continuar con el pago</a>
             </form>
         </div>
         </div>

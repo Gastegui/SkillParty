@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Aumetar presupuesto</title>
+        <title>SkillParty - Aumetar saldo</title>
     
         <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
         <link rel="stylesheet" href="/css/nav.css">
@@ -67,11 +67,11 @@
                     <div class="my-3 ms-3">
                         <div class="form-check">
                             <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked>
-                            <label class="form-check-label" for="credit">Credit card</label>
+                            <label class="form-check-label" for="credit">Tarjeta de crédito</label>
                         </div>
                         <div class="form-check">
                             <input id="debit" name="paymentMethod" type="radio" class="form-check-input">
-                            <label class="form-check-label" for="debit">Debit card</label>
+                            <label class="form-check-label" for="debit">Tarjeta de débito</label>
                         </div>
                         <div class="form-check">
                             <input id="paypal" name="paymentMethod" type="radio" class="form-check-input">
@@ -79,27 +79,27 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control bg-body-primary mb-2" id="name" placeholder="Name">
-                        <label for="name">Name on card</label>
+                        <input type="text" class="form-control bg-body-primary mb-2" id="name" placeholder="Nombre">
+                        <label for="name">Titular de la tarjeta</label>
                     </div>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control bg-body-primary mb-2" id="numeroDeCuenta" placeholder="numeroCuenta">
-                        <label for="numeroDeCuenta">Credit card number</label>
+                        <input type="text" class="form-control bg-body-primary mb-2" id="numeroDeCuenta" placeholder="Número de la tarjeta">
+                        <label for="numeroDeCuenta">Número de la tarjeta</label>
                     </div>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control bg-body-primary mb-2" id="expiration" placeholder="expiration">
-                        <label for="expiration">Expiration date</label>
+                        <input type="text" class="form-control bg-body-primary mb-2" id="expiration" placeholder="Fecha de caducidad">
+                        <label for="expiration">Fecha de caducidad</label>
                     </div>
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control bg-body-primary mb-2" id="ccv" placeholder="ccv">
-                        <label for="ccv">Security code</label>
+                        <input type="text" class="form-control bg-body-primary mb-2" id="ccv" placeholder="CCV">
+                        <label for="ccv">Código de seguridad</label>
                     </div>
 
                     <div class="form-floating">
-                        <input type="number"  class="form-control bg-body-primary mb-2" name="cantidad" id="cuantoDinero" placeholder="cuantoDinero" required min="1">
+                        <input type="number"  class="form-control bg-body-primary mb-2" name="cantidad" id="cuantoDinero" placeholder="Cantidad" required min="1">
                         <label for="cuantoDinero">Saldo a añadir</label>
                     </div>
                     

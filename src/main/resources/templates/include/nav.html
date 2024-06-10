@@ -31,7 +31,7 @@
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" th:href="@{/}">Pagina principal</a>
+              <a class="nav-link active" aria-current="page" th:href="@{/}">Página principal</a>
               <a href="#" class="nav-link active" sec:authorize="isAuthenticated()" onclick="document.getElementById('logout-form-hamburger').submit();">Cerrar sesión</a>
             <form id="logout-form-hamburger" th:action="@{/logout}" method="POST" style="display: none;">
             </form>
@@ -50,9 +50,9 @@
                 Idioma
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Euskara</a><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Castellano</a><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">English</a></li>
+                <li><a class="dropdown-item" href="?lang=es">Castellano</a><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="?lang=eu">Vasco</a><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="?lang=en">Inglés</a></li>
               </ul>
             </li>
           </ul>

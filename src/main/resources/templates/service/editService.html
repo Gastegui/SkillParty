@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/coursePage.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/editService.js"></script>
-    <title>Document</title>
+    <title>SkillParty - Editar servicio</title>
     <style>
       html, body {
           height: 100%;
@@ -38,14 +38,13 @@
               <div class="container-fluid p-0">
                   <div class="row d-flex justify-content-between">
                     <div class="form-check p-3">
-                      <label class="form-check-label h3" for="thumbnail">Portadako argazkia igo</label>
+                      <label class="form-check-label h3" for="thumbnail">Subir imágen de portada</label>
                       <input class="form-control" type="file" id="thumbnail" name="file">
                     </div>
                   </div>
 
                   <div class="row d-flex justify-content-center p-3">
-                    <textarea	rows="4" cols="50" th:field="*{descripcion}" placeholder="Service description" id="abc" required></textarea>
-                    <textarea	rows="4" cols="50" th:field="*{descripcion}" placeholder="Service description" id="abc" required></textarea>
+                    <textarea	rows="4" cols="50" th:field="*{descripcion}" placeholder="Descripción del servicio" id="abc" required></textarea>
                   </div>
                   
                   <select class="form-select" id="inputGroupSelect01" name="categoriaParam" required> 
@@ -67,8 +66,8 @@
                 </select>
 
                   <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary px-4 m-2">Edit</button>
-                    <a th:href="@{/service/delete(title=${Servicio.titulo})}" class="btn btn-danger px-4 m-2">Delete service</a>
+                    <button type="submit" class="btn btn-primary px-4 m-2">Editar</button>
+                    <a th:href="@{/service/delete(title=${Servicio.titulo})}" class="btn btn-danger px-4 m-2">Borrar servicio</a>
                   </div>
               </div>
             </div>
@@ -78,7 +77,7 @@
             <div class="container-fluid p-0 m-0 w-100">
               <div class="row d-flex align-items-center">
                 <div class="col-auto">
-                  <img th:src="@{|/uploads/${Servicio.creador.id}/profile${Servicio.creador.imagen.extension}|}" class="rounded w-auto p-3 m-0" height="100" alt="profile picture">
+                  <img th:src="@{|/uploads/${Servicio.creador.id}/profile${Servicio.creador.imagen.extension}|}" class="rounded w-auto p-3 m-0" height="100" alt="Foto de perfil">
                 </div>
                 <div class="col">
                   <p class="h3 m-0 ps-2" th:text="${Servicio.creador.nombre}"></p>
@@ -91,10 +90,10 @@
                     <div th:each="i : ${ListaOpciones}" class="list-group-item gap-2" >
                       <form th:action="@{/service/editOption(id=${i.getId()}, title=${Servicio.titulo})}" method="post" class="w-100 d-flex flex-row justify-content-between">
                         <div class="d-flex flex-column" style="width: 75%;">
-                          <input type="text" th:value="${i.descripcion}" name="desc" required placeholder="Buy option">
+                          <input type="text" th:value="${i.descripcion}" name="desc" required placeholder="Opción de compra">
                           <input type="number" name="precio" th:value="${i.precio}" step=".01" required placeholder="€€€">
                         </div>
-                        <button type="submit" class="btn btn-light mx-3">Edit</button>
+                        <button type="submit" class="btn btn-light mx-3">Editar</button>
                         <a th:href="@{/service/deleteOption(id=${i.getId()},title=${Servicio.getTitulo()})}" class="btn btn-light">Borrar</a>
                       </form>
                     </div>
@@ -108,10 +107,10 @@
                     <div class="list-group-item gap-2">
                       <form th:action="@{/service/createOption(title=${Servicio.getTitulo()})}" th:object="${Opcion}" method="post" class="w-100 d-flex flex-row justify-content-between">
                         <div class="d-flex flex-column" style="width: 75%;">
-                          <input type="text" th:field="*{descripcion}" required placeholder="Buy option">
+                          <input type="text" th:field="*{descripcion}" required placeholder="Opción de compra">
                           <input type="number" name="precio" step=".01" required placeholder="€€€">
                         </div>
-                        <button type="submit" class="btn btn-light">CREATE</button>
+                        <button type="submit" class="btn btn-light">Crear</button>
                       </form>
                     </div>
                   </div>
@@ -143,7 +142,7 @@
                   </div>
 
                   <div class="d-flex justify-content-center">
-                      <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${Servicio.creador.id}/services/${Servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" alt="Sample Image" height="300">   
+                      <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${Servicio.creador.id}/services/${Servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" alt="Imagen de la muestra" height="300">   
                       <video controls th:if="${i.multimedia.isVid()}" height="300">
                           <source th:src="@{|/uploads/${Servicio.creador.id}/services/${Servicio.id}/muestra${i.posicion}${i.multimedia.extension}|}" type="video/mp4">
                       </video>
@@ -169,14 +168,14 @@
               <div class="p-2 d-flex align-items-center w-50">
                 <form th:action="@{/service/createSample(title=${Servicio.getTitulo()}, pos=${ListaMuestras.size()+1})}" method="post" enctype="multipart/form-data" class="card shadow-sm">
                   <div class="form-check p-0">
-                    <label class="form-check-label h3" for="filex">Argazkia edo bideoa igo</label>
+                    <label class="form-check-label h3" for="filex">Subir imágen o vídeo</label>
                     <input class="form-control" type="file" name="file" id="filex" required>
                   </div>
 
                   <div class="card-body">
                     <div class="d-flex justify-content-end m-2">
                       <button type="submit" class="btn btn-primary px-4 me-md-2">
-                        Create
+                        Crear
                       </button>
                     </div>
                   </div>
