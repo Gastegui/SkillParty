@@ -16,7 +16,7 @@
     <main>
       <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
         <div class="row w-100 d-flex justify-content-center">
-          <form th:action="@{|/service/edit?tituloViejo=${Servicio.getTitulo()}|}" th:object="${Servicio}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
+          <form th:action="@{/service/edit(tituloViejo=${Servicio.getTitulo()})}" th:object="${Servicio}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
             <div class="row text-start">
               <input type="text" th:field="*{titulo}" placeholder="Service name" class="h1 p-1 card-header" required/>
             </div>
@@ -60,7 +60,7 @@
 
                   <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary px-4 m-2">Edit</button>
-                    <a th:href="|/service/delete?title=${Servicio.titulo}|" class="btn btn-danger px-4 m-2">Delete service</a>
+                    <a th:href="@{/service/delete(title=${Servicio.titulo})}" class="btn btn-danger px-4 m-2">Delete service</a>
                   </div>
               </div>
             </div>
@@ -87,7 +87,7 @@
                           <input type="number" name="precio" th:value="${i.precio}" step=".01" required placeholder="€€€">
                         </div>
                         <button type="submit" class="btn btn-light mx-3">Edit</button>
-                        <a th:href="|/service/deleteOption?id=${i.getId()}&title=${Servicio.getTitulo()}|" class="btn btn-light">Borrar</a>
+                        <a th:href="@{/service/deleteOption(id=${i.getId()},title=${Servicio.getTitulo()})}" class="btn btn-light">Borrar</a>
                       </form>
                     </div>
                   </div>
@@ -130,8 +130,8 @@
                 <form th:action="@{/service/editSample(id=${i.id}, title=${Servicio.getTitulo()})}" method="post" enctype="multipart/form-data" class="card shadow-sm">
 
                   <div class="d-flex mb-3" th:classappend="|${i.posicion == 1 ? 'justify-content-end' : ' '} ${i.posicion == ListaMuestras.size() ? 'justify-content-start' : ' '} ${i.posicion != 1 and i.posicion != ListaMuestras.size() ? 'justify-content-between' : ' '}|">
-                    <a class="btn" th:if="${i.posicion != 1}" th:href="|/service/editSamplePos?title=${Servicio.getTitulo()}&id=${i.id}&dir=izq|">&lt;--</a>
-                    <a class="btn" th:if="${i.posicion != ListaMuestras.size()}" th:href="|/service/editSamplePos?title=${Servicio.getTitulo()}&id=${i.id}&dir=der|">--&gt;</a>
+                    <a class="btn" th:if="${i.posicion != 1}" th:href="@{/service/editSamplePos(title=${Servicio.getTitulo()},id=${i.id},dir=izq)}">&lt;--</a>
+                    <a class="btn" th:if="${i.posicion != ListaMuestras.size()}" th:href="@{/service/editSamplePos(title=${Servicio.getTitulo()},id=${i.id},dir=der)}">--&gt;</a>
                   </div>
 
                   <div class="d-flex justify-content-center">
@@ -150,7 +150,7 @@
                       <button type="submit" class="btn btn-primary px-4 me-md-2">
                         Editar
                       </button>
-                      <a th:href="|/service/deleteSample?id=${i.getId()}&title=${Servicio.getTitulo()}|" class="btn btn-primary px-4 me-md-2">
+                      <a th:href="@{/service/deleteSample(id=${i.getId()},title=${Servicio.getTitulo()})}" class="btn btn-primary px-4 me-md-2">
                         Borrar
                       </a>
                     </div>
@@ -180,12 +180,12 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center">
-        <form th:action="@{|/service/publish?private=${Servicio.publicado ? 'y' : 'n'}&title=${Servicio.titulo}|}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
+        <form th:action="@{/service/publish(private=${Servicio.publicado ? 'y' : 'n'},title=${Servicio.titulo})}" th:object="${Servicio}" method="post" class="m-3 px-2 d-flex justify-content-end">
           <input hidden type="text" th:field="*{titulo}" th:value="${Servicio.getTitulo()}">
           <button type="submit" th:text="${Servicio.publicado}? 'Hacer privado' : 'Hacer público'" id="botonPublicar"  class="btn btn-primary"></button>
         </form>
         <div id="verServicio">
-          <a th:if="${Servicio.publicado}" th:href="|/service/view?title=${Servicio.titulo}|" class="btn btn-primary px-4 me-md-2">Ver pantalla del servicio</a>
+          <a th:if="${Servicio.publicado}" th:href="@{/service/view(title=${Servicio.titulo})}" class="btn btn-primary px-4 me-md-2">Ver pantalla del servicio</a>
         </div>
       </div>
     </main>

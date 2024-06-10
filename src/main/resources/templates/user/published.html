@@ -32,8 +32,8 @@
                                     <p class="card-text" th:text="${i.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a th:href="@{|/course/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>
-                                            <a th:href="@{|/course/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                            <a th:href="@{/course/view(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                            <a th:href="@{/course/edit(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Editar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -64,8 +64,8 @@
                                         <p class="card-text" th:text="${i.descripcion}"></p>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="btn-group">
-                                                <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>      
-                                                <a th:href="@{|/service/edit?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Editar</a>      
+                                                <a th:href="@{/service/view(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Ver</a>      
+                                                <a th:href="@{/service/edit(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Editar</a>      
                                             </div>
                                         </div>
                                     </div>

@@ -68,7 +68,7 @@
                                     <p th:text="${i.descripcion}" class="card-text"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a th:href="@{|/service/view?title=${i.titulo}|}" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                            <a th:href="@{/service/view(title=${i.titulo})}" class="btn btn-sm btn-outline-secondary">Ver</a>
                                         </div>
                                         <p th:text="|Creador: ${i.creador.nombre}|"></p>
                                     </div>
@@ -80,11 +80,11 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end pb-2">
-                <a th:if="${hayAnterior}" th:href="@{|/service/list?page=${pagActual - 1}|}" class="btn border mt-2 me-2 bg-white">
+                <a th:if="${hayAnterior}" th:href="@{/service/list(page=${pagActual - 1})}" class="btn border mt-2 me-2 bg-white">
                     <img src="/images/flecha_izqierda.png" alt="Página anterior" style="width: 20px; height: 20px;">
                 </a>
                 <p th:text="|Página acutal: ${pagActual}|"></p>
-                <a th:if="${haySiguiente}" th:href="@{|/service/list?page=${pagActual + 1}|}" class="btn border mt-2 me-2 bg-white">
+                <a th:if="${haySiguiente}" th:href="@{/service/list(page=${pagActual + 1})}" class="btn border mt-2 me-2 bg-white">
                     <img src="/images/flecha.png" alt="Página siguiente" style="width: 20px; height: 20px;">
                 </a>
             </div>

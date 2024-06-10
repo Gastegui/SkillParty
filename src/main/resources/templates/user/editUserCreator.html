@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                         <h4>Fecha de nacimiento: </h4>
-                        <input type="date" name="fecha" th:value="${usuario.fechaDeNacimiento}" />
+                        <input type="date" name="fecha"/>
                     </div>
                     <div class="col-lg-4 col-sm-6 text-white p-2 mb-2">
                         <h4>Contraseña actual: </h4>
@@ -76,7 +76,7 @@
         
             <div class="container mt-3">
                 <div class="row">
-                    <div id="glass" class="col-md-4">
+                    <divclass="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">
@@ -84,14 +84,14 @@
                                     <h3>Cursos</h3>
                                     <p>Podrás crear tus propios cursos y publicarlos al público.</p>
                                     <div>
-                                        <input type="checkbox" id="creator">
-                                        <label for="creator" class="text-white">Elegir</label>
+                                        <input type="checkbox" id="curso_input">
+                                        <label for="curso_input" class="text-white">Elegir</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="glass" class="col-md-4">
+                    <div class="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">
@@ -99,14 +99,14 @@
                                     <h3>Servicios</h3>
                                     <p>Podrás publicar tus servicios y ganar dinero con contrataciones.</p>
                                     <div>
-                                        <input type="checkbox" id="creator">
-                                        <label for="creator" class="text-white">Elegir</label>
+                                        <input type="checkbox" id="servicio_input">
+                                        <label for="servicio_input" class="text-white">Elegir</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="glass" class="col-md-4">
+                    <div class="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">
@@ -114,8 +114,8 @@
                                     <h3>Kit konpleto</h3>
                                     <p>Podrás hacer los dos.</p>
                                     <div>
-                                        <input type="checkbox" id="creator">
-                                        <label for="creator" class="text-white">Elegir</label>
+                                        <input type="checkbox" id="todos_input">
+                                        <label for="todos_input" class="text-white">Elegir</label>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="row w-100 m-3 pt-md-3 pe-md-4 justify-content-between">
-                    <a th:href="@{|/user/delete|}" class="col-md-2 btn btn-danger btn-lg px-4 me-md-2">Borrar</a>
+                    <a th:href="@{/user/delete}" class="col-md-2 btn btn-danger btn-lg px-4 me-md-2">Borrar</a>
                     <button type="submit" class="col-md-2 btn btn-primary btn-lg px-4 me-md-2">Editar</button>
                 </div>
             </div>

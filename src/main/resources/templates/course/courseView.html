@@ -17,7 +17,7 @@
         <p class="m-auto text-white p-2">Verificado por el administrador</p>
       </div>
       <div class="bg-info mx-4 mb-2 " th:if="${curso.verificado == false and admin}">
-        <form th:action="@{|/course/verify?title=${curso.titulo}|}" method="post">
+        <form th:action="@{/course/verify(title=${curso.titulo})}" method="post">
           <div class="d-flex justify-content-center py-2 mx-2">
             <h4 class="me-2">Nivel del curso</h4>
             <input type="number" min="1" max="5" name="puntuacion">
@@ -26,7 +26,7 @@
             <button type="submit" class="btn border rounded bg-white m-2">Verificar</button>
           </div>
         </form>
-        <form th:action="@{|/course/delete?title=${curso.titulo}|}" method="get" class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
+        <form th:action="@{/course/delete(title=${curso.titulo})}" method="get" class="d-flex justify-content-center p-3 bg-info mx-4 mb-2">
           <button type="submit" class="btn border rounded bg-danger m-2">Eliminar</button>
         </form>
       </div>
@@ -67,14 +67,14 @@
                           <div class="row mb-2">
                               <div class="col-12 d-flex align-items-center">
                                   <div class="rating me-3">
-                                    <a th:href="@{/snake}" class="btn btn-warning rounded">Ponerse en contacto con el creador</a>
+                                    <a th:href="@{/chat}" class="btn btn-warning rounded">Ponerse en contacto con el creador</a>
                                   </div>
                               </div>
                           </div>
                           <div class="row mb-2">
                               <div class="col-12 d-flex align-items-center">
                                   <div class="rating me-3">
-                                    <a th:href="@{|/user/seeCourses?id=${curso.creador.id}|}" class="btn btn-warning rounded">Ver otros cursos del mismo creador</a>
+                                    <a th:href="@{/user/seeCourses(id=${curso.creador.id})}" class="btn btn-warning rounded">Ver otros cursos del mismo creador</a>
                                   </div>
                               </div>
                           </div>
@@ -83,9 +83,9 @@
                   <div class="card opinion-card mt-2">
                     <div class="card-body">
                       <p th:text="|Precio: ${curso.precio}€|"></p>
-                      <form th:action="@{|/course/buy?title=${curso.titulo}|}" method="post" class="card opinion-card d-flex justify-content-center mt-3 p-0 bg-success">
+                      <form th:action="@{/course/buy(title=${curso.titulo})}" method="post" class="card opinion-card d-flex justify-content-center mt-3 p-0 bg-success">
                         <button th:if="${comprado == false}" type="submit" class="btn btn-lg">Comprar curso</button>
-                        <a th:if="${comprado == true}" th:href="@{|/course/content?title=${curso.titulo}&pos=1|}" class="btn btn-lg">Entrar al curso</a>
+                        <a th:if="${comprado == true}" th:href="@{/course/content(title=${curso.titulo}&pos=1)}" class="btn btn-lg">Entrar al curso</a>
                       </form>
                     </div>
                   </div>
@@ -106,7 +106,7 @@
               <div class="row mb-2" th:each="i : ${curso.valoraciones}">
                 <div class="col-12 d-flex align-items-center">
                   <div class="me-3 bg-danger rounded">
-                    <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="|/course/deleteRating?id=${i.id}&title=${curso.titulo}|">Borrar valoración</a>
+                    <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="/course/deleteRating(id=${i.id},title=${curso.titulo})">Borrar valoración</a>
                   </div>
                   <div class="me-3">
                     <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil">
@@ -126,7 +126,7 @@
           <hr>
           <div class="container-fluid" sec:authorize="isAuthenticated()">
             <h5>Da tu opinión</h5>
-            <form th:action="@{|/course/rate?title=${curso.titulo}|}" th:object="${ValorarCursos}" method="post" class="row mb-2">
+            <form th:action="@{/course/rate(title=${curso.titulo})}" th:object="${ValorarCursos}" method="post" class="row mb-2">
               <div class="col-lg-4 d-flex py-2 mx-2">
                 <h5 class="me-2">Puntuación</h5>
                 <input type="number" min="1" max="5" th:field="*{valoracion}">

@@ -35,7 +35,7 @@
                                     <p class="card-text" th:text="${i.curso.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a th:href="@{|/course/content?title=${i.curso.titulo}&pos=1|}" class="btn btn-sm btn-outline-secondary">Abrir curso</a>      
+                                            <a th:href="@{/course/content(title=${i.curso.titulo},pos=1)}" class="btn btn-sm btn-outline-secondary">Abrir curso</a>      
                                         </div>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                 <p class="card-text" th:text="${i.curso.descripcion}"></p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a th:href="@{|/course/content?title=${i.curso.titulo}&pos=1|}" class="btn btn-sm btn-outline-secondary">Abrir curso</a>      
+                                        <a th:href="@{/course/content(title=${i.curso.titulo},pos=1)}" class="btn btn-sm btn-outline-secondary">Abrir curso</a>      
                                     </div>
                                 </div>
                             </div>

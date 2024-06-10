@@ -66,7 +66,7 @@
   <div th:if="${servicio.verificado}" class="d-flex justify-content-center bg-info mx-4 ">
     <p class="m-auto text-white p-2">Verificado por el administrador</p>
   </div>
-  <form th:action="@{|/service/verify?title=${servicio.titulo}|}" method="post" th:if="${!servicio.verificado and admin}" class="d-flex justify-content-center bg-info mx-4 mb-2">
+  <form th:action="@{/service/verify(title=${servicio.titulo})}" method="post" th:if="${!servicio.verificado and admin}" class="d-flex justify-content-center bg-info mx-4 mb-2">
     <button class="btn border rounded bg-white my-2">Verificar</button>
   </form>
 
@@ -111,7 +111,7 @@
             <img th:src="@{|/uploads/${servicio.creador.id}/profile${servicio.creador.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="profile picture">
             <span class="h3 m-0 ps-2" th:text="|${servicio.creador.nombre} ${servicio.creador.apellidos}|"></span>
             <div class="col-10 m-2">
-              <form class="offset-lg-2" th:action="@{|/service/buy?title=${servicio.getTitulo()}|}" method="post">
+              <form class="offset-lg-2" th:action="@{/service/buy(title=${servicio.titulo})}" method="post">
                 <div id="max-height" class="list-group">
                   <label th:each="i : ${servicio.opciones}" class="list-group-item d-flex gap-2">
                     <input class="form-check-input flex-shrink-0" type="radio" name="id" th:value="${i.id}">
@@ -142,7 +142,7 @@
           <div th:each="i : ${servicio.valoraciones}" class="row mb-2" data-rating-id="${i.id}">
             <div class="col-12 d-flex align-items-center">
               <div class="me-3 bg-danger rounded">
-                <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="|/service/deleteRating?id=${i.id}&title=${servicio.titulo}|">Borrar valoración</a>
+                <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="@{/service/deleteRating(id=${i.id},title=${servicio.titulo})}">Borrar valoración</a>
               </div>
               <div class="me-3">
                 <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil">
@@ -160,7 +160,7 @@
           </div>
         </div>
 
-        <form sec:authorize="isAuthenticated()" th:action="@{|/service/rate?title=${servicio.titulo}|}" th:object="${ValorarServicios}" method="post">
+        <form sec:authorize="isAuthenticated()" th:action="@{/service/rate(title=${servicio.titulo})}" th:object="${ValorarServicios}" method="post">
           <label>Valoracion: <input type="number" th:field="*{valoracion}" max="5" min="0"></label>
           <label>Comentario: <input type="text" th:field="*{comentario}"></label>
           <button type="submit">Mandar valoracion</button>
