@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/header.css">
         <link rel="stylesheet" href="/css/listStyle.css">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -19,7 +20,7 @@
         </div>
         <aside class="position-relative container ">
             <div class="row">
-                
+                <ul>
                 <li class="col dropdown me-auto ms-2 p-1 list-unstyled">
                     <a class="nav-link dropdown-toggle border p-2 bg-white" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Filtroa jartzeko</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown">
@@ -43,10 +44,10 @@
                         </li>
                     </ul>
                 </li> 
+                </ul>
                 <form class="col-4 pt-1" >
                     <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
                 </form>
-
             </div>
         </aside>
 
@@ -61,7 +62,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title" th:text="${i.titulo}"></h5>
                                 </div>
-                                <img th:src="@{|/uploads/${i.creador.id}/courses/${i.id}/portada${i.portada.extension}|}" class="bd-placeholder-img card-img-top" width="100%" height="225" />
+                                <img th:src="@{|/uploads/${i.creador.id}/courses/${i.id}/portada${i.portada.extension}|}" alt="portada" class="bd-placeholder-img card-img-top" width="100" height="225" />
                                 <div class="card-body">
                                     <p class="card-text" th:text="${i.descripcion}"></p>
                                     <div class="d-flex justify-content-between align-items-center">

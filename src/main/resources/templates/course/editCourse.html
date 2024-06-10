@@ -13,188 +13,188 @@
 <body>
   <nav th:insert="~{include/nav :: nav}"></nav>
 
-    <main>
-      <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
-        <div class="row w-100 d-flex justify-content-center">
-          <form th:object="${Curso}" th:action="@{|/course/edit?tituloViejo=${Curso.titulo}|}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
-            <div class="row text-start">
-              <input type="text" th:field="*{titulo}" placeholder="Titulo del curso" class="h1 p-1 card-header" required/>
-            </div>
+  <main>
+    <div class="container-fluid vw-100 d-flex flex-column flex-lg-row">
+      <div class="row w-100 d-flex justify-content-center">
+        <form th:object="${Curso}" th:action="@{|/course/edit?tituloViejo=${Curso.titulo}|}" method="post" enctype="multipart/form-data" class="col-10 col-lg-6 card me-lg-4">
+          <div class="row text-start">
+            <input type="text" th:field="*{titulo}" placeholder="Titulo del curso" class="h1 p-1 card-header" required/>
+          </div>
 
-            <div class="row d-flex justify-content-center p-1">
-              <img th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/portada${Curso.portada.extension}|}" class="w-100 h-auto" alt="Portada del curso"/>
-            </div>
+          <div class="row d-flex justify-content-center p-1">
+            <img th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/portada${Curso.portada.extension}|}" class="w-100 h-auto" alt="Portada del curso"/>
+          </div>
 
-            <div class="row">
-              <div class="container-fluid p-0">
-                <div>
-                  <div class="row d-flex justify-content-between">
-                    <div class="form-check p-3">
-                      <label class="form-check-label h3" for="thumbnail">Cambiar portada:</label>
-                      <input class="form-control" type="file" id="thumbnail">
-                    </div>
+          <div class="row">
+            <div class="container-fluid p-0">
+              <div>
+                <div class="row d-flex justify-content-between">
+                  <div class="form-check p-3">
+                    <label class="form-check-label h3" for="thumbnail">Cambiar portada:</label>
+                    <input class="form-control" type="file" id="thumbnail">
                   </div>
-
-                  <div class="row d-flex justify-content-center p-3">
-                    <textarea	rows="4" cols="50" th:field="*{descripcion}" required></textarea>
-                  </div>
-                  
-                  <select class="form-select" id="inputGroupSelect01" name="tipoParam" required> 
-                    <option value="" disabled selected>Tipo</option> 
-                    <option value="Informática">Informática</option> 
-                    <option value="Arte">Arte</option> 
-                    <option value="Geografía">Geografía</option> 
-                    <option value="Ciencia">Ciencia</option> 
-                  </select>
-
-                  <br/>
-
-                  <select class="form-select" id="inputGroupSelect02" name="idiomaParam" required> 
-                    <option value="" disabled selected>Idioma</option> 
-                    <option value="eu">Euskara</option> 
-                    <option value="es">Castellano</option> 
-                    <option value="en">English</option> 
-                  </select>
-
-                  <br>
-
-                  <div class="d-flex justify-content-between">
-                    <a th:href="@{|/course/delete?title=${Curso.titulo}|}" class="btn btn-danger px-4 m-2">Eliminar servicio</a>
-                    <button type="submit" class="btn btn-primary px-4 m-2">Editar</button>
-                  </div>
-                  
                 </div>
-              </div>
-            </div>
-          </form>
 
-          <div class="col-10 col-lg-4 d-flex align-items-center justify-content-center card d-lg-inline mt-3 m-lg-0">
-            <div class="container-fluid p-0 m-0 w-100">
-              <div class="row d-flex align-items-center">
-                <div class="col-auto">
-                  <img th:src="@{|/uploads/${Curso.creador.id}/profile${Curso.creador.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil del creador">
+                <div class="row d-flex justify-content-center p-3">
+                  <textarea	rows="4" cols="50" th:field="*{descripcion}" required></textarea>
                 </div>
-                <div class="col">
-                  <p class="h3 m-0 ps-2" th:text="${Curso.creador.nombre}"></p>
+                
+                <select class="form-select" id="inputGroupSelect01" name="tipoParam" required> 
+                  <option value="" disabled selected>Tipo</option> 
+                  <option value="Informática">Informática</option> 
+                  <option value="Arte">Arte</option> 
+                  <option value="Geografía">Geografía</option> 
+                  <option value="Ciencia">Ciencia</option> 
+                </select>
+
+                <br/>
+
+                <select class="form-select" id="inputGroupSelect02" name="idiomaParam" required> 
+                  <option value="" disabled selected>Idioma</option> 
+                  <option value="eu">Euskara</option> 
+                  <option value="es">Castellano</option> 
+                  <option value="en">English</option> 
+                </select>
+
+                <br>
+
+                <div class="d-flex justify-content-between">
+                  <a th:href="@{|/course/delete?title=${Curso.titulo}|}" class="btn btn-danger px-4 m-2">Eliminar servicio</a>
+                  <button type="submit" class="btn btn-primary px-4 m-2">Editar</button>
                 </div>
-              </div>
-
-              <div class="row d-flex justify-content-center p-0">
-                <div class="col-10 m-2 p-0">
-
-                  <div class="list-group">
-                    <div class="list-group-item gap-2">
-                      <form th:action="@{|/course/editPrice?title=${Curso.titulo}|}" method="post" class="w-100 d-flex flex-row justify-content-between">
-                        <div class="d-flex flex-column" style="width: 75%;">
-                          Precio del curso:
-                          <input type="number" name="price" th:value="${Curso.precio}" placeholder="Precio del curso" required>
-                        </div>
-                        <button type="submit" class="btn btn-light">Editar</button>
-                      </form>
-                    </div>
-                  </div>
-                  <br/>
-
-                </div>
+                
               </div>
             </div>
           </div>
+        </form>
 
-        </div>
-      </div>
-      <br>
+        <div class="col-10 col-lg-4 d-flex align-items-center justify-content-center card d-lg-inline mt-3 m-lg-0">
+          <div class="container-fluid p-0 m-0 w-100">
+            <div class="row d-flex align-items-center">
+              <div class="col-auto">
+                <img th:src="@{|/uploads/${Curso.creador.id}/profile${Curso.creador.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil del creador">
+              </div>
+              <div class="col">
+                <p class="h3 m-0 ps-2" th:text="${Curso.creador.nombre}"></p>
+              </div>
+            </div>
 
-      <div>
-        <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold">Contenido del curso</h2>
-      
-        <div class="album py-2 ">
-          <div class="container">
-              <div class="d-flex overflow-x-auto">
-                
-                  <div th:each="i : ${ListaElementos}" class="p-2">
-                    <form class="card shadow-sm" th:action="@{|/course/editElement?id=${i.id}&title=${Curso.titulo}|}" enctype="multipart/form-data" method="post">
-                        <div class="card-body">
-                          <div class="btn-group d-flex justify-content-between mb-3">
-                            <a th:if="${i.posicion != 1}" th:href="@{|/course/editElementPos?title=${Curso.titulo}&id=${i.id}&dir=izq|}">&lt;--</a>
-                            <a th:if="${i.posicion != ListaElementos.size()}" th:href="@{|/course/editElementPos?title=${Curso.titulo}&id=${i.id}&dir=der|}">--&gt;</a>
-                          </div>
-                          <h5 class="card-title"><input type="text" th:value="${i.titulo}" name="titulo" placeholder="Titulo del elemento" required></h5>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                          <video th:if="${i.multimedia.isVid()}" controls width="300px">
-                            <source th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/elemento${i.posicion}${i.multimedia.extension}|}" type="video/mp4">
-                          </video>
-                          <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/elemento${i.posicion}${i.multimedia.extension}|}" alt="logo" width="300px">   
-                        </div>
-                        <div class="form-check p-2 ">
-                          <p>Para cambiar la foto o video:</p>
-                          <input class="form-control" type="file" id="formFile" name="multimedia">
-                        </div>
-            
-                        <div class="card-body">
-                          <textarea	rows="4" cols="50" name="texto" th:text="${i.texto}" placeholder="Texto del elemento"></textarea>
-                          
-                          <div class="d-flex justify-content-end">
+            <div class="row d-flex justify-content-center p-0">
+              <div class="col-10 m-2 p-0">
 
-                            <div class="form-check p-2">
-                              <label class="form-check-label h6" for="credit">Cambiar archivo adjunto</label>
-                              <input class="form-control" type="file" id="formFile" name="adjunto">
-                            </div>
-
-                            <div class="btn-group m-2">
-                              <button type="submit" class="btn btn-primary me-2">Editar</button>
-                              <a th:href="@{|/course/deleteElement?title=${Curso.titulo}&id=${i.id}|}" class="btn btn-danger">Borrar</a>
-                            </div>
-                          </div>
-                        </div>
+                <div class="list-group">
+                  <div class="list-group-item gap-2">
+                    <form th:action="@{|/course/editPrice?title=${Curso.titulo}|}" method="post" class="w-100 d-flex flex-row justify-content-between">
+                      <div class="d-flex flex-column" style="width: 75%;">
+                        Precio del curso:
+                        <input type="number" name="price" th:value="${Curso.precio}" placeholder="Precio del curso" required>
+                      </div>
+                      <button type="submit" class="btn btn-light">Editar</button>
                     </form>
                   </div>
-                  
-                  <!-- kurtsoa hutsik-->
-                  <div class="p-2 d-flex align-items-center">
-                    <form class="card shadow-sm" th:action="@{|/course/createElement?title=${Curso.titulo}&pos=${ListaElementos.size()+1}|}" enctype="multipart/form-data" method="post">
-                        <div class="card-body">
-                          <h5 class="card-title"><input type="text" name="titulo" placeholder="Título del elemento" required></h5>
-                        </div>
-                        <div class="card-body">
-                          <label class="" for="credit">Video o imagen del elemento</label>
-                          <input class="form-control" type="file" id="formFile" name="multimedia" required>
-                        </div>
+                </div>
+                <br/>
 
-                        <div class="card-body">
-                          <textarea	rows="4"
-                                            cols="50"
-                                            name="texto"
-                                            placeholder="Texto del elemento"
-                                            required
-                                            ></textarea>
-
-                            <div class="d-flex justify-content-end m-2">
-                              <div class="form-check p-2">
-                                <label class="form-check-label h6" for="credit">Añadir archivo adjunto</label>
-                                <input class="form-control" type="file" id="formFile" name="adjunto">
-                              </div>
-                              <button type="submit" class="btn btn-primary px-4 me-md-2">Añadir</button>
-                            </div>
-                        </div>
-                      </form>
-                  </div>
-                  
               </div>
+            </div>
           </div>
         </div>
-      </div>
 
-     <div class="btn-group m-3 px-2 d-flex">
-        <a th:href="@{|/course/delete?title=${Curso.titulo}|}" class="btn btn-danger rounded px-4 me-2 me-md-2">Borrar curso</a>
-        <div class="btn btn-primary rounded me-md-2">
-            <form method="post" th:action="@{|/course/publish?private=${Curso.publicado ? 'y' : 'n'}&title=${Curso.titulo}|}">
-              <button class="w-100 px-4 btn btn-primary rounded" th:text="${Curso.publicado ? 'Hacer privado' : 'Publicar curso'}"></button>
-            </form>
+      </div>
+    </div>
+    <br>
+
+    <div>
+      <h2 class="mx-2 px-2 mx-md-4 px-md-4 fw-bold">Contenido del curso</h2>
+    
+      <div class="album py-2 ">
+        <div class="container">
+            <div class="d-flex overflow-x-auto">
+              
+                <div th:each="i : ${ListaElementos}" class="p-2">
+                  <form class="card shadow-sm" th:action="@{|/course/editElement?id=${i.id}&title=${Curso.titulo}|}" enctype="multipart/form-data" method="post">
+                      <div class="card-body">
+                        <div class="btn-group d-flex justify-content-between mb-3">
+                          <a th:if="${i.posicion != 1}" th:href="@{|/course/editElementPos?title=${Curso.titulo}&id=${i.id}&dir=izq|}">&lt;--</a>
+                          <a th:if="${i.posicion != ListaElementos.size()}" th:href="@{|/course/editElementPos?title=${Curso.titulo}&id=${i.id}&dir=der|}">--&gt;</a>
+                        </div>
+                        <input type="text" th:value="${i.titulo}" name="titulo" placeholder="Titulo del elemento" required>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <video th:if="${i.multimedia.isVid()}" controls width="300">
+                          <source th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/elemento${i.posicion}${i.multimedia.extension}|}" type="video/mp4">
+                        </video>
+                        <img th:if="${i.multimedia.isImg()}" th:src="@{|/uploads/${Curso.creador.id}/courses/${Curso.id}/elemento${i.posicion}${i.multimedia.extension}|}" alt="logo" width="300">   
+                      </div>
+                      <div class="form-check p-2 ">
+                        <p>Para cambiar la foto o video:</p>
+                        <input class="form-control" type="file" name="multimedia">
+                      </div>
+          
+                      <div class="card-body">
+                        <textarea	rows="4" cols="50" name="texto" th:text="${i.texto}" placeholder="Texto del elemento"></textarea>
+                        
+                        <div class="d-flex justify-content-end">
+
+                          <div class="form-check p-2">
+                            <label class="form-check-label h6">Cambiar archivo adjunto</label>
+                            <input class="form-control" type="file" name="adjunto">
+                          </div>
+
+                          <div class="btn-group m-2">
+                            <button type="submit" class="btn btn-primary me-2">Editar</button>
+                            <a th:href="@{|/course/deleteElement?title=${Curso.titulo}&id=${i.id}|}" class="btn btn-danger">Borrar</a>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+                </div>
+                
+                <!-- kurtsoa hutsik-->
+                <div class="p-2 d-flex align-items-center">
+                  <form class="card shadow-sm" th:action="@{|/course/createElement?title=${Curso.titulo}&pos=${ListaElementos.size()+1}|}" enctype="multipart/form-data" method="post">
+                      <div class="card-body">
+                        <input type="text" name="titulo" placeholder="Título del elemento" required>
+                      </div>
+                      <div class="card-body">
+                        <label class="form-check-label h6" for="elementMedia">Video o imagen del elemento</label>
+                        <input class="form-control" type="file" id="elementMedia" name="multimedia" required>
+                      </div>
+
+                      <div class="card-body">
+                        <textarea	rows="4"
+                                          cols="50"
+                                          name="texto"
+                                          placeholder="Texto del elemento"
+                                          required
+                                          ></textarea>
+
+                          <div class="d-flex justify-content-end m-2">
+                            <div class="form-check p-2">
+                              <label class="form-check-label h6" for="adjunto">Añadir archivo adjunto</label>
+                              <input class="form-control" type="file" id="adjunto" name="adjunto">
+                            </div>
+                            <button type="submit" class="btn btn-primary px-4 me-md-2">Añadir</button>
+                          </div>
+                      </div>
+                    </form>
+                </div>
+                
+            </div>
         </div>
-        <a th:if="${Curso.publicado}" class="btn btn-primary rounded px-4 me-md-2" th:href="@{|/course/view?title=${Curso.titulo}|}">Ver curso</a>
-      </div> 
-    </main>
+      </div>
+    </div>
+
+   <div class="btn-group m-3 px-2 d-flex">
+      <a th:href="@{|/course/delete?title=${Curso.titulo}|}" class="btn btn-danger rounded px-4 me-2 me-md-2">Borrar curso</a>
+      <div class="btn btn-primary rounded me-md-2">
+          <form method="post" th:action="@{|/course/publish?private=${Curso.publicado ? 'y' : 'n'}&title=${Curso.titulo}|}">
+            <button class="w-100 px-4 btn btn-primary rounded" th:text="${Curso.publicado ? 'Hacer privado' : 'Publicar curso'}"></button>
+          </form>
+      </div>
+      <a th:if="${Curso.publicado}" class="btn btn-primary rounded px-4 me-md-2" th:href="@{|/course/view?title=${Curso.titulo}|}">Ver curso</a>
+    </div> 
+  </main>
     <script defer src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
