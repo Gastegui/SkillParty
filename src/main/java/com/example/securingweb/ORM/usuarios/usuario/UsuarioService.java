@@ -121,24 +121,24 @@ public class UsuarioService implements UserDetailsService
 
         if (edad >= 0 && edad < 20) {
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(arte, 6L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(ciencia, 7L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(informatica, 6L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(ciencia, 6L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(informatica, 9L));
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(geografia, 4L));
         } else if (edad >= 20 && edad < 40) {
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(arte, 7L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(ciencia, 8L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(informatica, 5L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(ciencia, 7L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(informatica, 7L));
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(geografia, 5L));
         } else if (edad >= 40 && edad < 60) {
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(arte, 8L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(ciencia, 9L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(ciencia, 8L));
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(informatica, 4L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(geografia, 6L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacion(geografia, 7L));
         } else if (edad >= 60 && edad < 80) {
             cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(arte, 9L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(ciencia, 10L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(informatica, 3L));
-            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(geografia, 7L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(ciencia, 9L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionGreaterThan(informatica, 1L));
+            cursosRecomendados.addAll(cursoRepository.findByTipoAndPuntuacionLessThan(geografia, 8L));
         }
         return cursosRecomendados;
     }
