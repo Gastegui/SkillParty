@@ -26,6 +26,9 @@ public class ChatController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private WebSocketController webSocketController;
+
     @GetMapping("/chat")
     public String chat(@RequestParam(value = "recipient", required = false) String recipient, Model model, Principal principal) {
         String username = principal.getName();
@@ -44,10 +47,14 @@ public class ChatController {
 
     @PostMapping("/send")
     public String sendMessage(@RequestParam("message") String message,
-                            @RequestParam("recipient") String recipient,
-                            Principal principal) {
+                                @RequestParam("recipient") String recipient,
+                                Principal principal) {
         String username = principal.getName();
-        mensajesService.saveMessage(username, recipient, message);
+
+        Mensajes mensaje = mensajesService.saveMessage(username, recipient, message);
+
+        webSocketController.notifyNewMessage(mensaje);
+
         return "redirect:/chat?recipient=" + recipient;
     }
 }

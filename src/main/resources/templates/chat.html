@@ -10,47 +10,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var isAuthenticated = /*[[${isAuthenticated}]]*/ false;
-        var currentUsername = /*[[${#authentication.name}]]*/ 'anonymous';
+        document.addEventListener("DOMContentLoaded", function () {
+            var isAuthenticated = /*[[${isAuthenticated}]]*/ false;
+            if (isAuthenticated) {
+                var socket = new SockJS('/websocket-endpoint');
+                var stompClient = Stomp.over(socket);
+                var currentUsername = /*[[${#authentication.name}]]*/ '';
 
-        if (isAuthenticated) {
-          
-          var socket = new SockJS('/websocket-endpoint');
-          var stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe('/user/' + currentUsername + '/queue/messages', function (message) {
+                        var mensaje = JSON.parse(message.body);
+                        updateMessages(mensaje);
+                    });
+                });
 
-          stompClient.connect({}, function (frame) {
-              console.log('Connected: ' + frame);
-              stompClient.subscribe('/topic/send', function (message) {
-                  var mensaje = JSON.parse(message.body);
-                  updateMessages(mensaje);
-              });
-          });
-
-          function updateMessages(mensaje) {
-              // Actualizar el DOM con el nuevo mensaje
-              var chatLog = document.querySelector('.chat-log');
-              var newMessageElement = document.createElement('div');
-              newMessageElement.classList.add('chat-log__item');
-              
-              if (mensaje.usuario.username === currentUsername) {
-                  newMessageElement.classList.add('chat-log__item--own');
-              } else {
-                  newMessageElement.classList.add('chat-log__item--left');
-              }
-              
-              newMessageElement.innerHTML = `
-                  <h3 class="chat-log__author">
-                      <img src="/uploads/${mensaje.usuario.id}/profile${mensaje.usuario.imagen.extension}" alt="Profile Picture" width="30" height="30"/>
-                      <span>${mensaje.usuario.nombre} ${mensaje.usuario.apellidos} ${new Date(mensaje.fechaEnvio).toLocaleTimeString()}</span>
-                  </h3>
-                  <div class="chat-log__message">${mensaje.texto}</div>
-              `;
-              chatLog.appendChild(newMessageElement);
-          }
-        }
-      });
-  </script>
+                function updateMessages(mensaje) {
+                    var chatLog = document.querySelector('.chat-log');
+                    var newMessageElement = document.createElement('div');
+                    newMessageElement.classList.add('chat-log__item');
+                    if (mensaje.usuario === currentUsername) {
+                        newMessageElement.classList.add('chat-log__item--own');
+                    } else {
+                        newMessageElement.classList.add('chat-log__item--left');
+                    }
+                    newMessageElement.innerHTML = `
+                        <h3 class="chat-log__author">
+                            <img src="${mensaje.usuarioImagen}" alt="Profile Picture" width="30" height="30"/>
+                            <span>${mensaje.usuario} ${new Date(mensaje.fechaEnvio).toLocaleTimeString()}</span>
+                        </h3>
+                        <div class="chat-log__message">${mensaje.texto}</div>
+                    `;
+                    chatLog.appendChild(newMessageElement);
+                }
+            }
+        });
+    </script>
 </head>
 <body>
   <header th:insert="~{include/nav :: nav}"></header>
