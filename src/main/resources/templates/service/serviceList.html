@@ -8,43 +8,45 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <title>Cursos</title>
+        <style>
+            html, body {
+                height: 100%;
+                background-color: #c20114;
+                background-image: linear-gradient(316deg, #6db6d1 0%, #e8a02c 74%);
+            }
+        </style>
     </head>
     <body class="overflow-x-hidden">
         <header th:insert="~{include/nav :: nav}"></header>
         
-        <div>
-            <img src="/images/logo.png" alt="logo" class="image">
-        </div>
         <div class="ms-5">
             <h2 class="fw-bold">Servicios</h2>
         </div>
         <aside class="position-relative container ">
             <div class="row">
-                <ul>
-                    <li class="col dropdown me-auto ms-2 p-1 list-unstyled">
-                        <a class="nav-link dropdown-toggle border p-2 bg-white" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Filtroa jartzeko</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdown">
-                            <li>
-                                <div class="dropdown-item">
-                                    <input type="checkbox" name="es" id="es">
-                                    <label for="es">Castellano</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="dropdown-item">
-                                    <input type="checkbox" name="eu" id="eu">
-                                    <label for="eu">Euskara</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="dropdown-item">
-                                    <input type="checkbox" name="en" id="en">
-                                    <label for="en">English</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </li> 
-                </ul>
+                <div class="col dropdown me-auto ms-2 p-1 list-unstyled">
+                    <a class="nav-link dropdown-toggle border p-2 bg-white" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Filtroa jartzeko</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown">
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="es" id="es">
+                                <label for="es">Castellano</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="eu" id="eu">
+                                <label for="eu">Euskara</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown-item">
+                                <input type="checkbox" name="en" id="en">
+                                <label for="en">English</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div> 
                 <form class="col-4 pt-1" >
                     <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
                 </form>

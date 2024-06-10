@@ -29,19 +29,6 @@ body {
   border-top-right-radius: 0;
 }
 
-/*.back-video {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100vw;
-  min-height: 100vh;
-  width: auto;
-  height: auto;
-  z-index: -1;
-  object-fit: cover;
-  object-position: center;
-}*/
-
 .video-container {
   position: fixed;
   top: 0;
@@ -64,144 +51,12 @@ body {
 }
 
 .animated-text {
-  transition: color 0.3s ease-in-out; /* Transición suave para el cambio de color */
-}
-
-.animated-text:hover {
-  color: red; /* Color que cambiará al hacer hover */
+  transition: color 0.3s ease-in-out;
 }
 
 #crearCuenta {
   border: solid 1px #FFF;
   border-radius: 12px;
   transition: color 2s ease-in-out;
-}
-
-.animated-nav {
-  transition: background-color 0.3s ease-in-out;
-}
-
-.animated-nav:hover {
-  background-color: white;
-}
-
-.animated-nav #header-buttons a {
-  transition: color 2s ease-in-out;
-  color: white;
-}
-
-.animated-nav #title p {
-  transition: color 2s ease-in-out;
-  color: white;
-}
-
-.animated-nav:hover #header-buttons a {
-  color: black;
-}
-
-.animated-nav:hover #title p {
-  color: black;
-}
-
-/*.animated-nav:hover #crearCuenta {
-  border: solid 1px #333;
-}*/
-
-.custom-height {
-  height: 8em;
-}
-
-@media (max-width: 1920px) { /*AHAL DA KENDU*/
-  .justify-center {
-    justify-content: center !important;
-  }
-}
-
-@media (min-width: 1920px) {
-  .justify-right {
-    justify-content: end !important;
-  }
-}
-
-.botoi { /*BOOTSRAPERA AHAL DA PASAU*/
-  padding: 15px 40px;
-  border: solid 1px #FFF;
-  outline: none;
-  background-color: transparent;
-  cursor: pointer;
-  position: relative;
-  z-index: 0;
-  border-radius: 12px;
-}
-
-.botoiPro { /*BOOTSRAPERA AHAL DA PASAU*/
-  margin-right: 2em;
-  padding: 15px 40px;
-  border: none;
-  outline: none;
-  color: #FFF;
-  cursor: pointer;
-  position: relative;
-  z-index: 0;
-  border-radius: 12px;
-}
-
-.botoiPro::after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #333;
-  left: 0;
-  top: 0;
-  border-radius: 10px;
-}
-
-/* glow */
-.botoiPro::before {
-  content: "";
-  background: linear-gradient(
-    45deg,
-    #FF0000, #FF7300, #FFFB00, #48FF00,
-    #00FFD5, #002BFF, #FF00C8, #FF0000
-  );
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  background-size: 600%;
-  z-index: -1;
-  width: calc(100% + 4px);
-  height:  calc(100% + 4px);
-  filter: blur(8px);
-  animation: glowing 20s linear infinite;
-  transition: opacity .3s ease-in-out;
-  border-radius: 10px;
-  opacity: 0;
-}
-
-@keyframes glowing {
-  0% {background-position: 0 0;}
-  50% {background-position: 400% 0;}
-  100% {background-position: 0 0;}
-}
-
-/* hover */
-.botoiPro:hover::before {
-  opacity: 1;
-}
-
-#menu-buttons {
-  display: none;
-}
-
-@media (max-width: 700px) {
-  #header-buttons {
-    display: none;
-  }
-
-  #menu-buttons {
-    display: block;
-  }
 }
 

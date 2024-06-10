@@ -8,20 +8,23 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
 
         <title>Cursos</title>
+        <style>
+            html, body {
+                height: 100%;
+                background-color: #c20114;
+                background-image: linear-gradient(316deg, #e8a02c  0%, #6db6d1 74%);
+            }
+        </style>
     </head>
     <body class="overflow-x-hidden">
         <header th:insert="~{include/nav :: nav}"></header>
         
-        <div id="imageDiv">
-            <img src="/images/logo.png" alt="logo" class="image">
-        </div>
         <div class="ms-5">
             <h2 class="fw-bold">Cursos</h2>
         </div>
         <aside class="position-relative container ">
             <div class="row">
-                <ul>
-                <li class="col dropdown me-auto ms-2 p-1 list-unstyled">
+                <div class="col dropdown me-auto ms-2 p-1 list-unstyled">
                     <a class="nav-link dropdown-toggle border p-2 bg-white" href="#" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">Filtroa jartzeko</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdown">
                         <li>
@@ -43,8 +46,7 @@
                             </div>
                         </li>
                     </ul>
-                </li> 
-                </ul>
+                </div> 
                 <form class="col-4 pt-1" >
                     <input class="form-control pt-2" type="text" placeholder="Search" aria-label="Search">
                 </form>
