@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/servicePage.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <title>Document</title>
@@ -61,7 +61,7 @@
   </script>
 </head>
 <body>
-  <nav th:insert="~{include/nav :: nav}"></nav>
+  <header th:insert="~{include/nav :: nav}"></header>
 
   <div th:if="${servicio.verificado}" class="d-flex justify-content-center bg-info mx-4 ">
     <p class="m-auto text-white p-2">Verificado por el administrador</p>
@@ -114,7 +114,7 @@
               <form class="offset-lg-2" th:action="@{/service/buy(title=${servicio.titulo})}" method="post">
                 <div id="max-height" class="list-group">
                   <label th:each="i : ${servicio.opciones}" class="list-group-item d-flex gap-2">
-                    <input class="form-check-input flex-shrink-0" type="radio" name="id" th:value="${i.id}">
+                    <input class="form-check-input flex-shrink-0" type="radio" name="id" th:value="${i.id}" required>
                     <span>
                       <span th:text="${i.getDescripcion()}"></span>
                       <small th:text="|${i.getPrecio()}€|" class="d-block text-body-secondary"></small>

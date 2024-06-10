@@ -430,6 +430,9 @@ public class ServiceController
         if(user == null)
             return "redirect:/error/403";
 
+        if(user.isAdmin())
+            return "redirect:/error/403";
+
         if(user.equals(servicio.get().getCreador()))
             return "redirect:/service/view?title="+encode(padre)+"&message=cannotBuyOwnService";
 

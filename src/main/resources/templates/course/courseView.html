@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/coursePage.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/download.js"></script>
     <title>Document</title>
 </head>
 <body class="overflow-x-hidden">
-  <nav th:insert="~{include/nav :: nav}"></nav>
+  <header th:insert="~{include/nav :: nav}"></header>
 
-      <div class="d-flex justify-content-center bg-info mx-4 " th:if="${curso.verificado}">
-        <p class="m-auto text-white p-2">Verificado por el administrador</p>
+      <div class="d-flex justify-content-center bg-info mx-4" th:if="${curso.verificado}">
+        <p class="m-auto text-white p-2">Verificado por el administrador. Puntuacion: <span th:text="${curso.puntuacion}"></span></p>
       </div>
       <div class="bg-info mx-4 mb-2 " th:if="${curso.verificado == false and admin}">
         <form th:action="@{/course/verify(title=${curso.titulo})}" method="post">
@@ -84,8 +84,8 @@
                     <div class="card-body">
                       <p th:text="|Precio: ${curso.precio}€|"></p>
                       <form th:action="@{/course/buy(title=${curso.titulo})}" method="post" class="card opinion-card d-flex justify-content-center mt-3 p-0 bg-success">
-                        <button th:if="${comprado == false}" type="submit" class="btn btn-lg">Comprar curso</button>
-                        <a th:if="${comprado == true}" th:href="@{/course/content(title=${curso.titulo}&pos=1)}" class="btn btn-lg">Entrar al curso</a>
+                        <button th:if="${comprado == false && admin == false}" type="submit" class="btn btn-lg">Comprar curso</button>
+                        <a th:if="${comprado == true || admin}" th:href="@{/course/content(title=${curso.titulo},pos=1)}" class="btn btn-lg">Entrar al curso</a>
                       </form>
                     </div>
                   </div>
@@ -106,7 +106,7 @@
               <div class="row mb-2" th:each="i : ${curso.valoraciones}">
                 <div class="col-12 d-flex align-items-center">
                   <div class="me-3 bg-danger rounded">
-                    <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="/course/deleteRating(id=${i.id},title=${curso.titulo})">Borrar valoración</a>
+                    <a th:if="${i.usuario.id == usuarioID or admin}" class="btn" th:href="@{/course/deleteRating(id=${i.id},title=${curso.titulo})}">Borrar valoración</a>
                   </div>
                   <div class="me-3">
                     <img th:src="@{|/uploads/${i.usuario.id}/profile${i.usuario.imagen.extension}|}" class="rounded h-auto p-3 m-0" width="100" alt="Foto de perfil">

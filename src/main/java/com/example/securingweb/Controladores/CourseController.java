@@ -929,15 +929,20 @@ public class CourseController
         boolean comprado = false;
         boolean acabado = false;
 
-        for(ComprarCurso i : usuario.getCursosComprados())
+        if(!usuario.isAdmin())
         {
-            if(i.getCurso().equals(curso.get()))
-                {
-                    comprado = true;
-                    acabado = i.getTerminado();
-                    break;
-                }
+            for(ComprarCurso i : usuario.getCursosComprados())
+            {
+                if(i.getCurso().equals(curso.get()))
+                    {
+                        comprado = true;
+                        acabado = i.getTerminado();
+                        break;
+                    }
+            }
         }
+        else
+            comprado = true;
 
         if(!comprado)
             return "redirect:/error/403";

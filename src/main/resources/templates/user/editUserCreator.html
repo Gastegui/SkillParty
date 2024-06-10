@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cardStyle.css">
 
     <title>Document</title>
 </head>
@@ -18,7 +19,7 @@
         </video>
     </div>
 
-    <nav th:insert="~{include/nav :: nav}"></nav>
+    <header th:insert="~{include/nav :: nav}"></header>
 
     <main>
         <form th:action="@{/user/edit}" th:object="${usuario}" method="post" enctype="multipart/form-data">
@@ -76,7 +77,7 @@
         
             <div class="container mt-3">
                 <div class="row">
-                    <divclass="col-md-4 glass">
+                    <div class="col-md-4 glass">
                         <div class="container">
                             <div class="card">
                                 <div class="content">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/createUser.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/script.js"></script>
@@ -17,7 +17,7 @@
         </video>
     </div>
 
-    <nav th:insert="~{include/nav :: nav}"></nav>
+    <header th:insert="~{include/nav :: nav}"></header>
     
     <div class="container-fluid m-0 vh-80 d-flex">
           <main class="row vw-100 h-100 d-flex justify-content-center">
@@ -42,7 +42,7 @@
               </div>
               
               <div class="form-floating">
-                  <input type="text" th:field="*{email}" class="form-control bg-body-primary mb-2" id="email" placeholder="Correo electrónico">
+                  <input type="email" th:field="*{email}" class="form-control bg-body-primary mb-2" id="email" placeholder="Correo electrónico">
                   <label for="email">Correo electrónico</label>
               </div>
 
