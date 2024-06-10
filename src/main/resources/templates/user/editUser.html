@@ -25,7 +25,7 @@
         <div class="mx-4 px-4">
             <h1 class="text-white fw-bold">Editar perfil</h1>
         </div>
-        <form class="container text-center" th:action="@{/user/edit}" th:object="${usuario}" method="post">
+        <form class="container text-center" th:action="@{/user/edit}" th:object="${usuario}" enctype="multipart/form-data" method="post">
         
             <div class="row w-100">
                 <div class="col-md-6 text-white p-2 mb-2">
