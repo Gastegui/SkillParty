@@ -28,37 +28,37 @@
               <h1 class="display-1 mb-3 ms-0 fw-normal text-white text-aling-center">Crear cuenta</h1>
 
               <div class="form-floating">
-                  <input type="text" th:field="*{nombre}" class="form-control bg-body-primary mb-2" placeholder="Nombre">
+                  <input type="text" th:field="*{nombre}" class="form-control bg-body-primary mb-2" placeholder="Nombre" required>
                   <label for="name">Nombre</label>
               </div>
 
               <div class="form-floating">
-                  <input type="text" th:field="*{apellidos}" class="form-control bg-body-primary mb-2" id="surname" placeholder="Apellidos">
+                  <input type="text" th:field="*{apellidos}" class="form-control bg-body-primary mb-2" id="surname" placeholder="Apellidos" required>
                   <label for="surname">Apellidos</label>
               </div>
 
               <div class="form-floating">
-                  <input type="date" name="fecha_nacimiento" class="form-control bg-body-primary mb-2" id="date_birth" placeholder="Fecha de nacimiento">
+                  <input type="date" name="fecha_nacimiento" class="form-control bg-body-primary mb-2" id="date_birth" placeholder="Fecha de nacimiento" required>
                   <label for="date_birth">Fecha de nacimiento</label>
               </div>
               
               <div class="form-floating">
-                  <input type="email" th:field="*{email}" class="form-control bg-body-primary mb-2" id="email" placeholder="Correo electrónico">
+                  <input type="email" th:field="*{email}" class="form-control bg-body-primary mb-2" id="email" placeholder="Correo electrónico" required>
                   <label for="email">Correo electrónico</label>
               </div>
 
               <div class="form-floating">
-                  <input type="text" th:field="*{username}" class="form-control bg-body-primary mb-2" id="username" placeholder="Nombre de usuario">
+                  <input type="text" th:field="*{username}" class="form-control bg-body-primary mb-2" id="username" placeholder="Nombre de usuario" required>
                   <label for="username">Nombre de usuario</label>
               </div>
 
               <div class="form-floating" id="firstPassword">
-                  <input type="password" th:field="*{password}" class="form-control bg-body-primary mb-2" id="password" placeholder="Contraseña">
+                  <input type="password" th:field="*{password}" class="form-control bg-body-primary mb-2" id="password" placeholder="Contraseña" required>
                   <label for="password">Contraseña</label>
               </div>
 
               <div class="form-floating" id="secondPassword">
-                  <input type="password" class="form-control bg-body-primary" id="repeatPassword" placeholder="Repetir contraseña">
+                  <input type="password" class="form-control bg-body-primary" id="repeatPassword" placeholder="Repetir contraseña" required>
                   <label for="repeatPassword">Repetir contraseña</label>
               </div>
 
