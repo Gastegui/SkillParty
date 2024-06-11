@@ -4,6 +4,7 @@ var creator;
 var text1;
 var text2;
 var botoia;
+var mezua;
 var aditionalInformation;
 var infoPanels;
 
@@ -19,7 +20,8 @@ window.onload = function(){
     aditionalInformation = document.getElementById('gehigarri');
     infoPanels = document.getElementById('infoCards');
 
-    botoia = document.getElementById('testua');
+    mezua = document.getElementById('testua');
+    botoia = document.getElementById('login');
 }
 
 function pasahitza1Gorde(event){
@@ -39,11 +41,14 @@ function konprobatu(){
 
     if(text1 == text2)
     {
-        botoia.innerHTML = "Ondo sartu dira pasahitzak";
+        mezua.innerHTML = "Ondo sartu dira pasahitzak";
+        login.classList.remove("disabled");
+
     }
     else
     {
-        botoia.innerHTML = "Gaizki sartu dira pasahitzak";
+        mezua.innerHTML = "Gaizki sartu dira pasahitzak";
+        login.classList.add("disabled");
     }
 }
 
