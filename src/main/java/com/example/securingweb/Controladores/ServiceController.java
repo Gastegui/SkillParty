@@ -450,7 +450,7 @@ public class ServiceController
         compra.setTerminado(false);
         comprarServiciosRepository.save(compra);
 
-        return "redirect:/snake"; //pagina //MARK: esto debería redirigir al chat o algo así ns
+        return "redirect:/chat";
     }
 
     @PostMapping("createOption")

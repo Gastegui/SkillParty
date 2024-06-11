@@ -26,7 +26,7 @@
         <form th:action="@{/course/verify(title=${curso.titulo})}" method="post">
           <div class="d-flex justify-content-center py-2 mx-2">
             <h4 class="me-2">Nivel del curso</h4>
-            <input type="number" min="1" max="5" name="puntuacion">
+            <input type="number" min="1" max="10" name="puntuacion">
           </div>
           <div class="d-flex justify-content-center py-2">
             <button type="submit" class="btn border rounded bg-white m-2">Verificar</button>
